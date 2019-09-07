@@ -1,0 +1,201 @@
+
+> (lg "g")
+
+======================= l o a d i n g =======================================
+; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/single-double-slash-and-morphology/g.ded"
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (load "g.testsuite.lisp")
+
+T
+> (test-ders)
+
+To see rule switches, do (switches)
+  To beam or not to beam    : NIL
+  Normal Form (NF) parse    : T
+  Out of vocabulary flag    : NIL
+ *PRINT-READABLY*           : NIL
+ *PRINT-PRETTY*             : T
+  Currently loaded grammar  : g.ded
+ *CCG-GRAMMAR*              : 12 items
+ *LEX-RULES-TABLE*          : 0 items
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+
+"CCGlab, version 5.2"
+=======
+1
+(ADAM -IN OKU -DUGU KITAP)
+========
+
+
+Derivation 1
+--------------
+LEX   (ADAM) := NP
+        : (LAM X (MAN X))
+LEX   (-IN) := (S/VP)\*NP
+        : (LAM X (LAM P (P X)))
+<     (ADAM)(-IN) := S/VP
+        : ((LAM X (LAM P (P X))) (LAM X (MAN X)))
+LEX   (OKU) := VP\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+>Bx   (ADAM -IN)(OKU) := S\NP
+        : (LAM X
+           (((LAM X (LAM P (P X))) (LAM X (MAN X)))
+            ((LAM X (LAM Y ((READ X) Y))) X)))
+LEX   (-DUGU) := (NP/NP)\*(S\NP)
+        : (LAM P (LAM Q ((AND (P X)) (Q X))))
+<     (ADAM -IN OKU)(-DUGU) := NP/NP
+        : ((LAM P (LAM Q ((AND (P X)) (Q X))))
+           (LAM X
+            (((LAM X (LAM P (P X))) (LAM X (MAN X)))
+             ((LAM X (LAM Y ((READ X) Y))) X))))
+LEX   (KITAP) := NP
+        : (LAM X (BOOK X))
+>     (ADAM -IN OKU -DUGU)(KITAP) := NP
+        : (((LAM P (LAM Q ((AND (P X)) (Q X))))
+            (LAM X
+             (((LAM X (LAM P (P X))) (LAM X (MAN X)))
+              ((LAM X (LAM Y ((READ X) Y))) X))))
+           (LAM X (BOOK X)))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((READ X) (LAM X (MAN X)))) (BOOK X)) =
+    (AND (READ X (\ X . MAN X)) (BOOK X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+2
+(ADAM -IN OKU -YAN KITAP)
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+3
+(KITAP -I OKU -YAN ADAM)
+========
+
+
+Derivation 1
+--------------
+LEX   (KITAP) := NP
+        : (LAM X (BOOK X))
+LEX   (-I) := (VP/(VP\NP))\*NP
+        : (LAM P (LAM Q (Q P)))
+<     (KITAP)(-I) := VP/(VP\NP)
+        : ((LAM P (LAM Q (Q P))) (LAM X (BOOK X)))
+LEX   (OKU) := VP\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+>     (KITAP -I)(OKU) := VP
+        : (((LAM P (LAM Q (Q P))) (LAM X (BOOK X)))
+           (LAM X (LAM Y ((READ X) Y))))
+LEX   (-YAN) := (NP/NP)\*VP
+        : (LAM P (LAM Q ((AND (P X)) (Q X))))
+<     (KITAP -I OKU)(-YAN) := NP/NP
+        : ((LAM P (LAM Q ((AND (P X)) (Q X))))
+           (((LAM P (LAM Q (Q P))) (LAM X (BOOK X)))
+            (LAM X (LAM Y ((READ X) Y)))))
+LEX   (ADAM) := NP
+        : (LAM X (MAN X))
+>     (KITAP -I OKU -YAN)(ADAM) := NP
+        : (((LAM P (LAM Q ((AND (P X)) (Q X))))
+            (((LAM P (LAM Q (Q P))) (LAM X (BOOK X)))
+             (LAM X (LAM Y ((READ X) Y)))))
+           (LAM X (MAN X)))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((READ (LAM X (BOOK X))) X)) (MAN X)) =
+    (AND (READ (\ X . BOOK X) X) (MAN X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+4
+(KITAP -I OKU -DUGU ADAM)
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+5
+(UYU -MA -YAN ADAM)
+========
+
+
+Derivation 1
+--------------
+LEX   (UYU) := VP
+        : (LAM X (SLEEP X))
+LEX   (-MA) := VP\\VP
+        : (LAM P (NEG P))
+<     (UYU)(-MA) := VP
+        : ((LAM P (NEG P)) (LAM X (SLEEP X)))
+LEX   (-YAN) := (NP/NP)\\VP
+        : (LAM P (LAM Q ((AND (P X)) (Q X))))
+<     (UYU -MA)(-YAN) := NP/NP
+        : ((LAM P (LAM Q ((AND (P X)) (Q X))))
+           ((LAM P (NEG P)) (LAM X (SLEEP X))))
+LEX   (ADAM) := NP
+        : (LAM X (MAN X))
+>     (UYU -MA -YAN)(ADAM) := NP
+        : (((LAM P (LAM Q ((AND (P X)) (Q X))))
+            ((LAM P (NEG P)) (LAM X (SLEEP X))))
+           (LAM X (MAN X)))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((NEG (LAM X (SLEEP X))) X)) (MAN X)) =
+    (AND (NEG (\ X . SLEEP X) X) (MAN X))
+
+Derivation 2
+--------------
+LEX   (UYU) := VP
+        : (LAM X (SLEEP X))
+LEX   (-MA) := VP\\VP
+        : (LAM P (NEG P))
+<     (UYU)(-MA) := VP
+        : ((LAM P (NEG P)) (LAM X (SLEEP X)))
+LEX   (-YAN) := (NP/NP)\*VP
+        : (LAM P (LAM Q ((AND (P X)) (Q X))))
+<     (UYU -MA)(-YAN) := NP/NP
+        : ((LAM P (LAM Q ((AND (P X)) (Q X))))
+           ((LAM P (NEG P)) (LAM X (SLEEP X))))
+LEX   (ADAM) := NP
+        : (LAM X (MAN X))
+>     (UYU -MA -YAN)(ADAM) := NP
+        : (((LAM P (LAM Q ((AND (P X)) (Q X))))
+            ((LAM P (NEG P)) (LAM X (SLEEP X))))
+           (LAM X (MAN X)))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((NEG (LAM X (SLEEP X))) X)) (MAN X)) =
+    (AND (NEG (\ X . SLEEP X) X) (MAN X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)

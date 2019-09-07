@@ -1,0 +1,14 @@
+(
+
+
+the d  |:=|  np |/|  |*| n |:|   |\\| x |.|  x |;| 
+man n  |:=|  n |:|  !man |;| 
+boy n  |:=|  n |:|  !boy |;| 
+in p   |:=|   |(| n |\\| n |)|  |/|  |*| np |:|   |\\| x |\\| y |.| !in x y |;| 
+corner n  |:=|  n |:|  !corner |;| 
+hits v  |:=|   |(| s |\\| np |)|  |/| np |:|   |\\| x |\\| y |.| !hits x y |;| 
+sees v  |:=|   |(| s |\\| np |)|  |/| np |:|   |\\| x |\\| y |.| !sees x y |;| 
+wants v  |:=|   |(| s |\\| np |)|  |/| vp |:|   |\\| p |\\| x |.| !want  |(| p x |)| x |;| 
+to i  |:=|  vp |/| iv  |:|   |\\| p |.| p |;| 
+study v  |:=|  iv  |:|   |\\| x |.| !study x |;| 
+read v  |:=|  iv |/| np  |:|   |\\| x |\\| y |.| !read x y |;| )

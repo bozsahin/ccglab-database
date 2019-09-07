@@ -1,0 +1,1028 @@
+
+%CCG for Turkish Finite-Verb Inflection
+%Utku Can Kunter, Jan 2018
+
+%For questions, corrections and suggestions: uckunter@gmail.com
+%This is a work-in-progress, please do not judge harshly.
+
+%References:
+%%Göksel, A., and Kerslake, C. (2005). Turkish: A comprehensive grammar. London: Routledge.
+%%Moens, M. and Steedman, M. (1988). Temporal Ontology and Temporal Reference. Computational Linguistics, 14, pp.15-28.
+%%Steedman and Baldridge (2011) Combinatory Categorial Grammar.  In: R. Borsley and K. Borjars (eds.) Non-Transformational Syntax, 181-224, Blackwell.
+%%Taylan, E. E. (ed.) (2001). The verb in Turkish. Amsterdam: John Benjamins.
+
+%Rules do not cover the following (among many others):
+%%Nominal inflectional suffixes
+%%Phonological variations
+%%Modified word order
+%%Imperatives
+%%Auxiliary verbs cannot take tense/aspect/modality markers (for now, due to some complications)
+
+%Rules are replicated to cover:
+%%Passive intransitive, Intransitive, Transitive, Transitive causative verbs
+%%Target verbs on positions 0-7
+%%Agreements for different verb types (in order to disallow certain derivations for certain verb types. This is future work.)
+
+%Items are grouped according to their functions:
+%%Stems, words, phrases: NPs, Also, Verbs, Auxiliary, Quick VPs, Speech environment
+%%Suffixes: Non-finite verb suffix attempts, Negation (Non-finite verbs), Voice, 
+%%%Position1, Negation (Finite-verbs), Değil, Position2, Position3, Position4, Generic agreement, Position5
+
+%Features are used for restricting the number of possible derivations:
+%%vp: Type of verb phrase (for non-finite verbs), Type of verb (For finite verbs) as given in Moens and Steedman (1988), AUX (Auxiliary)
+%%mod: Expression of modality (True/False)
+%%pos: Inflectional position as given in Göksel and Kerslake (2005) (Originally 1-5, expanded to 0-7)
+%%caus: Causative marker taken (True/False)
+%%neg: Negation marker taken (True/False)
+%%genmod: Can take generalized modality (Possible/Impossible)
+
+%Workflow:
+%%(load-grammar "finite-verb-suffixes" :maker 'sbcl)
+%%(ccg-deduce '(ahmet gel -di -agr))
+%%(cky-show-deduction)
+%%(cky-pprint)
+
+%Some examples:
+%%(ccg-deduce '(ahmet gel -me -di -agr))
+%%(ccg-deduce '(ahmet gel -me -z -se -agr ben de gel -me -z -agr))
+%%(ccg-deduce '(ahmet sen_okuldayken gel -miş -di -agr))
+%%(ccg-deduce '(ahmet sen_okuldayken gel -miş -agr -dir))
+%%(ccg-deduce '(ahmet gel -iyor değil -agr))
+%%(ccg-deduce '(ahmet gel -ebil -ecek -se -agr ben de gel -ebil -ir -agr))
+%%(ccg-deduce '(hırsız konuş -ir -se -agr ahmet hapse_gir -me -z -agr))
+%%(ccg-deduce '(ben hırsızın konuş -diğini ahmet gel -diğinde öğren -miş -di -agr))
+%%(ccg-deduce '(hırsız hapse_gir -meden_önce konuş -dir -il -eme -di -di -agr))
+%%(ccg-deduce '(polis hırsızı konuş -dir -ebil -di -agr))
+%%(ccg-deduce '(polis hırsızı konuş -dir -ebil -miş değil -agr))
+%%(ccg-deduce '(hırsız hapisteyken konuş -dir -il -ebil -ir -di -agr))
+%%(ccg-deduce '(sen hırsızı hırsız konuş -dir -il -ir -iken izle -meli -di -agr))
+%%(ccg-deduce '(komiser polise hırsızı konuş -dir -t -eme -di -agr))
+%%(ccg-deduce '(polis hırsız konuş -ir -iken gül -iyor -di -agr))
+%%(ccg-deduce '(ben hırsızın konuş -eceğini o hapse_gir -meden_önce bil -iyor -di -agr))
+
+%The following combinatory modalities have been crucial in managing the rule set:
+%% \* and /* represent the most restrictive standard modality. They are used to restrict the number of derivations by employing the adjacency assumption.
+%% \\ modality is even more restrictive. In addition to |*, it forbids the selected item from binding to suffixes. It is used almost always in suffix rules.
+
+%Stems, words, phrases
+%%NPs
+ben 		n := np : !speaker;
+sen 		n := np : !hearer;
+o			n := np : !third_person;
+söz 		n := np : !promise;
+huzur 		n := np : !peace;
+şeker 		n := np : !candy;
+komiser 	n := np : !officer;
+polis 		n := np : !policeman;
+polise 		n := np : !policeman;
+hırsız		n := np : !robber;
+hırsızı		n := np : !robber;
+hırsızın	n := np : !robber;
+hapse		n := np : !to_prison;
+beşinci_ödev n := np : !fifth_asg;
+borcu 		n := np : !loan;
+araba 		n := np : !car;
+ahmet		n := np : !ahmet;
+ahmetin		n := np : !ahmet;
+herkes		n := np : !everyone;
+kimse		n := np : !no_one;
+
+%%Also
+de 		n := np\*np : \x.x;
+
+%%Verbs
+gül			v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!laugh x;
+gel 		v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!come x;
+git 		v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!go x;
+dön 		v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!come_back x;
+hapse_gir 	v := vp[vp=culmination,mod=false,pos=0,caus=false]\np : \x.!go_to_jail x;
+ver 		v := (vp[vp=point,mod=false,pos=0,caus=false]\np)\np : \x\y.!give x y;
+konuş		v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!speak x;
+haber_ver	v := (vp[vp=culmination,mod=false,pos=0,caus=false]\np)\np : \y\x.!inform x y; 
+söyle		v := vp[vp=process,mod=false,pos=0,caus=false]\np : \x.!tell x;
+al			v := vp[vp=point,mod=false,pos=0,caus=false]\np\np : \y\x.!buy y x;
+kapat		v := vp[vp=culm_proc,mod=false,pos=0,caus=false]\np\np : \y\x.!pay_off y x;
+beğen		v := (vp[vp=state,mod=false,pos=0,caus=false]\np)\np : \y\x.!like y x;
+duy			v := (vp[vp=point,mod=false,pos=0,caus=false]\np)\np : \y\x.!hear y x;
+öğren		v := (vp[vp=culm_proc,mod=false,pos=0,caus=false]\np)\np : \y\x.!learn y x;
+bekle		v := (vp[vp=process,mod=false,pos=0,caus=false]\np)\np : \y\x.!wait y x;
+inan		v := (vp[vp=state,mod=false,pos=0,caus=false]\np)\np : \y\x.!believe y x;
+bil			v := (vp[vp=state,mod=false,pos=0,caus=false]\np)\np : \y\x.!know y x;
+gör			v := (vp[vp=culmination,mod=false,pos=0,caus=false]\np)\np : \y\x.!see y x;
+izle		v := (vp[vp=process,mod=false,pos=0,caus=false]\np)\np : \y\x.!watch y x;
+yakala		v := (vp[vp=culmination,mod=false,pos=0,caus=false]\np)\np : \y\x.!catch y x;
+
+%%Auxiliary (to expand tense/aspect/modality combinations)
+ol			v := vp[vp=aux,mod=?x,pos=0,caus=false]\*vp[mod=?x,pos=4]
+			: \p.!AUX (p w0 t0);
+ol			v := (vp[vp=aux,mod=?x,pos=0,caus=false]\np)\*(vp[mod=?x,pos=4]\np)
+			: \p\x.!AUX (p x w0 t0);
+ol			v := ((vp[vp=aux,mod=?x,pos=0,caus=false]\np)\np)\*((vp[mod=?x,pos=4]\np)\np)
+			: \p\x\y.!AUX (p x y w0 t0);
+ol			v := (((vp[vp=aux,mod=?x,pos=0,caus=false]\np)\np)\np)\*(((vp[mod=?x,pos=4]\np)\np)\np)
+			: \p\x\y\z.!AUX (p x y z w0 t0);
+
+%%Quick VPs
+sen_okuldayken 				vp := vp[vp=time_conv] : \w0\t0.(!time !hearer_at_school);
+ahmet_yemek_yerken 			vp := vp[vp=time_conv] : \w0\t0.(!time !ahmet_eating);
+yılbaşı_kutlanırken 		vp := vp[vp=time_conv] : \w0\t0.(!time !anonymous_celebrating_new_years);
+ali_tv_izlerken 			vp := vp[vp=time_conv] : \w0\t0.(!time !ali_watching_tv);
+ayşe_ödev_yaparken 			vp := vp[vp=time_conv] : \w0\t0.(!time !ayşe_doing_hw);
+ahmet_yürürken 				vp := vp[vp=time_conv] : \w0\t0.(!time !ahmet_walking);
+yağmur_yağarken 			vp := vp[vp=time_conv] : \w0\t0.(!time !raining);
+ahmet_konuşurken 			vp := vp[vp=time_conv] : \w0\t0.(!time !ahmet_talking);
+ayşe_oyun_oynarken 			vp := vp[vp=time_conv] : \w0\t0.(!time !ayşe_playing);
+ben_dördüncü_ödevi_yaparken vp := vp[vp=time_conv] : \w0\t0.(!time !speaker_working_on_the_fourth_asg);
+parti_başlamadan 			vp := vp[vp=time_conv] : \w0\t0.(!time_before !party_starts);
+hapisteyken					vp := vp[vp=time_conv] : \w0\t0.(!time !was_in_jail);
+ibibikler_öter_ötmez		vp := vp[vp=time_conv] : \w0\t0.(!time !ibibiks_start_chirping);
+
+%%Speech environment
+now 	n := np : !time_current;
+actual_world n := np : !world_actual;
+
+%Suffixes
+%%Non-finite verb suffix attempts
+%%Case markers integrated
+%%Possessive markers integrated
+%%Accompanying words integrated
+%%Negation markers sometimes integrated (no tense/aspect/modality markers for them to bind)
+-mesini		c := np\*vp[pos=0] : \p.!fact p; %-me -i (poss) -i (acc)
+-mesini		c := np\*vp[pos=1] : \p.!fact p;
+-mesini		c := np\*vp[pos=2] : \p.!fact p;
+
+-işini		c := np\*vp[pos=0] : \p.!manner p; %-iş -i (poss) -i (acc)
+-işini		c := np\*vp[pos=1] : \p.!manner p;
+-işini		c := np\*vp[pos=2] : \p.!manner p;
+
+-diğini		c := np\*vp[pos=0] : \p.!actual_event p; %-dik -i (poss) -i (acc)
+-diğini		c := np\*vp[pos=1] : \p.!actual_event p;
+-diğini		c := np\*vp[pos=2] : \p.!actual_event p;
+
+-eceğini	c := np\*vp[pos=0] : \p.!hypothetical_event p; %-ecek -i (poss) -i (acc)
+-eceğini	c := np\*vp[pos=1] : \p.!hypothetical_event p;
+-eceğini	c := np\*vp[pos=2] : \p.!hypothetical_event p;
+
+%%adjectivals
+-en			c := (np/*np)\*vp[pos=0] : \p\x.!doer p x; %-en
+-en			c := (np/*np)\*vp[pos=1] : \p\x.!doer p x;
+-en			c := (np/*np)\*vp[pos=2] : \p\x.!doer p x;
+
+%%converbs
+%%%w0 and t0 must be taken from the main verb for -iken, which is problematic
+-iken		c := vp[vp=time_conv,pos=converb]\*vp[pos=4] 									: \p\w0\t0.!while (p w0 t0); %-iken
+-iken		c := (vp[vp=time_conv,pos=converb]\*np)\*(vp[pos=4]\np) 						: \p\x\w0\t0.!while (p x w0 t0);
+-iken		c := ((vp[vp=time_conv,pos=converb]\*np)\*np)\*((vp[pos=4]\np)\np) 				: \p\x\y\w0\t0.!while (p x y w0 t0);
+-iken		c := (((vp[vp=time_conv,pos=converb]\*np)\*np)\*np)\*(((vp[pos=4]\np)\np)\np) 	: \p\x\y\z\w0\t0.!while (p x y z w0 t0);
+
+-erek		c := vp[vp=manner_conv,pos=converb]\*vp[pos=0] : \p.!while p; %-erek
+-erek		c := vp[vp=manner_conv,pos=converb]\*vp[pos=1] : \p.!while p;
+-erek		c := vp[vp=manner_conv,pos=converb]\*vp[pos=2] : \p.!while p;
+
+-dikçe		c := vp[vp=manner_conv,pos=converb]\*vp[pos=0] : \p.!the_more p; %-dik -çe
+-dikçe		c := vp[vp=manner_conv,pos=converb]\*vp[pos=1] : \p.!the_more p;
+-dikçe		c := vp[vp=manner_conv,pos=converb]\*vp[pos=2] : \p.!the_more p;
+
+-diğinde	c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!when p; %-dik -i (abl) -de (loc)
+-diğinde	c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!when p;
+-diğinde	c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!when p;
+
+-diğinden_beri	c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!since p; %-dik -i (poss) -den (abl) beri
+-diğinden_beri	c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!since p;
+-diğinden_beri	c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!since p;
+
+-dikten_sonra	c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!after p; %-dik -ten (abl) sonra
+-dikten_sonra	c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!after p;
+-dikten_sonra	c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!after p;
+
+-eceğine_göre	c := vp[vp=reason_conv,pos=converb]\*vp[pos=0] : \p.!since p; %-ecek -i (poss) -e (acc) göre
+-eceğine_göre	c := vp[vp=reason_conv,pos=converb]\*vp[pos=1] : \p.!since p;
+-eceğine_göre	c := vp[vp=reason_conv,pos=converb]\*vp[pos=2] : \p.!since p;
+
+-eceği_için		c := vp[vp=reason_conv,pos=converb]\*vp[pos=0] : \p.!since p; %-ecek -i (poss) için
+-eceği_için		c := vp[vp=reason_conv,pos=converb]\*vp[pos=1] : \p.!since p;
+-eceği_için		c := vp[vp=reason_conv,pos=converb]\*vp[pos=2] : \p.!since p;
+
+-eceğinden_dolayı	c := vp[vp=reason_conv,pos=converb]\*vp[pos=0] : \p.!since p; %-ecek -i (poss) -den (abl) dolayı
+-eceğinden_dolayı	c := vp[vp=reason_conv,pos=converb]\*vp[pos=1] : \p.!since p;
+-eceğinden_dolayı	c := vp[vp=reason_conv,pos=converb]\*vp[pos=2] : \p.!since p;
+
+-ecek_kadar		c := vp[vp=reason_conv,pos=converb]\*vp[pos=0] : \p.!since p; %-ecek kadar
+-ecek_kadar		c := vp[vp=reason_conv,pos=converb]\*vp[pos=1] : \p.!since p;
+-ecek_kadar		c := vp[vp=reason_conv,pos=converb]\*vp[pos=2] : \p.!since p;
+
+-meden			c := vp[vp=manner_conv,pos=converb]\*vp[pos=0] : \p.!without p; %-me -den (abl)
+-meden			c := vp[vp=manner_conv,pos=converb]\*vp[pos=1] : \p.!without p;
+-meden			c := vp[vp=manner_conv,pos=converb]\*vp[pos=2] : \p.!without p;
+
+-meden_önce		c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!before p; %-me -den (abl) önce
+-meden_önce		c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!before p;
+-meden_önce		c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!before p;
+
+-eli			c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!since p; %-me (neg) -eli
+-eli			c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!since p;
+-eli			c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!since p;
+
+-meyeli			c := vp[vp=time_conv,pos=converb]\*vp[pos=0] : \p\w0\t0.!since (!not p); %-me (neg) -eli
+-meyeli			c := vp[vp=time_conv,pos=converb]\*vp[pos=1] : \p\w0\t0.!since (!not p);
+-meyeli			c := vp[vp=time_conv,pos=converb]\*vp[pos=2] : \p\w0\t0.!since (!not p);
+
+-meksizin		c := vp[vp=manner_conv,pos=converb]\*vp[pos=0] : \p.!without p; %-mek -siz -in
+-meksizin		c := vp[vp=manner_conv,pos=converb]\*vp[pos=1] : \p.!without p;
+-meksizin		c := vp[vp=manner_conv,pos=converb]\*vp[pos=2] : \p.!without p;
+
+%%negation: non-finite negation
+-me		c := (np\*vp[pos=0])/*(np\*vp[pos=0]) 	: \n\p.n !not (p);
+-me		c := (np\*vp[pos=1])/*(np\*vp[pos=1]) 	: \n\p.n !not (p);
+-me		c := (np\*vp[pos=2])/*(np\*vp[pos=2]) 	: \n\p.n !not (p);
+
+-me		c := ((np/*np)\*vp[pos=0])/*((np/*np)\*vp[pos=0]) 	: \n\p.n !not (p);
+-me		c := ((np/*np)\*vp[pos=1])/*((np/*np)\*vp[pos=1]) 	: \n\p.n !not (p);
+-me		c := ((np/*np)\*vp[pos=2])/*((np/*np)\*vp[pos=2]) 	: \n\p.n !not (p);
+
+-me		c := (vp[vp=?x,pos=converb]\*vp[pos=0])/*(vp[vp=?x,pos=converb]\*vp[pos=0]) 	: \n\p.n !not (p);
+-me		c := (vp[vp=?x,pos=converb]\*vp[pos=1])/*(vp[vp=?x,pos=converb]\*vp[pos=1]) 	: \n\p.n !not (p);
+-me		c := (vp[vp=?x,pos=converb]\*vp[pos=2])/*(vp[vp=?x,pos=converb]\*vp[pos=2]) 	: \n\p.n !not (p);
+
+%%voices: causative, passive, reflexive, reciprocal
+-dir 	c := ((vp[vp=?x,pos=0,caus=true]\np)\np)\\(vp[vp=?x,pos=0,caus=false]\np) 			
+			: \p\a\x\w0\t0.!init (p a w0 t0) x w0 t0;
+-t 		c := (((vp[vp=?x,pos=0,caus=false]\np)\np)\np)\\((vp[vp=?x,pos=0,caus=true]\np)\np) 	
+			: \p\a\b\x\w0\t0.!init (p a b w0 t0) x w0 t0;
+-il 	c := vp[vp=?x,pos=1]\\(vp[vp=?x,pos=0]\np) 							: \p\w0\t0.p !anonymous w0 t0;
+-in 	c := (vp[vp=?x,pos=1]\np)\\(vp[vp=?x,pos=0]\np) 					: \p\x\w0\t0.p x x w0 t0;
+-iş 	c := ((vp[vp=?x,pos=1]\np)\np)\\(vp[vp=?x,pos=0]\np) 				: \p\x2\x1\w0\t0.!and (p x2 x1 w0 t0) (p x1 x2 w0 t0);
+
+-dir 	c := (((vp[vp=?x,pos=0,caus=true]\np)\np)\np)\\((vp[vp=?x,pos=0,caus=false]\np)\np) 			
+			: \p\b\a\x\w0\t0.!init (p b a w0 t0) x w0 t0;
+-t 		c := ((((vp[vp=?x,pos=0,caus=false]\np)\np)\np)\np)\\(((vp[vp=?x,pos=0,caus=true]\np)\np)\np) 	
+			: \p\c\b\a\x\w0\t0.!init (p c b a w0 t0) x w0 t0;
+-il 	c := (vp[vp=?x,pos=1]\np)\\((vp[vp=?x,pos=0]\np)\np) 					: \p\x\w0\t0.p x !anonymous w0 t0;
+-in 	c := ((vp[vp=?x,pos=1]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 				: \p\y\x\w0\t0.p y x x w0 t0;
+-iş 	c := (((vp[vp=?x,pos=1]\np)\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 			: \p\y\x2\x1\w0\t0.!and (p y x2 x1 w0 t0) (p y x1 x2 w0 t0);
+
+%%position 1
+-eme	c := vp[vp=?x,pos=2]\\vp[vp=?x,pos=0] : \p\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p w_pos t0)));
+-eme	c := vp[vp=?x,pos=2]\\vp[vp=?x,pos=1] : \p\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p w_pos t0)));
+
+-eme	c := (vp[vp=?x,pos=2]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p x w_pos t0)));
+-eme	c := (vp[vp=?x,pos=2]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p x w_pos t0)));
+
+-eme	c := ((vp[vp=?x,pos=2]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) :
+			 \p\y\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p y x w_pos t0)));
+-eme	c := ((vp[vp=?x,pos=2]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p y x w_pos t0)));
+
+-eme	c := (((vp[vp=?x,pos=2]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p z y x w_pos t0)));
+-eme	c := (((vp[vp=?x,pos=2]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!not (!exists w_pos (!and (!ability w0 w_pos) (p z y x w_pos t0)));
+
+%%negation
+%%falls between voice suffixes and tense/aspect/modality suffixes
+%%negation: passive intransitive pos=0
+-me		c := (vp[vp=?x,mod=true,neg=true,pos=3]\\vp[vp=?x,pos=0])/*(vp[vp=?x,mod=true,neg=false,pos=3]\\vp[vp=?x,pos=0]) 			: \n\p.n !not p;
+-me		c := (vp[vp=?x,mod=false,neg=true,pos=4]\\vp[vp=?x,pos=0])/*(vp[vp=?x,mod=false,neg=false,pos=4]\\vp[vp=?x,pos=0]) 		: \n\p.!not (n p);
+-me		c := (vp[vp=?x,mod=true,neg=true,pos=4]\\vp[vp=?x,pos=0])/*(vp[vp=?x,mod=true,neg=false,pos=4]\\vp[vp=?x,pos=0]) 			: \n\p.n !not p;
+-me		c := ((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=0])/*((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=0]) 	
+			: \n\p\s.n !not p s;
+
+%%negation: intransitive pos=0
+-me		c := ((vp[vp=?x,mod=true,neg=true,pos=3]\np)\\(vp[vp=?x,pos=0]\np))/*((vp[vp=?x,mod=true,neg=false,pos=3]\np)\\(vp[vp=?x,pos=0]\np)) 			
+			: \n\p\x.n !not (p x);
+-me		c := ((vp[vp=?x,mod=false,neg=true,pos=4]\np)\\(vp[vp=?x,pos=0]\np))/*((vp[vp=?x,mod=false,neg=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np)) 		
+			: \n\p\x\w0\t0.!not (n p x w0 t0);
+-me		c := ((vp[vp=?x,mod=true,neg=true,pos=4]\np)\\(vp[vp=?x,pos=0]\np))/*((vp[vp=?x,mod=true,neg=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np)) 			
+			: \n\p\x.n !not (p x);
+-me		c := (((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=0]\np))/*(((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=0]\np)) 	
+			: \n\p\x\s.n !not (p x) (s);
+
+%%negation: transitive pos=0
+-me		c := (((vp[vp=?x,mod=true,neg=true,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np))/*(((vp[vp=?x,mod=true,neg=false,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np)) 
+			: \n\p\y\x.n !not (p y x);
+-me		c := (((vp[vp=?x,mod=false,neg=true,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np))/*(((vp[vp=?x,mod=false,neg=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np)) 		
+			: \n\p\y\x\w0\t0.!not (n p y x w0 t0);
+-me		c := (((vp[vp=?x,mod=true,neg=true,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np))/*(((vp[vp=?x,mod=true,neg=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np)) 
+			: \n\p\y\x.n !not (p y x);
+-me		c := ((((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=0]\np)\np))/*((((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=0]\np)\np)) 	
+			: \n\p\y\x\s.n !not (p y x) (s);
+
+%%negation: causative transitive pos=0
+-me		c := ((((vp[vp=?x,mod=true,neg=true,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np))/*((((vp[vp=?x,mod=true,neg=false,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np)) 
+			: \n\p\z\y\x.n !not (p z y x);
+-me		c := ((((vp[vp=?x,mod=false,neg=true,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np))/*((((vp[vp=?x,mod=false,neg=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np)) 
+			: \n\p\z\y\x\w0\t0.!not (n p z y x w0 t0);
+-me		c := ((((vp[vp=?x,mod=true,neg=true,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np))/*((((vp[vp=?x,mod=true,neg=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np)) 	
+			: \n\p\z\y\x.n !not (p z y x);
+-me		c := (((((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np))/*(((((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np))
+			: \n\p\z\y\x\s.n !not (p z y x) (s);
+
+%%negation: passive intransitive pos=1
+-me		c := (vp[vp=?x,mod=true,neg=true,pos=3]\\vp[vp=?x,pos=1])/*(vp[vp=?x,mod=true,neg=false,pos=3]\\vp[vp=?x,pos=1]) 			: \n\p.n !not (p);
+-me		c := (vp[vp=?x,mod=false,neg=true,pos=4]\\vp[vp=?x,pos=1])/*(vp[vp=?x,mod=false,neg=false,pos=4]\\vp[vp=?x,pos=1]) 		: \n\p\w0\t0.!not (n p w0 t0);
+-me		c := (vp[vp=?x,mod=true,neg=true,pos=4]\\vp[vp=?x,pos=1])/*(vp[vp=?x,mod=true,neg=false,pos=4]\\vp[vp=?x,pos=1]) 			: \n\p.n !not (p);
+-me		c := ((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=1])/*((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=1]) 	
+			: \n\p\s.n !not (p) (s);
+
+%%negation: intransitive pos=1
+-me		c := ((vp[vp=?x,mod=true,neg=true,pos=3]\np)\\(vp[vp=?x,pos=1]\np))/*((vp[vp=?x,mod=true,neg=false,pos=3]\np)\\(vp[vp=?x,pos=1]\np)) 			
+			: \n\p\x.n !not (p x);
+-me		c := ((vp[vp=?x,mod=false,neg=true,pos=4]\np)\\(vp[vp=?x,pos=1]\np))/*((vp[vp=?x,mod=false,neg=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np)) 		
+			: \n\p\x\w0\t0.!not (n p x w0 t0);
+-me		c := ((vp[vp=?x,mod=true,neg=true,pos=4]\np)\\(vp[vp=?x,pos=1]\np))/*((vp[vp=?x,mod=true,neg=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np)) 			
+			: \n\p\x.n !not (p x);
+-me		c := (((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=1]\np))/*(((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=1]\np)) 	
+			: \n\p\x\s.n !not (p x) (s);
+
+%%negation: transitive pos=1
+-me		c := (((vp[vp=?x,mod=true,neg=true,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np))/*(((vp[vp=?x,mod=true,neg=false,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np)) 
+			: \n\p\y\x.n !not (p y x);
+-me		c := (((vp[vp=?x,mod=false,neg=true,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np))/*(((vp[vp=?x,mod=false,neg=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np)) 	
+			: \n\p\y\x\w0\t0.!not (n p y x w0 t0);
+-me		c := (((vp[vp=?x,mod=true,neg=true,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np))/*(((vp[vp=?x,mod=true,neg=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np)) 
+			: \n\p\y\x.n !not (p y x);
+-me		c := ((((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=1]\np)\np))/*((((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=1]\np)\np)) 	
+			: \n\p\y\x\s.n !not (p y x) (s);
+
+%%negation: causative transitive pos=1
+-me		c := ((((vp[vp=?x,mod=true,neg=true,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np))/*((((vp[vp=?x,mod=true,neg=false,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np)) 
+			: \n\p\z\y\x.n !not (p z y x);
+-me		c := ((((vp[vp=?x,mod=false,neg=true,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np))/*((((vp[vp=?x,mod=false,neg=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np)) 
+			: \n\p\z\y\x\w0\t0.!not (n p z y x w0 t0);
+-me		c := ((((vp[vp=?x,mod=true,neg=true,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np))/*((((vp[vp=?x,mod=true,neg=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np)) 	
+			: \n\p\z\y\x.n !not (p z y x);
+-me		c := (((((vp[vp=?x,mod=false,neg=true,pos=4]/s[mod=false,pos=7])\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np))/*(((((vp[vp=?x,mod=false,neg=false,pos=4]/s[mod=false,pos=7])\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np))
+			: \n\p\z\y\x\s.n !not (p z y x) (s);
+
+%%değil is incomplete
+değil	c := vp[vp=aux,mod=?x,pos=4]\*vp[mod=?x,pos=4] 
+			: \p\w0\t0.!not (p w0 t0);
+değil	c := (vp[vp=aux,mod=?x,pos=4]\np)\*(vp[mod=?x,pos=4]\np) 
+			: \p\x\w0\t0.!not (p x w0 t0);
+değil	c := ((vp[vp=aux,mod=?x,pos=4]\np)\np)\*((vp[mod=?x,pos=4]\np)\np) 
+			: \p\y\x\w0\t0.!not (p y x w0 t0);
+değil	c := (((vp[vp=aux,mod=?x,pos=4]\np)\np)\np)\*(((vp[mod=?x,pos=4]\np)\np)\np) 	
+			: \p\z\y\x\w0\t0.!not (p z y x w0 t0);
+
+%%position 2
+%%probability
+-ebil 	c := vp[vp=?x,mod=true,pos=3]\\vp[vp=?x,pos=0] : \p\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p w_pos t0));
+-ebil 	c := vp[vp=?x,mod=true,pos=3]\\vp[vp=?x,pos=1] : \p\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p w_pos t0));
+-ebil 	c := vp[vp=?x,mod=true,pos=3]\\vp[vp=?x,pos=2] : \p\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p w_pos t0));
+
+-ebil 	c := (vp[vp=?x,mod=true,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p x w_pos t0));
+-ebil 	c := (vp[vp=?x,mod=true,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p x w_pos t0));
+-ebil 	c := (vp[vp=?x,mod=true,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p x w_pos t0));
+
+-ebil 	c := ((vp[vp=?x,mod=true,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p y x w_pos t0));
+-ebil 	c := ((vp[vp=?x,mod=true,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p y x w_pos t0));
+-ebil 	c := ((vp[vp=?x,mod=true,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p y x w_pos t0));
+
+-ebil 	c := (((vp[vp=?x,mod=true,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p z y x w_pos t0));
+-ebil 	c := (((vp[vp=?x,mod=true,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p z y x w_pos t0));
+-ebil 	c := (((vp[vp=?x,mod=true,pos=3]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists w_pos (!and (!possibility w0 w_pos) (p z y x w_pos t0));
+%!ability,!probability,!phys_possibility,!deon_possibility,!epis_possibility
+
+%%complex verbs: non-premeditative, ...
+%%not thoroughly tested
+-iver 	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=0] : \p\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=0] : \p\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=0] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=0] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=0] : \p\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\x\y\t0.!and (p x y t0) (!easy (p x y t0));
+-eyaz	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\x\y\t0.!and (!not (p x y t0)) (!close (p x y t0));
+-egel	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-ekal	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-edur	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t3 t0) (p x y (t0 t3)));
+
+-iver 	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=1] : \p\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=1] : \p\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=1] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=1] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=1] : \p\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\x\y\t0.!and (p x y t0) (!easy (p x y t0));
+-eyaz	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\x\y\t0.!and (!not (p x y t0)) (!close (p x y t0));
+-egel	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-ekal	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-edur	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t3 t0) (p x y (t0 t3)));
+
+-iver 	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=2] : \p\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=2] : \p\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=2] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=2] : \p\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := vp[vp=?x,pos=3]\\vp[vp=?x,pos=2] : \p\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\t0.!and (p x t0) (!easy (p x t0));
+-eyaz	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\t0.!and (!not (p x t0)) (!close (p x t0));
+-egel	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-ekal	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\t0.!exists t3 (!and (!earlier t0 t3) (p x (t3 t0)));
+-edur	c := (vp[vp=?x,pos=3]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\t0.!exists t3 (!and (!earlier t3 t0) (p x (t0 t3)));
+
+-iver 	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\x\y\t0.!and (p x y t0) (!easy (p x y t0));
+-eyaz	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\x\y\t0.!and (!not (p x y t0)) (!close (p x y t0));
+-egel	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-ekal	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t0 t3) (p x y (t3 t0)));
+-edur	c := ((vp[vp=?x,pos=3]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\x\y\t0.!exists t3 (!and (!earlier t3 t0) (p x y (t0 t3)));
+
+%%position 3
+%%finite verbs obligatorily contain a suffix from position 3
+%%simple aspects: perfective, perfective-evidential, imperfective, aorist, future
+%%%simple aspects: passive intransitive pos=0 %aslında pos=0 gerek yok
+-di 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0]
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!know (p w0 t) !speaker w0 t));
+-miş 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] 
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!not (!know (p w0 t) !speaker w0 t)));
+-iyor 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-mekte 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-ir 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] : \p\w0\t0.!exists t (p w0 t);
+-z 		c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] : \p\w0\t0.!exists t (p w0 t);
+-ecek 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=0] : \p\w0\t0.!exists t (!and (!earlier t t0) (p w0 t));
+
+%%%simple aspects: intransitive pos=0
+-di 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np)
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!know (p x w0 t) !speaker w0 t));
+-miş 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!not (!know (p x w0 t) !speaker w0 t)));
+-iyor 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-mekte 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-ir 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-z 		c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-ecek 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=0]\np) : \p\x\w0\t0.!exists t (!and (!earlier t t0) (p x w0 t));
+
+%%%simple aspects: transitive pos=0
+-di 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!know (p y x w0 t) !speaker w0 t));
+-miş 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!not (!know (p y x w0 t) !speaker w0 t)));
+-iyor 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-mekte 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-ir 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-z 		c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-ecek 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) : \p\y\x\w0\t0.!exists t (!and (!earlier t t0) (p y x w0 t));
+
+%%%simple aspects: transitive causative pos=0
+-di 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!know (p z y x w0 t) !speaker w0 t));
+-miş 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!not (!know (p z y x w0 t) !speaker w0 t)));
+-iyor 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-mekte 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-ir 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-z 		c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-ecek 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=0]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t t0) (p z y x w0 t));
+
+%%%simple aspects: passive intransitive pos=1
+-di 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1]
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!know (p w0 t) !speaker w0 t));
+-miş 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] 
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!not (!know (p w0 t) !speaker w0 t)));
+-iyor 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-mekte 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-ir 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] : \p\w0\t0.!exists t (p w0 t);
+-z 		c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] : \p\w0\t0.!exists t (p w0 t);
+-ecek 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=1] : \p\w0\t0.!exists t (!and (!earlier t t0) (p w0 t));
+
+%%%simple aspects: intransitive pos=1
+-di 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!know (p x w0 t) !speaker w0 t));
+-miş 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!not (!know (p x w0 t) !speaker w0 t)));
+-iyor 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-mekte 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-ir 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-z 		c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-ecek 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=1]\np) : \p\x\w0\t0.!exists t (!and (!earlier t t0) (p x w0 t));
+
+%%%simple aspects: transitive pos=1
+-di 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!know (p y x w0 t) !speaker w0 t));
+-miş 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!not (!know (p y x w0 t) !speaker w0 t)));
+-iyor 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-mekte 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-ir 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-z 		c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-ecek 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) : \p\y\x\w0\t0.!exists t (!and (!earlier t t0) (p y x w0 t));
+
+%%%simple aspects: transitive causative pos=1
+-di 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!know (p z y x w0 t) !speaker w0 t));
+-miş 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!not (!know (p z y x w0 t) !speaker w0 t)));
+-iyor 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-mekte 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-ir 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-z 		c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-ecek 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=1]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t t0) (p z y x w0 t));
+
+%%%simple aspects: passive intransitive pos=2
+-di 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2]
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!know (p w0 t) !speaker w0 t));
+-miş 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] 
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!not (!know (p w0 t) !speaker w0 t)));
+-iyor 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-mekte 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-ir 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] : \p\w0\t0.!exists t (p w0 t);
+-z 		c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] : \p\w0\t0.!exists t (p w0 t);
+-ecek 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=2] : \p\w0\t0.!exists t (!and (!earlier t t0) (p w0 t));
+
+%%%simple aspects: intransitive pos=2
+-di 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!know (p x w0 t) !speaker w0 t));
+-miş 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!not (!know (p x w0 t) !speaker w0 t)));
+-iyor 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-mekte 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-ir 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-z 		c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-ecek 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=2]\np) : \p\x\w0\t0.!exists t (!and (!earlier t t0) (p x w0 t));
+
+%%%simple aspects: transitive pos=2
+-di 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!know (p y x w0 t) !speaker w0 t));
+-miş 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!not (!know (p y x w0 t) !speaker w0 t)));
+-iyor 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-mekte 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-ir 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-z 		c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-ecek 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) : \p\y\x\w0\t0.!exists t (!and (!earlier t t0) (p y x w0 t));
+
+%%%simple aspects: transitive causative pos=2
+-di 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!know (p z y x w0 t) !speaker w0 t));
+-miş 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!not (!know (p z y x w0 t) !speaker w0 t)));
+-iyor 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-mekte 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-ir 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-z 		c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-ecek 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=2]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t t0) (p z y x w0 t));
+
+%%%simple aspects: passive intransitive pos=3
+-di 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3]
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!know (p w0 t) !speaker w0 t));
+-miş 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] 
+			: \p\w0\t0.!exists t (!and (!earlier t0 t) (p w0 t) (!not (!know (p w0 t) !speaker w0 t)));
+-iyor 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-mekte 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] 
+			: \p\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p w0 (t1 t2)));
+-ir 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] : \p\w0\t0.!exists t (p w0 t);
+-z 		c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] : \p\w0\t0.!exists t (p w0 t);
+-ecek 	c := vp[vp=?x,mod=false,pos=4]\\vp[vp=?x,pos=3] : \p\w0\t0.!exists t (!and (!earlier t t0) (p w0 t));
+
+%%%simple aspects: intransitive pos=3
+-di 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!know (p x w0 t) !speaker w0 t));
+-miş 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!exists t (!and (!earlier t0 t) (p x w0 t) (!not (!know (p x w0 t) !speaker w0 t)));
+-iyor 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-mekte 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p x w0 (t1 t2)));
+-ir 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-z 		c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) : \p\x\w0\t0.!exists t (p x w0 t);
+-ecek 	c := (vp[vp=?x,mod=false,pos=4]\np)\\(vp[vp=?x,pos=3]\np) : \p\x\w0\t0.!exists t (!and (!earlier t t0) (p x w0 t));
+
+%%%simple aspects: transitive pos=3
+-di 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!know (p y x w0 t) !speaker w0 t));
+-miş 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p y x w0 t) (!not (!know (p y x w0 t) !speaker w0 t)));
+-iyor 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-mekte 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p y x w0 (t1 t2)));
+-ir 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-z 		c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) : \p\y\x\w0\t0.!exists t (p y x w0 t);
+-ecek 	c := ((vp[vp=?x,mod=false,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) : \p\y\x\w0\t0.!exists t (!and (!earlier t t0) (p y x w0 t));
+
+%%%simple aspects: transitive causative pos=3
+-di 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!know (p z y x w0 t) !speaker w0 t));
+-miş 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t0 t) (p z y x w0 t) (!not (!know (p z y x w0 t) !speaker w0 t)));
+-iyor 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-mekte 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t1 !exists t2 (!and (!earlier t0 t1) (!earlier t2 t0) (p z y x w0 (t1 t2)));
+-ir 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-z 		c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (p z y x w0 t);
+-ecek 	c := (((vp[vp=?x,mod=false,pos=4]\np)\np)\np)\\(((vp[vp=?x,pos=3]\np)\np)\np) 
+			: \p\z\y\x\w0\t0.!exists t (!and (!earlier t t0) (p z y x w0 t));
+
+%%modalities: conditional, optative, obligative
+%%%modalities: passive intransitive pos=0 %redundant
+-se 	c := (vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=0] 
+			: \p\s\w0\t0.!forall w_ref (!condition (p w_ref t0) (s w_ref t0)); 
+-e 		c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=0] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+-meli 	c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=0] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+
+%%%modalities: intransitive pos=0
+-se 	c := ((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\s\w0\t0.!forall w_ref (!condition (p x w_ref t0) (s w_ref t0)); 
+-e 		c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+-meli 	c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=0]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+
+%%%modalities: transitive pos=0
+-se 	c := (((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\x\y\s\w0\t0.!forall w_ref (!condition (p x y w_ref t0) (s w_ref t0)); 
+-e 		c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+-meli 	c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=0]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+
+%%%modalities: passive intransitive pos=1
+-se 	c := (vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=1] 
+			: \p\s\w0\t0.!forall w_ref (!condition (p w_ref t0) (s w_ref t0)); 
+-e 		c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=1] 
+			: \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+-meli 	c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=1] 
+			: \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+
+%%%modalities: intransitive pos=1
+-se 	c := ((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\s\w0\t0.!forall w_ref (!condition (p x w_ref t0) (s w_ref t0));  
+-e 		c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+-meli 	c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=1]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+
+%%%modalities: transitive pos=1
+-se 	c := (((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\x\y\s\w0\t0.!forall w_ref (!condition (p x y w_ref t0) (s w_ref t0)); 
+-e 		c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+-meli 	c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=1]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+
+%%%modalities: passive intransitive pos=2
+-se 	c := (vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=2] 
+			: \p\s\w0\t0.!forall w_ref (!condition (p w_ref t0) (s w_ref t0)); 
+-e 		c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=2] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+-meli 	c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=2] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+
+%%%modalities: intransitive pos=2
+-se 	c := ((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\s\w0\t0.!forall w_ref (!condition (p x w_ref t0) (s w_ref t0)); 
+-e 		c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+-meli 	c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=2]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+
+%%%modalities: transitive pos=2
+-se 	c := (((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\x\y\s\w0\t0.!forall w_ref (!condition (p x y w_ref t0) (s w_ref t0)); 
+-e 		c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+-meli 	c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=2]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+
+%%%modalities: passive intransitive pos=3
+-se 	c := (vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\\vp[vp=?x,pos=3] 
+			: \p\s\w0\t0.!forall w_ref (!condition (p w_ref t0) (s w_ref t0)); 
+-e 		c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=3] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+-meli 	c := vp[vp=?x,mod=true,pos=4]\\vp[vp=?x,pos=3] : \p\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p w_mod t0));
+
+%%%modalities: intransitive pos=3
+-se 	c := ((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\s\w0\t0.!forall w_ref (!condition (p x w_ref t0) (s w_ref t0)); 
+-e 		c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+-meli 	c := (vp[vp=?x,mod=true,pos=4]\np)\\(vp[vp=?x,pos=3]\np) 
+			: \p\x\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x w_mod t0));
+
+%%%modalities: transitive pos=3
+-se 	c := (((vp[vp=?x,mod=false,pos=4]/s[mod=false,pos=7])\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\x\y\s\w0\t0.!forall w_ref (!condition (p x y w_ref t0) (s w_ref t0)); 
+-e 		c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+-meli 	c := ((vp[vp=?x,mod=true,pos=4]\np)\np)\\((vp[vp=?x,pos=3]\np)\np) 
+			: \p\x\y\w0\t0.!forall w_mod (!condition (!congruent !speaker w0 w_mod) (p x y w_mod t0));
+
+%%position 4
+%%copular markers: past, evidential, conditional
+%%%copular: after aspect passive intransitive
+-di 	c := (vp[vp=?x,mod=?x,pos=5]\\vp[vp=time_conv])\\vp[vp=?x,mod=?x,pos=4] 
+			: \p\v\w0\t0.!and (p x w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!know (p w0 (v w0 t0)) !speaker w0 (v w0 t0));
+-miş 	c := (vp[vp=?x,mod=?x,pos=5]\\vp[vp=time_conv])\\vp[vp=?x,mod=?x,pos=4] 
+			: \p\v\w0\t0.!and (p x w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!not (!know (p w0 (v w0 t0)) !speaker w0 (v w0 t0)));
+
+%%%copular: after aspect intransitive
+-di 	c := ((vp[vp=?x,mod=?x,pos=5]\np)\\vp[vp=time_conv])\\(vp[vp=?x,mod=?x,pos=4]\np) 
+			: \p\v\x\w0\t0.!and (p x w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!know (p x w0 (v w0 t0)) !speaker w0 (v w0 t0));
+-miş 	c := ((vp[vp=?x,mod=?x,pos=5]\np)\\vp[vp=time_conv])\\(vp[vp=?x,mod=?x,pos=4]\np) 
+			: \p\v\x\w0\t0.!and (p x w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!not (!know (p x w0 (v w0 t0)) !speaker w0 (v w0 t0)));
+
+%%%copular: after aspect transitive
+-di 	c := (((vp[vp=?x,mod=?x,pos=5]\np)\np)\\vp[vp=time_conv])\\((vp[vp=?x,mod=?x,pos=4]\np)\np)
+			: \p\v\x\y\w0\t0.!and (p x y w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!know (p x y w0 (v w0 t0)) !speaker w0 (v w0 t0));
+-miş 	c := (((vp[vp=?x,mod=?x,pos=5]\np)\np)\\vp[vp=time_conv])\\((vp[vp=?x,mod=?x,pos=4]\np)\np) 
+			: \p\v\x\y\w0\t0.!and (p x y w0 (v w0 t0)) (!earlier t0 (v w0 t0)) (!not (!know (p x y w0 (v w0 t0)) !speaker w0 (v w0 t0)));
+
+%%%copular: after conditional passive intransitive
+-di 	c := (vp[vp=?x,mod=false,pos=5]/s[pos=7])\\(vp[vp=?x,pos=4,mod=false]/s[pos=7])
+			: \p\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p w0 t_ref (s w0 t0)));
+-miş 	c := (vp[vp=?x,mod=false,pos=5]/s[pos=7])\\(vp[vp=?x,pos=4,mod=false]/s[pos=7])
+			: \p\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p w0 t_ref (s w0 t0)));
+
+%%%copular: after conditional intransitive
+-di 	c := ((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\\((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np) 
+			: \p\x\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x w0 t_ref (s w0 t0)));
+-miş 	c := ((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\\((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np) 
+			: \p\x\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x w0 t_ref (s w0 t0)));
+
+%%%copular: after conditional transitive
+-di 	c := (((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\np)\\(((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np)\np) 
+			: \p\x\y\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x y w0 t_ref (s w0 t0)));
+-miş 	c := (((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\np)\\(((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np)\np) 
+			: \p\x\y\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x y w0 t_ref (s w0 t0)));
+
+%%%copular: after conditional transitive causative
+-di 	c := ((((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\np)\np)\\((((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np)\np)\np) 
+			: \p\x\y\z\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x y z w0 t_ref (s w0 t0)));
+-miş 	c := ((((vp[vp=?x,pos=5,mod=false]/s[pos=7])\np)\np)\np)\\((((vp[vp=?x,pos=4,mod=false]/s[pos=7])\np)\np)\np) 
+			: \p\x\y\z\s\w0\t0.!exists t_ref (!and (!earlier t0 t_ref) (p x y z w0 t_ref (s w0 t0)));
+
+%%%copular: whole sentence modal after no copula
+-se 	c := (vp[vp=?x,mod=?x,pos=5]/s[pos=7])\*vp[vp=?x,mod=?x,pos=4] : \s1\s2\w0\t0.!forall w_ref (!condition (s1 w_ref t0) (s2 w_ref t0)); 
+
+%%%super copular: whole sentence modal after aspect copula
+-se 	c := (vp[vp=?x,mod=?x,pos=7]/s[pos=7])\*vp[vp=?x,mod=?x,pos=5] : \s1\s2\w0\t0.!forall w_ref (!condition (s1 w_ref t0) (s2 w_ref t0)); 
+
+%%generic agreement
+%%agreement: vp=point
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\\vp[vp=point,mod=?x,pos=4] : \p.p;
+-agr	c := (s[mod=?x,pos=7,genmod=pos]\np)\\(vp[vp=point,mod=?x,pos=4]\np) : \p\x.p x;
+-agr	c := ((s[mod=?x,pos=7,genmod=pos]\np)\np)\\((vp[vp=point,mod=?x,pos=4]\np)\np) : \p\x\y.p x y;
+-agr	c := (((s[mod=?x,pos=7,genmod=pos]\np)\np)\np)\\(((vp[vp=point,mod=?x,pos=4]\np)\np)\np) : \p\x\y\z.p x y z;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=point,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=point,mod=?x,pos=4]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=point,mod=?x,pos=4]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=point,mod=?x,pos=4]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\\(vp[vp=point,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]\np)\vp[vp=time_conv])\\((vp[vp=point,mod=?x,pos=5]\np)\vp[vp=time_conv]) 
+			: \p\v\x.p v x;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]\np)\np)\vp[vp=time_conv])\\(((vp[vp=point,mod=?x,pos=5]\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y.p v x y;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]\np)\np)\np)\vp[vp=time_conv])\\((((vp[vp=point,mod=?x,pos=5]\np)\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y\z.p v x y z;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=point,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=point,mod=?x,pos=5]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=point,mod=?x,pos=5]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=point,mod=?x,pos=5]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: whole sentence conditional copular 
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((vp[vp=point,mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=point,mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%agreement: vp=process
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\\vp[vp=process,mod=?x,pos=4] : \p.p;
+-agr	c := (s[mod=?x,pos=7,genmod=pos]\np)\\(vp[vp=process,mod=?x,pos=4]\np) : \p\x.p x;
+-agr	c := ((s[mod=?x,pos=7,genmod=pos]\np)\np)\\((vp[vp=process,mod=?x,pos=4]\np)\np) : \p\x\y.p x y;
+-agr	c := (((s[mod=?x,pos=7,genmod=pos]\np)\np)\np)\\(((vp[vp=process,mod=?x,pos=4]\np)\np)\np) : \p\x\y\z.p x y z;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=process,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=process,mod=?x,pos=4]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=process,mod=?x,pos=4]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=process,mod=?x,pos=4]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\\(vp[vp=process,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]\np)\vp[vp=time_conv])\\((vp[vp=process,mod=?x,pos=5]\np)\vp[vp=time_conv]) 
+			: \p\v\x.p v x;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]\np)\np)\vp[vp=time_conv])\\(((vp[vp=process,mod=?x,pos=5]\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y.p v x y;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]\np)\np)\np)\vp[vp=time_conv])\\((((vp[vp=process,mod=?x,pos=5]\np)\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y\z.p v x y z;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=process,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=process,mod=?x,pos=5]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=process,mod=?x,pos=5]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=process,mod=?x,pos=5]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: whole sentence conditional copular 
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((vp[vp=process,mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=process,mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%agreement: vp=state
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\\vp[vp=state,mod=?x,pos=4] : \p.p;
+-agr	c := (s[mod=?x,pos=7,genmod=pos]\np)\\(vp[vp=state,mod=?x,pos=4]\np) : \p\x.p x;
+-agr	c := ((s[mod=?x,pos=7,genmod=pos]\np)\np)\\((vp[vp=state,mod=?x,pos=4]\np)\np) : \p\x\y.p x y;
+-agr	c := (((s[mod=?x,pos=7,genmod=pos]\np)\np)\np)\\(((vp[vp=state,mod=?x,pos=4]\np)\np)\np) : \p\x\y\z.p x y z;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=state,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=state,mod=?x,pos=4]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=state,mod=?x,pos=4]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=state,mod=?x,pos=4]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\\(vp[vp=state,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]\np)\vp[vp=time_conv])\\((vp[vp=state,mod=?x,pos=5]\np)\vp[vp=time_conv]) 
+			: \p\v\x.p v x;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]\np)\np)\vp[vp=time_conv])\\(((vp[vp=state,mod=?x,pos=5]\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y.p v x y;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]\np)\np)\np)\vp[vp=time_conv])\\((((vp[vp=state,mod=?x,pos=5]\np)\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y\z.p v x y z;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=state,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=state,mod=?x,pos=5]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=state,mod=?x,pos=5]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=state,mod=?x,pos=5]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: whole sentence conditional copular 
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((vp[vp=state,mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=state,mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%agreement: vp=culmination
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\\vp[vp=culmination,mod=?x,pos=4] : \p.p;
+-agr	c := (s[mod=?x,pos=7,genmod=pos]\np)\\(vp[vp=culmination,mod=?x,pos=4]\np) : \p\x.p x;
+-agr	c := ((s[mod=?x,pos=7,genmod=pos]\np)\np)\\((vp[vp=culmination,mod=?x,pos=4]\np)\np) : \p\x\y.p x y;
+-agr	c := (((s[mod=?x,pos=7,genmod=pos]\np)\np)\np)\\(((vp[vp=culmination,mod=?x,pos=4]\np)\np)\np) : \p\x\y\z.p x y z;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culmination,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=culmination,mod=?x,pos=4]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=culmination,mod=?x,pos=4]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=culmination,mod=?x,pos=4]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\\(vp[vp=culmination,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]\np)\vp[vp=time_conv])\\((vp[vp=culmination,mod=?x,pos=5]\np)\vp[vp=time_conv]) 
+			: \p\v\x.p v x;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]\np)\np)\vp[vp=time_conv])\\(((vp[vp=culmination,mod=?x,pos=5]\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y.p v x y;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]\np)\np)\np)\vp[vp=time_conv])\\((((vp[vp=culmination,mod=?x,pos=5]\np)\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y\z.p v x y z;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culmination,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=culmination,mod=?x,pos=5]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=culmination,mod=?x,pos=5]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=culmination,mod=?x,pos=5]/s[pos=7])\np)\np)\np) : \p\x\y\z\s.p x y z s;
+
+%%%agreement: whole sentence conditional copular 
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((vp[vp=culmination,mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culmination,mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%agreement: vp=culm_proc
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\\vp[vp=culm_proc,mod=?x,pos=4] : \p.p;
+-agr	c := (s[mod=?x,pos=7,genmod=pos]\np)\\(vp[vp=culm_proc,mod=?x,pos=4]\np) : \p\x.p x;
+-agr	c := ((s[mod=?x,pos=7,genmod=pos]\np)\np)\\((vp[vp=culm_proc,mod=?x,pos=4]\np)\np) : \p\x\y.p x y;
+-agr	c := (((s[mod=?x,pos=7,genmod=pos]\np)\np)\np)\\(((vp[vp=culm_proc,mod=?x,pos=4]\np)\np)\np) : \p\x\y\z.p x y z;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culm_proc,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=culm_proc,mod=?x,pos=4]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=culm_proc,mod=?x,pos=4]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=culm_proc,mod=?x,pos=4]/s[pos=7])\np)\np)\np) 
+			: \p\x\y\z\s.p x y z s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\\(vp[vp=culm_proc,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]\np)\vp[vp=time_conv])\\((vp[vp=culm_proc,mod=?x,pos=5]\np)\vp[vp=time_conv]) 
+			: \p\v\x.p v x;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]\np)\np)\vp[vp=time_conv])\\(((vp[vp=culm_proc,mod=?x,pos=5]\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y.p v x y;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]\np)\np)\np)\vp[vp=time_conv])\\((((vp[vp=culm_proc,mod=?x,pos=5]\np)\np)\np)\vp[vp=time_conv]) 
+			: \p\v\x\y\z.p v x y z;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culm_proc,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\*((vp[vp=culm_proc,mod=?x,pos=5]/s[pos=7])\np) : \p\x\s.p x s;
+-agr	c := (((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\*(((vp[vp=culm_proc,mod=?x,pos=5]/s[pos=7])\np)\np) : \p\x\y\s.p x y s;
+-agr	c := ((((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\np)\np)\np)\*((((vp[vp=culm_proc,mod=?x,pos=5]/s[pos=7])\np)\np)\np) 
+			: \p\x\y\z\s.p x y z s;
+
+%%%agreement: whole sentence conditional copular 
+-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((vp[vp=culm_proc,mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=culm_proc,mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%agreement: vp=aux
+%%%agreement: aspect pos=4
+-agr	c := s[mod=?x,pos=7,genmod=pos]\*vp[vp=aux,mod=?x,pos=4] : \p.p;
+
+%%%agreement: conditional pos=4
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=aux,mod=?x,pos=4]/s[pos=7]) : \p\s.p s;
+
+%%%agreement: aspect pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]\vp[vp=time_conv])\*(vp[vp=aux,mod=?x,pos=5]\vp[vp=time_conv]) 
+			: \p\v.p v;
+
+%%%agreement: conditional pos=5
+-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[vp=aux,mod=?x,pos=5]/s[pos=7]) : \p\s.p s;
+
+%%%agreement: whole sentence conditional copular not possible for AUX
+%%%-agr	c := ((s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*s[pos=4])\*((s[mod=?x,pos=5]/s[pos=7])\*s[pos=4]) : \p\s\x.p s x;
+
+%%%agreement: whole sentence super copular not possible for AUX
+%%%-agr	c := (s[mod=?x,pos=7,genmod=impos]/s[pos=7])\*(vp[mod=?x,pos=7]/s[pos=7]) : \p\s.p s;
+
+%%position 5
+%%generalized modality only comes after agreements, not following conditionals or any copular markers or known past
+%%need a feature to restrict generalized modality to following the remaining suffixes 
+%%%generalized modality: passive intransitive
+-dir	c := s[pos=7,genmod=impos]\*s[pos=7,genmod=pos] 
+			: \p\w0\t0.!exists w_gmod (!and (!probability w0 w_gmod) (p w_gmod t0));
+
+%%%generalized modality: intransitive
+-dir	c := (s[pos=7,genmod=impos]\np)\*(s[pos=7,genmod=pos]\np) 
+			: \p\x\w0\t0.!exists w_gmod (!and (!probability w0 w_gmod) (p x w_gmod t0));
+
+%%%generalized modality: transitive
+-dir	c := ((s[pos=7,genmod=impos]\np)\np)\*((s[pos=7,genmod=pos]\np)\np) 
+			: \p\x\y\w0\t0.!exists w_gmod (!and (!probability w0 w_gmod) (p x y w_gmod t0));
+
+%%%generalized modality: transitive causative
+-dir	c := (((s[pos=7,genmod=impos]\np)\np)\np)\*(((s[pos=7,genmod=pos]\np)\np)\np) 
+			: \p\x\y\w0\t0.!exists w_gmod (!and (!probability w0 w_gmod) (p x y w_gmod t0));
+

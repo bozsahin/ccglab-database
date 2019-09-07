@@ -1,0 +1,100 @@
+(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Can 4  |:=|  s |/|  |(| s |\\| np |[| case |=| nom |]|  |)|   |:|   |\\| p |.| p !can |;| 
+kediyi 4  |:=|   |(| s |\\| np |[| case |=| nom |]|  |)|  |/|  |(| s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| acc |]|  |)|  |:|   |\\| p |.| p !cat |;| 
+Ayşe 4  |:=|  s |/|  |(| s |\\| np |[| case |=| nom |]|  |)|   |:|   |\\| p |.| p !ayse |;| 
+köpeğe 4  |:=|   |(| s |\\| np |[| case |=| nom |]|  |)|  |/|  |(| s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| dat |]|  |)|  |:|   |\\| p |.| p !dog |;| 
+köpeği 4  |:=|   |(| s |\\| np |[| case |=| nom |]|  |)|  |/|  |(| s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| acc |]|  |)|  |:|   |\\| p |.| p !dog |;| 
+okşadı 4  |:=|  s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| acc |]|   |:|   |\\| x |\\| y |.| !pet x y |;| 
+Mary 7  |:=|  np  |:|  !m |;| 
+hits 7  |:=|   |(| s |\\|  |^| np |)|  |/|  |^| np  |:|   |\\| x |\\| y |.| !hit x y |;| 
+the 7  |:=|  np |/|  |*| n  |:|   |\\| x |.| !def x |;| 
+target 7  |:=|  n  |:|  !target |;| 
+persuades fig1  |:=|   |(| s |\\|  |^| np |[| agr |=| 3s |]|  |)|  |/|  |^| vp |/|  |^| np |:|   |\\| x |\\| p |\\| y |.| !persuade  |(| p x |)|  x y |;| 
+promises fig1  |:=|   |(| s |\\|  |^| np |[| agr |=| 3s |]|  |)|  |/|  |^| vp |/|  |^| np |:|   |\\| x |\\| p |\\| y |.| !promise  |(| p y |)|  x y |;| 
+expects fig1  |:=|   |(| s |\\|  |^| np |[| agr |=| 3s |]|  |)|  |/|  |^| vp |/|  |^| np |:|   |\\| x |\\| p |\\| y |.| !expect  |(| p x |)|  y |;| 
+John fig1  |:=|  np  |:|  !j |;| 
+to fig1  |:=|  vp |/| v  |:|   |\\| p |.| p |;| 
+hit fig1  |:=|  v |/|  |^| np  |:|   |\\| x |\\| y |.| !hit x y |;| 
+give 21a    |:=|   |(|  |(| s |\\|  |^| np |)|  |/|  |^| np |)|  |/|  |^| np |:|   |\\| x |\\| y |\\| z |.|  !give y x z |;|  
+Mary 21a    |:=|   |(|  |(| s |\\| np |)|  |/| np |)|  |\\|  |(|  |(|  |(| s |\\| np |)|  |/| np |)|  |/| np |)|  |:|   |\\| p |.| p !m |;| 
+books 21a   |:=|   |(| s |\\| np |)|  |\\|  |(|  |(| s |\\| np |)|  |/| np |)|  |:|   |\\| p |.| p !books |;| 
+books 21a   |:=|  n |[| num |=| plu |]|  |:|   |\\| x |.| !books x |;| 
+sales 16   |:=|  n |[| num |=| plu |]|  |:|   |\\| x |.| !sales x |;| 
+Klaus 21a   |:=|   |(|  |(| s |\\| np |)|  |/| np |)|  |\\|  |(|  |(|  |(| s |\\| np |)|  |/| np |)|  |/| np |)|  |:|   |\\| p |.| p !klaus |;| 
+cds 21a     |:=|   |(| s |\\| np |)|  |\\|  |(|  |(| s |\\| np |)|  |/| np |)|  |:|   |\\| p |.| p !cds |;| 
+and 21a     |:=|   |(| @X |\\|  |*| @X |)|  |/|  |*| @X  |:|   |\\| p |\\| q |\\| x |.|  !and  |(| p x |)|   |(| q x |)|   |;|   
+ve 7        |:=|   |(| @X |\\|  |*| @X |)|  |/|  |*| @X  |:|   |\\| p |\\| q |\\| x |.|  !and  |(| p x |)|   |(| q x |)|   |;|   
+Mary 21b    |:=|  s |/|  |(| s |\\| np |[| agr |=| 3s |]|  |)|  |:|   |\\| p |.| p !m |;| 
+Harry 21b    |:=|  s |/|  |(| s |\\| np |[| agr |=| 3s |]|  |)|  |:|   |\\| p |.| p !h |;| 
+John 21b    |:=|  s |/|  |(| s |\\| np |[| agr |=| 3s |]|  |)|  |:|   |\\| p |.| p !j |;| 
+likes 21b   |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !like x y |;| 
+hates 21b   |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !hate x y |;| 
+knows 16    |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/|  |^| sp |:|   |\\| s |\\| x |.| !know s x |;| 
+believes 16    |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/|  |^| sp |:|   |\\| s |\\| x |.| !believe s x |;| 
+have 16  |:=|   |(| s |\\| np |)|  |/| v |:|   |\\| p |\\| x |.| !asp p x |;| 
+might 16  |:=|   |(| s |\\| np |)|  |/| v |:|   |\\| p |\\| x |.| !asp p x |;| 
+skyrocket 16  |:=|  v |/| np |:|   |\\| x |\\| y |.| !increase x y |;| 
+spotted 16  |:=|   |(| s |\\| np |)|  |/| np |:|  |\\| x |\\| y |.| !spot x y |;| 
+read 16  |:=|  v |/| np |:|   |\\| x |\\| y |.| !read x y |;| 
+that  16    |:=|   |(| n |\\| n |)|  |/|  |^|  |(| s |/| np |)|   |:|   |\\| p |\\| q |\\| x |.| !and  |(| p x |)|   |(| q x |)|  |;| 
+that  16    |:=|  sp |/|  |^| s  |:|   |\\| p |.| p |;| 
+which  16    |:=|   |(| n |\\| n |)|  |/|  |^|  |(| s |/| np |)|   |:|   |\\| p |\\| q |\\| x |.| !and  |(| p x |)|   |(| q x |)|  |;| 
+cats 21b    |:=|  s |\\|  |(| s |/| np |)|   |:|   |\\| p |.| p !cats |;| 
+John 22     |:=|   |(| s |\\| np |[| agr |=| a? |]|  |/| vp |)|  |\\|  |(|  |(| s |\\| np |[| agr |=| ?a |]|  |/| vp |/| np |)|  |)|   |:|   |\\| p |.| p !j |;| 
+the 22  |:=|   |(| v |\\|  |(| v |/| np |)|  |)|  |/|  |*| n |:|   |\\| x |\\| p |.| p x |;| 
+ |(| vp-inf-raise |)|  v  |:|  lf  |-->|  vp |\\|  |(| vp |/| v |)|   |:|   |\\| lf |\\| p |.| p lf |;| 
+dynes     31a     |:=|  n |[| agr |=| 3fs |]|   |:|  !woman |;|                                  
+ddynes     31a    |:=|  n |[| agr |=| 3fs |]|   |:|  !woman |;|                                  
+welodd     31a    |:=|   |(| n |[| agr |=| ?a |]|  |\\| n |[| agr |=| ?a |]|  |)|  |/| np  |:|   |\\| x |\\| q |\\| y |.|  !and  |(| !saw x y |)|  |(| q y |)|  |;| 
+welodd     31a    |:=|   |(| n |[| agr |=| ?a |]|  |\\| n |[| agr |=| ?a |]|  |)|  |/| np  |:|   |\\| y |\\| q |\\| x |.|  !and  |(| !saw x y |)|  |(| q x |)|  |;| 
+gath      31a     |:=|   |(| n |[| agr |=| ?x |]|  |\\| n |[| agr |=| ?x |]|  |)|  |\\|  |(|  |(| n |[| agr |=| ?x |]|  |\\| n |[| agr |=| ?x |]|  |)|  |/| NP |)| 
+                     |:|   |\\| p |.| p !cat |;| 
+cath      31b     |:=|   |(| n |[| agr |=| ?x |]|  |\\| n |[| agr |=| ?x |]|  |)|  |\\|  |(|  |(| n |[| agr |=| ?x |]|  |\\| n |[| agr |=| ?x |]|  |)|  |/| NP |)| 
+                     |:|   |\\| p |.| p !cat |;| 
+arı fig2a  |:=|  v |/|  |(| v |\\| np |[| case |=| acc |]|  |)|   |:|  |\\| p |.| p !bee |;| 
+sok fig2a  |:=|  v |\\| np |[| case |=| acc |]|   |:|   |\\| x |\\| y |.| !sting x y |;| 
+-an fig2a  |:=|   |(| np |/| np |)|  |\\| v  |:|   |\\| p |\\| q |\\| z |.| !and  |(| p z |)|  |(| q z |)|  |;| 
+kız fig2a  |:=|  np |:|  !girl |;| 
+"arı sok" fig2b  |:=|  v  |:|  |\\| x |.| !cause  |(| !init  |(| !stung x |)|  |)|  !bee |;| 
+kızı fig3  |:=|  s |[| is |=| ip |]|  |/|  |(| s |[| is |=| ip |]|  |\\| np |[| case |=| acc |,| is |=| ip |]|  |)|   |:|   |\\| p |.| p  |(| !top !girl |)|  |;| 
+her fig3  |:=|   |(| s |[| is |=| ip |]|  |/|  |(| s |[| is |=| ip |]|  |\\| np |[| case |=| nom |,| is |=| ip |]|  |)|  |)|  |/| np
+                 |:|   |\\| w |\\| q |.|  |(| !forall xx |)|  |(| !imp  |(| w xx |)|  |(| q xx |)|  |)|  |;| 
+arı fig3  |:=|  np  |:|  !bee |;| 
+soktu fig3  |:=|   |(| s |[| t |=| past |]|  |\\| np |[| case |=| nom |]|  |)|  |\\| np |[| case |=| acc |]|  |:|   |\\| x |\\| y |.| !sting x y |;| 
+arı 37a  |:=|  s |[| is |=| b |]|  |\\|  |(| s |[| is |=| b |]|  |\\| np |[| case |=| nom |,| is |=| b |]|  |)|   |:|   |\\| p |.| p  |(| !back !bee |)|  |;| 
+kızı 37a  |:=|  s |[| is |=| b |]|  |\\|  |(| s |[| is |=| b |]|  |\\| np |[| case |=| acc |,| is |=| b |]|  |)|   |:|   |\\| p |.| p  |(| !back !girl |)|  |;| 
+kızı 37b  |:=|   |(| s |[| is |=| b |]|  |\\| np |[| case |=| nom |,| is |=| b |]|  |)|  |\\|  |(|  |(| s |[| is |=| b |]|  |\\| np |[| case |=| nom |,| is |=| b |]|  |\\| np |[| case |=| acc |,| is |=| b |]|  |)|  |)|   |:|   |\\| p |.| p  |(| !back !girl |)|  |;| 
+bütün fig4  |:=|   |(| s |[| is |=| b |]|  |/|  |(| s |[| is |=| b |]|  |\\| np |[| case |=| nom |,| is |=| b |]|  |)|  |)|  |/| np
+                 |:|   |\\| w |\\| q |.| !rheme  |(| !forall xx |)|  |(| !imp  |(| w xx |)|  |(| q xx |)|  |)|  |;| 
+arılar fig4  |:=|  np  |:|  !bees |;| 
+"os carros" 44a  |:=|   |(| s |[| fop |=| ?f |]|  |\\| np |[| agr |=| ?a |]|  |)|  |\\|  |(|  |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/| np |[| c |=| plu |]|  |)|   |:|  |\\| p |.| p  |(| !plu !car |)|  |;| 
+se 44b  |:=|   |(| s |[| fop |=| pl |]|  |\\| np |[| agr |=| 3 |]|  |)|  |/|  |(|  |(| s |\\| np |[| agr |=| 3 |]|  |)|  |/| np |[| agr |=| 3 |,| typ |=| self |]|  |)|   |:|  |\\| p |\\| x |.| p  |(| !self x |)| x |;| 
+os 44c  |:=|   |(| s |[| fop |=| pl |]|  |\\| np |[| agr |=| ?a |]|  |)|  |/|  |(|  |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/| np |[| typ |=| pro |]|  |)|  
+			  |:|  |\\| p |\\| x |.| !and |(| p !them x |)|  |(| !noteq x !them |)|  |;| 
+não 45  |:=|   |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/|  |(| s |[| fop |=| pl |]|  |\\| np |[| agr |=| ?a |]|  |)|   |:|   |\\| p |\\| x |.| !not  |(| p x |)|  |;| 
+"O Paulo" fig5a  |:=|  s |[| fop |=| min |]|  |/|  |(| s |[| fop |=| min |]|  |\\| np |[| agr |=| 3s |]|  |)|   |:|   |\\| p |.| p !paul |;| 
+Eu fig5c  |:=|  s |[| fop |=| min |]|  |/|  |(| s |[| fop |=| min |]|  |\\| np |[| agr |=| 1s |]|  |)|   |:|   |\\| p |.| p !i |;| 
+viu fig5a  |:=|   |(| s |[| t |=| past |]|  |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !saw x y |;| 
+viram fig5b  |:=|   |(| s |[| t |=| past |]|  |\\| np |[| agr |=| 3p |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !saw x y |;| 
+vi fig5c  |:=|   |(| s |[| t |=| past |]|  |\\| np |[| agr |=| 1s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !saw x y |;| 
+todos fig5b  |:=|  s |[| fop |=| pl |]|  |/|  |(| s |[| fop |=| pl |]|  |\\| np |[| agr |=| 3p |]|  |)|  |:|  |\\| p |.| p !everybody |;| 
+se 46a  |:=|   |(| s |[| fop |=| min |]|  |\\| np |[| agr |=| 3 |]|  |)|  |\\|  |\\|  |(|  |(| s |\\| np |[| agr |=| 3 |]|  |)|  |/| np |[| agr |=| 3 |,| typ |=| self |]|  |)|   |:|  |\\| p |\\| x |.| p  |(| !self x |)| x |;| 
+os 46b  |:=|   |(| s |[| fop |=| min |]|  |\\| np |[| agr |=| ?a |]|  |)|  |\\|  |\\|  |(|  |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/| np |[| typ |=| plu |]|  |)|  
+			  |:|  |\\| p |\\| x |.| !and |(| p !them x |)|  |(| !noteq x !them |)|  |;| 
+"A sopa" 47  |:=|  s |[| is |=| top |]|  |/|  |(| s |/| np |)|  |:|  |\\| p |.| p  |(| !top !soup |)|  |;| 
+comeu 47  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !eat x y |;| )

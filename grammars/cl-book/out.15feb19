@@ -1,0 +1,2391 @@
+
+> (lg "cl-book")
+
+======================= l o a d i n g =======================================
+; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/cl-book/cl-book.ded"
+
+Project [cl-book] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : cl-book.ccg $
+    Its token form   : cl-book.lisptokens $
+  Deduction grammar  : cl-book.ded $ (derived from cl-book.lisptokens)
+  Induction grammar  : cl-book.ind #
+  Supervision source : cl-book.sup ^
+  Model-specific code: cl-book.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from cl-book.ded
+  *LEX-RULES-TABLE*  : set from cl-book.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (load "cl-book.testsuite.lisp")
+
+T
+> (test-ders)
+
+To see rule switches, do (switches)
+  To beam or not to beam    : NIL
+  Normal Form (NF) parse    : T
+  Out of vocabulary flag    : NIL
+ *PRINT-READABLY*           : NIL
+ *PRINT-PRETTY*             : T
+  Currently loaded grammar  : cl-book.ded
+ *CCG-GRAMMAR*              : 37 items
+ *LEX-RULES-TABLE*          : 4 items
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+
+"CCGlab, version 5.2"
+=======
+OTEST
+========
+
+
+Derivation 1
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+>D    (WHAT)(YOU) := S/((S\NP)/NP)
+        : (LAM H ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X)))))
+>     (AND)(WHAT YOU) := (S/((S\NP)/NP))\*(S/((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+<     (WHAT YOU CAN)(AND WHAT YOU) := S/((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+               (H X))))))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>B    (NOT)(DO) := (S\NP)/^NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+>B    (SHOULD)(NOT DO) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X (SHALL (P X))))
+            ((LAM X
+              ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+             X)))
+>     (WHAT YOU CAN AND WHAT YOU)(SHOULD NOT DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                (H X))))))
+           (LAM X
+            ((LAM P (LAM X (SHALL (P X))))
+             ((LAM X
+               ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+              X))))
+>     (KNOW)(WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S\NP
+        : ((LAM P (LAM X ((KNOW P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X))))))
+            (LAM X
+             ((LAM P (LAM X (SHALL (P X))))
+              ((LAM X
+                ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+               X)))))
+>     (I)(KNOW WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM H
+                ((LAM P (LAM X (WHAT (P X))))
+                 (LAM X ((LAM P (P YOU)) (H X))))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X))))
+                (LAM X
+                 ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                  (H X))))))
+             (LAM X
+              ((LAM P (LAM X (SHALL (P X))))
+               ((LAM X
+                 ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+                X))))))
+
+Final LF, normal-order evaluated: 
+
+    ((KNOW
+      ((AND (LAM G738 (WHAT (SHALL (NOT ((DO G738) YOU))))))
+       (LAM G743 (WHAT (CAN (SHALL (NOT ((DO G743) YOU))))))))
+     I) =
+    (KNOW
+     (AND (\ G748 . WHAT (SHALL (NOT (DO G748 YOU))))
+      (\ G753 . WHAT (CAN (SHALL (NOT (DO G753 YOU))))))
+     I)
+
+Derivation 2
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+>B    (YOU)(SHOULD) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+>D    (WHAT)(YOU SHOULD) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+              (H X)))))
+>     (AND)(WHAT YOU SHOULD) := (S/^((S\NP)/NP))\*(S/^((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+               (H X))))))
+<     (WHAT YOU CAN)(AND WHAT YOU SHOULD) := S/^((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                (H X))))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+               (H X))))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>B    (NOT)(DO) := (S\NP)/^NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+>     (WHAT YOU CAN AND WHAT YOU SHOULD)(NOT DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                 (H X))))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                (H X))))))
+           (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X))))
+>     (KNOW)(WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S\NP
+        : ((LAM P (LAM X ((KNOW P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X))))
+                (LAM X
+                 ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                  (H X))))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X))))))
+            (LAM X
+             ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))))
+>     (I)(KNOW WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM H
+                ((LAM P (LAM X (WHAT (P X))))
+                 (LAM X
+                  ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                   (H X))))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X))))
+                (LAM X
+                 ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                  (H X))))))
+             (LAM X
+              ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X))))))
+
+Final LF, normal-order evaluated: 
+
+    ((KNOW
+      ((AND (LAM G758 (WHAT (SHALL (NOT ((DO G758) YOU))))))
+       (LAM G763 (WHAT (CAN (NOT ((DO G763) YOU)))))))
+     I) =
+    (KNOW
+     (AND (\ G768 . WHAT (SHALL (NOT (DO G768 YOU))))
+      (\ G773 . WHAT (CAN (NOT (DO G773 YOU)))))
+     I)
+
+Derivation 3
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+>B    (SHOULD)(NOT) := (S\NP)/(S\NP)
+        : (LAM X
+           ((LAM P (LAM X (SHALL (P X)))) ((LAM P (LAM X (NOT (P X)))) X)))
+>B    (YOU)(SHOULD NOT) := S/(S\NP)
+        : (LAM X
+           ((LAM P (P YOU))
+            ((LAM X
+              ((LAM P (LAM X (SHALL (P X)))) ((LAM P (LAM X (NOT (P X)))) X)))
+             X)))
+>D    (WHAT)(YOU SHOULD NOT) := S/((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X
+               ((LAM P (P YOU))
+                ((LAM X
+                  ((LAM P (LAM X (SHALL (P X))))
+                   ((LAM P (LAM X (NOT (P X)))) X)))
+                 X)))
+              (H X)))))
+>     (AND)(WHAT YOU SHOULD NOT) := (S/((S\NP)/NP))\*(S/((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X
+                ((LAM P (P YOU))
+                 ((LAM X
+                   ((LAM P (LAM X (SHALL (P X))))
+                    ((LAM P (LAM X (NOT (P X)))) X)))
+                  X)))
+               (H X))))))
+<     (WHAT YOU CAN)(AND WHAT YOU SHOULD NOT) := S/((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X
+                 ((LAM P (P YOU))
+                  ((LAM X
+                    ((LAM P (LAM X (SHALL (P X))))
+                     ((LAM P (LAM X (NOT (P X)))) X)))
+                   X)))
+                (H X))))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+               (H X))))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>     (WHAT YOU CAN AND WHAT YOU SHOULD NOT)(DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X
+                  ((LAM P (P YOU))
+                   ((LAM X
+                     ((LAM P (LAM X (SHALL (P X))))
+                      ((LAM P (LAM X (NOT (P X)))) X)))
+                    X)))
+                 (H X))))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                (H X))))))
+           (LAM X (LAM Y ((DO X) Y))))
+>     (KNOW)(WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S\NP
+        : ((LAM P (LAM X ((KNOW P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X))))
+                (LAM X
+                 ((LAM X
+                   ((LAM P (P YOU))
+                    ((LAM X
+                      ((LAM P (LAM X (SHALL (P X))))
+                       ((LAM P (LAM X (NOT (P X)))) X)))
+                     X)))
+                  (H X))))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X))))))
+            (LAM X (LAM Y ((DO X) Y)))))
+>     (I)(KNOW WHAT YOU CAN AND WHAT YOU SHOULD NOT DO) := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM H
+                ((LAM P (LAM X (WHAT (P X))))
+                 (LAM X
+                  ((LAM X
+                    ((LAM P (P YOU))
+                     ((LAM X
+                       ((LAM P (LAM X (SHALL (P X))))
+                        ((LAM P (LAM X (NOT (P X)))) X)))
+                      X)))
+                   (H X))))))
+              (LAM H
+               ((LAM P (LAM X (WHAT (P X))))
+                (LAM X
+                 ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                  (H X))))))
+             (LAM X (LAM Y ((DO X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    ((KNOW
+      ((AND (LAM G778 (WHAT (SHALL (NOT ((DO G778) YOU))))))
+       (LAM G783 (WHAT (CAN ((DO G783) YOU))))))
+     I) =
+    (KNOW
+     (AND (\ G788 . WHAT (SHALL (NOT (DO G788 YOU))))
+      (\ G793 . WHAT (CAN (DO G793 YOU))))
+     I)
+
+Derivation 4
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+>B    (KNOW)(WHAT YOU CAN) := (S\NP)/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X)))))
+             X)))
+>B    (I)(KNOW WHAT YOU CAN) := S/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              ((LAM P (LAM X ((KNOW P) X)))
+               ((LAM H
+                 ((LAM P (LAM X (WHAT (P X))))
+                  (LAM X
+                   ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                    (H X)))))
+                X)))
+             X)))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+>D    (WHAT)(YOU) := S/((S\NP)/NP)
+        : (LAM H ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X)))))
+>     (AND)(WHAT YOU) := (S/((S\NP)/NP))\*(S/((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+<     (I KNOW WHAT YOU CAN)(AND WHAT YOU) := S/((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               ((LAM P (LAM X ((KNOW P) X)))
+                ((LAM H
+                  ((LAM P (LAM X (WHAT (P X))))
+                   (LAM X
+                    ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                     (H X)))))
+                 X)))
+              X))))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>B    (NOT)(DO) := (S\NP)/^NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+>B    (SHOULD)(NOT DO) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X (SHALL (P X))))
+            ((LAM X
+              ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+             X)))
+>     (I KNOW WHAT YOU CAN AND WHAT YOU)(SHOULD NOT DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X)))) (LAM X ((LAM P (P YOU)) (H X))))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                ((LAM P (LAM X ((KNOW P) X)))
+                 ((LAM H
+                   ((LAM P (LAM X (WHAT (P X))))
+                    (LAM X
+                     ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                      (H X)))))
+                  X)))
+               X))))
+           (LAM X
+            ((LAM P (LAM X (SHALL (P X))))
+             ((LAM X
+               ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND (LAM G798 (WHAT (SHALL (NOT ((DO G798) YOU))))))
+     ((KNOW (LAM G801 (WHAT (CAN (SHALL (NOT ((DO G801) YOU))))))) I)) =
+    (AND (\ G809 . WHAT (SHALL (NOT (DO G809 YOU))))
+     (KNOW (\ G812 . WHAT (CAN (SHALL (NOT (DO G812 YOU))))) I))
+
+Derivation 5
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+>B    (KNOW)(WHAT YOU CAN) := (S\NP)/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X)))))
+             X)))
+>B    (I)(KNOW WHAT YOU CAN) := S/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              ((LAM P (LAM X ((KNOW P) X)))
+               ((LAM H
+                 ((LAM P (LAM X (WHAT (P X))))
+                  (LAM X
+                   ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                    (H X)))))
+                X)))
+             X)))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+>B    (YOU)(SHOULD) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+>D    (WHAT)(YOU SHOULD) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+              (H X)))))
+>     (AND)(WHAT YOU SHOULD) := (S/^((S\NP)/NP))\*(S/^((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+               (H X))))))
+<     (I KNOW WHAT YOU CAN)(AND WHAT YOU SHOULD) := S/^((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                (H X))))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               ((LAM P (LAM X ((KNOW P) X)))
+                ((LAM H
+                  ((LAM P (LAM X (WHAT (P X))))
+                   (LAM X
+                    ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                     (H X)))))
+                 X)))
+              X))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>B    (NOT)(DO) := (S\NP)/^NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X)))
+>     (I KNOW WHAT YOU CAN AND WHAT YOU SHOULD)(NOT DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (SHALL (P X)))) X)))
+                 (H X))))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                ((LAM P (LAM X ((KNOW P) X)))
+                 ((LAM H
+                   ((LAM P (LAM X (WHAT (P X))))
+                    (LAM X
+                     ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                      (H X)))))
+                  X)))
+               X))))
+           (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((DO X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND (LAM G820 (WHAT (SHALL (NOT ((DO G820) YOU))))))
+     ((KNOW (LAM G824 (WHAT (CAN (NOT ((DO G824) YOU)))))) I)) =
+    (AND (\ G831 . WHAT (SHALL (NOT (DO G831 YOU))))
+     (KNOW (\ G835 . WHAT (CAN (NOT (DO G835 YOU)))) I))
+
+Derivation 6
+--------------
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (KNOW) := (S\NP)/^S
+        : (LAM P (LAM X ((KNOW P) X)))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (CAN) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (CAN (P X))))
+>B    (YOU)(CAN) := S/^(S\NP)
+        : (LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+>D    (WHAT)(YOU CAN) := S/^((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+              (H X)))))
+>B    (KNOW)(WHAT YOU CAN) := (S\NP)/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                 (H X)))))
+             X)))
+>B    (I)(KNOW WHAT YOU CAN) := S/^((S\NP)/NP)
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              ((LAM P (LAM X ((KNOW P) X)))
+               ((LAM H
+                 ((LAM P (LAM X (WHAT (P X))))
+                  (LAM X
+                   ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                    (H X)))))
+                X)))
+             X)))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHAT) := S/^(S/NP)
+        : (LAM P (LAM X (WHAT (P X))))
+LEX   (YOU) := S/(S\NP)
+        : (LAM P (P YOU))
+LEX   (SHOULD) := (S\NP)/^(S\NP)
+        : (LAM P (LAM X (SHALL (P X))))
+LEX   (NOT) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+>B    (SHOULD)(NOT) := (S\NP)/(S\NP)
+        : (LAM X
+           ((LAM P (LAM X (SHALL (P X)))) ((LAM P (LAM X (NOT (P X)))) X)))
+>B    (YOU)(SHOULD NOT) := S/(S\NP)
+        : (LAM X
+           ((LAM P (P YOU))
+            ((LAM X
+              ((LAM P (LAM X (SHALL (P X)))) ((LAM P (LAM X (NOT (P X)))) X)))
+             X)))
+>D    (WHAT)(YOU SHOULD NOT) := S/((S\NP)/NP)
+        : (LAM H
+           ((LAM P (LAM X (WHAT (P X))))
+            (LAM X
+             ((LAM X
+               ((LAM P (P YOU))
+                ((LAM X
+                  ((LAM P (LAM X (SHALL (P X))))
+                   ((LAM P (LAM X (NOT (P X)))) X)))
+                 X)))
+              (H X)))))
+>     (AND)(WHAT YOU SHOULD NOT) := (S/((S\NP)/NP))\*(S/((S\NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM X (WHAT (P X))))
+             (LAM X
+              ((LAM X
+                ((LAM P (P YOU))
+                 ((LAM X
+                   ((LAM P (LAM X (SHALL (P X))))
+                    ((LAM P (LAM X (NOT (P X)))) X)))
+                  X)))
+               (H X))))))
+<     (I KNOW WHAT YOU CAN)(AND WHAT YOU SHOULD NOT) := S/((S\NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM X (WHAT (P X))))
+              (LAM X
+               ((LAM X
+                 ((LAM P (P YOU))
+                  ((LAM X
+                    ((LAM P (LAM X (SHALL (P X))))
+                     ((LAM P (LAM X (NOT (P X)))) X)))
+                   X)))
+                (H X))))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               ((LAM P (LAM X ((KNOW P) X)))
+                ((LAM H
+                  ((LAM P (LAM X (WHAT (P X))))
+                   (LAM X
+                    ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                     (H X)))))
+                 X)))
+              X))))
+LEX   (DO) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((DO X) Y)))
+>     (I KNOW WHAT YOU CAN AND WHAT YOU SHOULD NOT)(DO) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM X (WHAT (P X))))
+               (LAM X
+                ((LAM X
+                  ((LAM P (P YOU))
+                   ((LAM X
+                     ((LAM P (LAM X (SHALL (P X))))
+                      ((LAM P (LAM X (NOT (P X)))) X)))
+                    X)))
+                 (H X))))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                ((LAM P (LAM X ((KNOW P) X)))
+                 ((LAM H
+                   ((LAM P (LAM X (WHAT (P X))))
+                    (LAM X
+                     ((LAM X ((LAM P (P YOU)) ((LAM P (LAM X (CAN (P X)))) X)))
+                      (H X)))))
+                  X)))
+               X))))
+           (LAM X (LAM Y ((DO X) Y))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND (LAM G842 (WHAT (SHALL (NOT ((DO G842) YOU))))))
+     ((KNOW (LAM G847 (WHAT (CAN ((DO G847) YOU))))) I)) =
+    (AND (\ G853 . WHAT (SHALL (NOT (DO G853 YOU))))
+     (KNOW (\ G858 . WHAT (CAN (DO G858 YOU))) I))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+CL169
+========
+
+
+Derivation 1
+--------------
+LEX   (THE) := (S/(S\NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (MAN) := N
+        : (LAM X (MAN X))
+LEX   (WHO) := (N\N)/(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (THINK) := (S\NP)/SP
+        : (LAM P (LAM X ((THINK P) X)))
+>B    (I)(THINK) := S/SP
+        : (LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+>D    (WHO)(I THINK) := (N\N)/(SP\NP)
+        : (LAM H
+           ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+              (H X)))))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (WHO) := (N\N)/(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARRY) := S/(S\NP)
+        : (LAM P (P BARRY))
+LEX   (CLAIMS) := (S\NP)/SP
+        : (LAM P (LAM X ((CLAIM P) X)))
+>B    (BARRY)(CLAIMS) := S/SP
+        : (LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+>D    (WHO)(BARRY CLAIMS) := (N\N)/(SP\NP)
+        : (LAM H
+           ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             ((LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+              (H X)))))
+>     (AND)(WHO BARRY CLAIMS) := ((N\N)/(SP\NP))\*((N\N)/(SP\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM H
+            ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              ((LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+               (H X))))))
+<     (WHO I THINK)(AND WHO BARRY CLAIMS) := (N\N)/(SP\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM H
+             ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               ((LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+                (H X))))))
+           (LAM H
+            ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+               (H X))))))
+LEX   (OWNS) := (SP\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+LEX   (THE) := ((SP\NP)\((SP\NP)/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := (SP\NP)\((SP\NP)/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (OWNS)(THE HOUSE) := SP\NP
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X (LAM Y ((OWN X) Y))))
+>     (WHO I THINK AND WHO BARRY CLAIMS)(OWNS THE HOUSE) := N\N
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM H
+              ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                ((LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+                 (H X))))))
+            (LAM H
+             ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+                (H X))))))
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X (LAM Y ((OWN X) Y)))))
+<     (MAN)(WHO I THINK AND WHO BARRY CLAIMS OWNS THE HOUSE) := N
+        : (((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM H
+               ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 ((LAM X ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+                  (H X))))))
+             (LAM H
+              ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+                 (H X))))))
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X (LAM Y ((OWN X) Y)))))
+           (LAM X (MAN X)))
+>     (THE)(MAN WHO I THINK AND WHO BARRY CLAIMS OWNS THE HOUSE) := S/(S\NP)
+        : ((LAM X (LAM P (P X)))
+           (((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM H
+                ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  ((LAM X
+                    ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+                   (H X))))))
+              (LAM H
+               ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+                  (H X))))))
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X (LAM Y ((OWN X) Y)))))
+            (LAM X (MAN X))))
+LEX   (BURNS) := S\NP
+        : (LAM X (BURN X))
+>     (THE MAN WHO I THINK AND WHO BARRY CLAIMS OWNS THE HOUSE)(BURNS) := S
+        : (((LAM X (LAM P (P X)))
+            (((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM H
+                 ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                  (LAM X
+                   ((LAM X
+                     ((LAM P (P BARRY)) ((LAM P (LAM X ((CLAIM P) X))) X)))
+                    (H X))))))
+               (LAM H
+                ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  ((LAM X ((LAM P (P I)) ((LAM P (LAM X ((THINK P) X))) X)))
+                   (H X))))))
+              (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+               (LAM X (LAM Y ((OWN X) Y)))))
+             (LAM X (MAN X))))
+           (LAM X (BURN X)))
+
+Final LF, normal-order evaluated: 
+
+    (BURN
+     (((AND
+        (LAM Q
+         (LAM G864
+          ((AND ((CLAIM ((OWN (LAM X (HOUSE X))) G864)) BARRY)) (Q G864)))))
+       (LAM Q
+        (LAM G867
+         ((AND ((THINK ((OWN (LAM X (HOUSE X))) G867)) I)) (Q G867)))))
+      (LAM X (MAN X)))) =
+    (BURN
+     (AND
+      (\ Q . \ G876 . AND (CLAIM (OWN (\ X . HOUSE X) G876) BARRY) (Q G876))
+      (\ Q . \ G879 . AND (THINK (OWN (\ X . HOUSE X) G879) I) (Q G879))
+      (\ X . MAN X)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+PARGAP
+========
+
+
+Derivation 1
+--------------
+LEX   (THE) := (S/(S\NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (BOOK) := N
+        : (LAM X (BOOK X))
+LEX   (WHICH) := (N\N)/(S/NP)
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (READ) := (S\NP)/NP
+        : (LAM X (LAM Y ((READ X) Y)))
+LEX   (WITHOUT) := ((S\NP)\(S\NP))/C
+        : (LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+LEX   (UNDERSTANDING) := C/NP
+        : (LAM X (LAM Y ((UNDERSTAND X) Y)))
+>B    (WITHOUT)(UNDERSTANDING) := ((S\NP)\(S\NP))/NP
+        : (LAM X
+           ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+            ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+<Sx   (READ)(WITHOUT UNDERSTANDING) := (S\NP)/NP
+        : (LAM X
+           (((LAM X
+              ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+               ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+             X)
+            ((LAM X (LAM Y ((READ X) Y))) X)))
+>B    (I)(READ WITHOUT UNDERSTANDING) := S/NP
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              (((LAM X
+                 ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                  ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                X)
+               ((LAM X (LAM Y ((READ X) Y))) X)))
+             X)))
+>     (WHICH)(I READ WITHOUT UNDERSTANDING) := N\N
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               (((LAM X
+                  ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                   ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                 X)
+                ((LAM X (LAM Y ((READ X) Y))) X)))
+              X))))
+<     (BOOK)(WHICH I READ WITHOUT UNDERSTANDING) := N
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                (((LAM X
+                   ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                    ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                  X)
+                 ((LAM X (LAM Y ((READ X) Y))) X)))
+               X))))
+           (LAM X (BOOK X)))
+>     (THE)(BOOK WHICH I READ WITHOUT UNDERSTANDING) := S/(S\NP)
+        : ((LAM X (LAM P (P X)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              ((LAM P (P I))
+               ((LAM X
+                 (((LAM X
+                    ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                     ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                   X)
+                  ((LAM X (LAM Y ((READ X) Y))) X)))
+                X))))
+            (LAM X (BOOK X))))
+LEX   (BURNS) := S\NP
+        : (LAM X (BURN X))
+>     (THE BOOK WHICH I READ WITHOUT UNDERSTANDING)(BURNS) := S
+        : (((LAM X (LAM P (P X)))
+            (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               ((LAM P (P I))
+                ((LAM X
+                  (((LAM X
+                     ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                      ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                    X)
+                   ((LAM X (LAM Y ((READ X) Y))) X)))
+                 X))))
+             (LAM X (BOOK X))))
+           (LAM X (BURN X)))
+
+Final LF, normal-order evaluated: 
+
+    (BURN (LAM X ((AND ((WITHOUT ((UNDERSTAND X) I)) ((READ X) I))) (BOOK X)))) =
+    (BURN (\ X . AND (WITHOUT (UNDERSTAND X I) (READ X I)) (BOOK X)))
+
+Derivation 2
+--------------
+LEX   (THE) := (S/(S\NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (BOOK) := N
+        : (LAM X (BOOK X))
+LEX   (WHICH) := (N\N)/(S/NP)
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (READ) := (S\NP)/NP
+        : (LAM X (LAM Y ((READ X) Y)))
+LEX   (WITHOUT) := ((S\NP)\(S\NP))/C
+        : (LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+<Lx   (READ)(WITHOUT) := ((S\NP)/C)/NP
+        : (LAM W
+           (LAM Z
+            (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+             ((LAM X (LAM Y ((READ X) Y))) W))))
+LEX   (UNDERSTANDING) := C/NP
+        : (LAM X (LAM Y ((UNDERSTAND X) Y)))
+>S    (READ WITHOUT)(UNDERSTANDING) := (S\NP)/NP
+        : (LAM X
+           (((LAM W
+              (LAM Z
+               (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                ((LAM X (LAM Y ((READ X) Y))) W))))
+             X)
+            ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+>B    (I)(READ WITHOUT UNDERSTANDING) := S/NP
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              (((LAM W
+                 (LAM Z
+                  (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                   ((LAM X (LAM Y ((READ X) Y))) W))))
+                X)
+               ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+             X)))
+>     (WHICH)(I READ WITHOUT UNDERSTANDING) := N\N
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               (((LAM W
+                  (LAM Z
+                   (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                    ((LAM X (LAM Y ((READ X) Y))) W))))
+                 X)
+                ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+              X))))
+<     (BOOK)(WHICH I READ WITHOUT UNDERSTANDING) := N
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                (((LAM W
+                   (LAM Z
+                    (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                     ((LAM X (LAM Y ((READ X) Y))) W))))
+                  X)
+                 ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+               X))))
+           (LAM X (BOOK X)))
+>     (THE)(BOOK WHICH I READ WITHOUT UNDERSTANDING) := S/(S\NP)
+        : ((LAM X (LAM P (P X)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              ((LAM P (P I))
+               ((LAM X
+                 (((LAM W
+                    (LAM Z
+                     (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                      ((LAM X (LAM Y ((READ X) Y))) W))))
+                   X)
+                  ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                X))))
+            (LAM X (BOOK X))))
+LEX   (BURNS) := S\NP
+        : (LAM X (BURN X))
+>     (THE BOOK WHICH I READ WITHOUT UNDERSTANDING)(BURNS) := S
+        : (((LAM X (LAM P (P X)))
+            (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               ((LAM P (P I))
+                ((LAM X
+                  (((LAM W
+                     (LAM Z
+                      (((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X))))) Z)
+                       ((LAM X (LAM Y ((READ X) Y))) W))))
+                    X)
+                   ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                 X))))
+             (LAM X (BOOK X))))
+           (LAM X (BURN X)))
+
+Final LF, normal-order evaluated: 
+
+    (BURN (LAM X ((AND ((WITHOUT ((UNDERSTAND X) I)) ((READ X) I))) (BOOK X)))) =
+    (BURN (\ X . AND (WITHOUT (UNDERSTAND X I) (READ X I)) (BOOK X)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+JOSHIHENDERSON
+========
+
+
+Derivation 1
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+<     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : (((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X))))))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 2
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+>     (AND)(BARBIE) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           ((LAM LF (LAM P (P LF))) BARBIE))
+<     (KEN)(AND BARBIE) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            ((LAM LF (LAM P (P LF))) BARBIE))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+>     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             ((LAM LF (LAM P (P LF))) BARBIE))
+            ((LAM LF (LAM P (P LF))) KEN))
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X)))))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((SAY ((OWN (LAM X (HOUSE X))) KEN)) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE)
+     (SAY (OWN (\ X . HOUSE X) KEN) KEN))
+
+Derivation 3
+--------------
+ETR   (KEN) := SP/(SP\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+ETR   (BARBIE) := SP/(SP\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+>     (AND)(BARBIE) := (SP/(SP\NP))\*(SP/(SP\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           ((LAM LF (LAM P (P LF))) BARBIE))
+<     (KEN)(AND BARBIE) := SP/(SP\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            ((LAM LF (LAM P (P LF))) BARBIE))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR-O (KEN) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+>Bx2  (THAT)(KEN) := (SP\NP)\((S\NP)/NP)
+        : (LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+<Dx   (SAID)(THAT KEN) := (SP\NP)/(SP/NP)
+        : (LAM H
+           ((LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+            (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+LEX   (OWNS) := (SP\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+LEX   (THE) := ((SP\NP)\((SP\NP)/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := (SP\NP)\((SP\NP)/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (OWNS)(THE HOUSE) := SP\NP
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X (LAM Y ((OWN X) Y))))
+>Dx   (SAID THAT KEN)(OWNS THE HOUSE) := (SP\NP)\(NP/NP)
+        : (LAM H
+           ((LAM H
+             ((LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+              (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+            (LAM X
+             ((((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+               (LAM X (LAM Y ((OWN X) Y))))
+              (H X)))))
+>Bx   (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := SP\(NP/NP)
+        : (LAM X
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              ((LAM LF (LAM P (P LF))) BARBIE))
+             ((LAM LF (LAM P (P LF))) KEN))
+            ((LAM H
+              ((LAM H
+                ((LAM X
+                  (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+                 (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+               (LAM X
+                ((((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+                  (LAM X (LAM Y ((OWN X) Y))))
+                 (H X)))))
+             X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND ((SAY ((OWN (LAM X (HOUSE X))) (X KEN))) BARBIE))
+      ((SAY ((OWN (LAM X (HOUSE X))) (X KEN))) KEN))) =
+    (\ X . AND (SAY (OWN (\ X . HOUSE X) (X KEN)) BARBIE)
+     (SAY (OWN (\ X . HOUSE X) (X KEN)) KEN))
+
+Derivation 4
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+MTR   (KEN AND BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+>     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X)))))))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 5
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+ETR   (KEN AND BARBIE) := SP/(SP\NP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR-O (KEN) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+>Bx2  (THAT)(KEN) := (SP\NP)\((S\NP)/NP)
+        : (LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+<Dx   (SAID)(THAT KEN) := (SP\NP)/(SP/NP)
+        : (LAM H
+           ((LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+            (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+LEX   (OWNS) := (SP\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+LEX   (THE) := ((SP\NP)\((SP\NP)/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := (SP\NP)\((SP\NP)/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (OWNS)(THE HOUSE) := SP\NP
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X (LAM Y ((OWN X) Y))))
+>Dx   (SAID THAT KEN)(OWNS THE HOUSE) := (SP\NP)\(NP/NP)
+        : (LAM H
+           ((LAM H
+             ((LAM X (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+              (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+            (LAM X
+             ((((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+               (LAM X (LAM Y ((OWN X) Y))))
+              (H X)))))
+>Bx   (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := SP\(NP/NP)
+        : (LAM X
+           (((LAM LF (LAM P (P LF)))
+             (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+            ((LAM H
+              ((LAM H
+                ((LAM X
+                  (LAM Y ((LAM P P) ((((LAM LF (LAM P (P LF))) KEN) X) Y))))
+                 (LAM X ((LAM P (LAM X ((SAY P) X))) (H X)))))
+               (LAM X
+                ((((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+                  (LAM X (LAM Y ((OWN X) Y))))
+                 (H X)))))
+             X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((SAY ((OWN (LAM X (HOUSE X))) (X KEN)))
+      (LAM X ((AND (BARBIE X)) (KEN X))))) =
+    (\ X . SAY (OWN (\ X . HOUSE X) (X KEN)) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 6
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+>     (AND)(BARBIE) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           ((LAM LF (LAM P (P LF))) BARBIE))
+<     (KEN)(AND BARBIE) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            ((LAM LF (LAM P (P LF))) BARBIE))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+>B    (THAT)(KEN OWNS) := SP/NP
+        : (LAM X
+           ((LAM P P)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+             X)))
+>B    (SAID)(THAT KEN OWNS) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X
+              ((LAM P P)
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) KEN)
+                  ((LAM X (LAM Y ((OWN X) Y))) X)))
+                X)))
+             X)))
+>B    (KEN AND BARBIE)(SAID THAT KEN OWNS) := S/NP
+        : (LAM X
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              ((LAM LF (LAM P (P LF))) BARBIE))
+             ((LAM LF (LAM P (P LF))) KEN))
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X
+                 ((LAM P P)
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) KEN)
+                     ((LAM X (LAM Y ((OWN X) Y))) X)))
+                   X)))
+                X)))
+             X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               ((LAM LF (LAM P (P LF))) BARBIE))
+              ((LAM LF (LAM P (P LF))) KEN))
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X
+                  ((LAM P P)
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) KEN)
+                      ((LAM X (LAM Y ((OWN X) Y))) X)))
+                    X)))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((SAY ((OWN (LAM X (HOUSE X))) KEN)) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE)
+     (SAY (OWN (\ X . HOUSE X) KEN) KEN))
+
+Derivation 7
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+MTR   (KEN AND BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+>B    (THAT)(KEN OWNS) := SP/NP
+        : (LAM X
+           ((LAM P P)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+             X)))
+>B    (SAID)(THAT KEN OWNS) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X
+              ((LAM P P)
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) KEN)
+                  ((LAM X (LAM Y ((OWN X) Y))) X)))
+                X)))
+             X)))
+>B    (KEN AND BARBIE)(SAID THAT KEN OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF)))
+             (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X
+                 ((LAM P P)
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) KEN)
+                     ((LAM X (LAM Y ((OWN X) Y))) X)))
+                   X)))
+                X)))
+             X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF)))
+              (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X
+                  ((LAM P P)
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) KEN)
+                      ((LAM X (LAM Y ((OWN X) Y))) X)))
+                    X)))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 8
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+>B    (THAT)(KEN) := SP/(S\NP)
+        : (LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X)))
+>B    (SAID)(THAT KEN) := (S\NP)/(S\NP)
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+>B    (BARBIE)(SAID THAT KEN) := S/(S\NP)
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) BARBIE)
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+             X)))
+>     (AND)(BARBIE SAID THAT KEN) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) BARBIE)
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+              X))))
+<     (KEN)(AND BARBIE SAID THAT KEN) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) BARBIE)
+              ((LAM X
+                ((LAM P (LAM X ((SAY P) X)))
+                 ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+               X))))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN AND BARBIE SAID THAT KEN)(OWNS) := S/NP
+        : (LAM X
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) BARBIE)
+                ((LAM X
+                  ((LAM P (LAM X ((SAY P) X)))
+                   ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+                 X))))
+             ((LAM LF (LAM P (P LF))) KEN))
+            ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) BARBIE)
+                 ((LAM X
+                   ((LAM P (LAM X ((SAY P) X)))
+                    ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+                  X))))
+              ((LAM LF (LAM P (P LF))) KEN))
+             ((LAM X (LAM Y ((OWN X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((OWN (LAM X (HOUSE X))) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE) (OWN (\ X . HOUSE X) KEN))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+B3TEST
+========
+
+
+Derivation 1
+--------------
+LEX   (VER) := ((S\NP)\NP)\NP
+        : (LAM X (LAM Y (LAM Z (((GIVE Y) X) Z))))
+LEX   (-DIR) := ((S\NP)\NP)\(S\NP)
+        : (LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+<B2   (VER)(-DIR) := (((S\NP)\NP)\NP)\NP
+        : (LAM X
+           (LAM Y
+            ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+             (((LAM X (LAM Y (LAM Z (((GIVE Y) X) Z)))) X) Y))))
+LEX   (-T) := ((S\NP)\NP)\(S\NP)
+        : (LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+<B3   (VER -DIR)(-T) := ((((S\NP)\NP)\NP)\NP)\NP
+        : (LAM X
+           (LAM Y
+            (LAM Z
+             ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+              ((((LAM X
+                  (LAM Y
+                   ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+                    (((LAM X (LAM Y (LAM Z (((GIVE Y) X) Z)))) X) Y))))
+                 X)
+                Y)
+               Z)))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     (LAM Y
+      (LAM Z
+       (LAM G971 (LAM G972 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G971)) G972)))))) =
+    (\ X . \ Y . \ Z . \ G998 . \ G999 . CAUSE (CAUSE (GIVE Y X Z) G998) G999)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+OTEST
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+CL169
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+PARGAP
+========
+
+
+Derivation 1
+--------------
+LEX   (THE) := (S/(S\NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (BOOK) := N
+        : (LAM X (BOOK X))
+LEX   (WHICH) := (N\N)/(S/NP)
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (I) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (READ) := (S\NP)/NP
+        : (LAM X (LAM Y ((READ X) Y)))
+LEX   (WITHOUT) := ((S\NP)\(S\NP))/C
+        : (LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+LEX   (UNDERSTANDING) := C/NP
+        : (LAM X (LAM Y ((UNDERSTAND X) Y)))
+>B    (WITHOUT)(UNDERSTANDING) := ((S\NP)\(S\NP))/NP
+        : (LAM X
+           ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+            ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+<Sx   (READ)(WITHOUT UNDERSTANDING) := (S\NP)/NP
+        : (LAM X
+           (((LAM X
+              ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+               ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+             X)
+            ((LAM X (LAM Y ((READ X) Y))) X)))
+>B    (I)(READ WITHOUT UNDERSTANDING) := S/NP
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              (((LAM X
+                 ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                  ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                X)
+               ((LAM X (LAM Y ((READ X) Y))) X)))
+             X)))
+>     (WHICH)(I READ WITHOUT UNDERSTANDING) := N\N
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               (((LAM X
+                  ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                   ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                 X)
+                ((LAM X (LAM Y ((READ X) Y))) X)))
+              X))))
+<     (BOOK)(WHICH I READ WITHOUT UNDERSTANDING) := N
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                (((LAM X
+                   ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                    ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                  X)
+                 ((LAM X (LAM Y ((READ X) Y))) X)))
+               X))))
+           (LAM X (BOOK X)))
+>     (THE)(BOOK WHICH I READ WITHOUT UNDERSTANDING) := S/(S\NP)
+        : ((LAM X (LAM P (P X)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              ((LAM P (P I))
+               ((LAM X
+                 (((LAM X
+                    ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                     ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                   X)
+                  ((LAM X (LAM Y ((READ X) Y))) X)))
+                X))))
+            (LAM X (BOOK X))))
+LEX   (BURNS) := S\NP
+        : (LAM X (BURN X))
+>     (THE BOOK WHICH I READ WITHOUT UNDERSTANDING)(BURNS) := S
+        : (((LAM X (LAM P (P X)))
+            (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               ((LAM P (P I))
+                ((LAM X
+                  (((LAM X
+                     ((LAM P (LAM Q (LAM X ((WITHOUT (P X)) (Q X)))))
+                      ((LAM X (LAM Y ((UNDERSTAND X) Y))) X)))
+                    X)
+                   ((LAM X (LAM Y ((READ X) Y))) X)))
+                 X))))
+             (LAM X (BOOK X))))
+           (LAM X (BURN X)))
+
+Final LF, normal-order evaluated: 
+
+    (BURN (LAM X ((AND ((WITHOUT ((UNDERSTAND X) I)) ((READ X) I))) (BOOK X)))) =
+    (BURN (\ X . AND (WITHOUT (UNDERSTAND X I) (READ X I)) (BOOK X)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+JOSHIHENDERSON
+========
+
+
+Derivation 1
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+<     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : (((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X))))))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 2
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+>     (AND)(BARBIE) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           ((LAM LF (LAM P (P LF))) BARBIE))
+<     (KEN)(AND BARBIE) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            ((LAM LF (LAM P (P LF))) BARBIE))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+>     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             ((LAM LF (LAM P (P LF))) BARBIE))
+            ((LAM LF (LAM P (P LF))) KEN))
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X)))))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((SAY ((OWN (LAM X (HOUSE X))) KEN)) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE)
+     (SAY (OWN (\ X . HOUSE X) KEN) KEN))
+
+Derivation 3
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+MTR   (KEN AND BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X))))
+>     (THAT)(KEN OWNS THE HOUSE) := SP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))))
+>     (SAID)(THAT KEN OWNS THE HOUSE) := S\NP
+        : ((LAM P (LAM X ((SAY P) X)))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) KEN)
+               ((LAM X (LAM Y ((OWN X) Y))) X))))))
+>     (KEN AND BARBIE)(SAID THAT KEN OWNS THE HOUSE) := S
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) KEN)
+                ((LAM X (LAM Y ((OWN X) Y))) X)))))))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 4
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+>     (AND)(BARBIE) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           ((LAM LF (LAM P (P LF))) BARBIE))
+<     (KEN)(AND BARBIE) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            ((LAM LF (LAM P (P LF))) BARBIE))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+>B    (THAT)(KEN OWNS) := SP/NP
+        : (LAM X
+           ((LAM P P)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+             X)))
+>B    (SAID)(THAT KEN OWNS) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X
+              ((LAM P P)
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) KEN)
+                  ((LAM X (LAM Y ((OWN X) Y))) X)))
+                X)))
+             X)))
+>B    (KEN AND BARBIE)(SAID THAT KEN OWNS) := S/NP
+        : (LAM X
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              ((LAM LF (LAM P (P LF))) BARBIE))
+             ((LAM LF (LAM P (P LF))) KEN))
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X
+                 ((LAM P P)
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) KEN)
+                     ((LAM X (LAM Y ((OWN X) Y))) X)))
+                   X)))
+                X)))
+             X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               ((LAM LF (LAM P (P LF))) BARBIE))
+              ((LAM LF (LAM P (P LF))) KEN))
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X
+                  ((LAM P P)
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) KEN)
+                      ((LAM X (LAM Y ((OWN X) Y))) X)))
+                    X)))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((SAY ((OWN (LAM X (HOUSE X))) KEN)) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE)
+     (SAY (OWN (\ X . HOUSE X) KEN) KEN))
+
+Derivation 5
+--------------
+LEX   (KEN) := NP
+        : KEN
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (BARBIE) := NP
+        : BARBIE
+>     (AND)(BARBIE) := NP\*NP
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE)
+<     (KEN)(AND BARBIE) := NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN)
+MTR   (KEN AND BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN)(OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+>B    (THAT)(KEN OWNS) := SP/NP
+        : (LAM X
+           ((LAM P P)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) KEN) ((LAM X (LAM Y ((OWN X) Y))) X)))
+             X)))
+>B    (SAID)(THAT KEN OWNS) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X
+              ((LAM P P)
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) KEN)
+                  ((LAM X (LAM Y ((OWN X) Y))) X)))
+                X)))
+             X)))
+>B    (KEN AND BARBIE)(SAID THAT KEN OWNS) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF)))
+             (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X
+                 ((LAM P P)
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) KEN)
+                     ((LAM X (LAM Y ((OWN X) Y))) X)))
+                   X)))
+                X)))
+             X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            (((LAM LF (LAM P (P LF)))
+              (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) BARBIE) KEN))
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X
+                  ((LAM P P)
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) KEN)
+                      ((LAM X (LAM Y ((OWN X) Y))) X)))
+                    X)))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SAY ((OWN (LAM X (HOUSE X))) KEN)) (LAM X ((AND (BARBIE X)) (KEN X)))) =
+    (SAY (OWN (\ X . HOUSE X) KEN) (\ X . AND (BARBIE X) (KEN X)))
+
+Derivation 6
+--------------
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+MTR   (BARBIE) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) BARBIE)
+LEX   (SAID) := (S\NP)/SP
+        : (LAM P (LAM X ((SAY P) X)))
+LEX   (THAT) := SP/S
+        : (LAM P P)
+MTR   (KEN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KEN)
+>B    (THAT)(KEN) := SP/(S\NP)
+        : (LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X)))
+>B    (SAID)(THAT KEN) := (S\NP)/(S\NP)
+        : (LAM X
+           ((LAM P (LAM X ((SAY P) X)))
+            ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+>B    (BARBIE)(SAID THAT KEN) := S/(S\NP)
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) BARBIE)
+            ((LAM X
+              ((LAM P (LAM X ((SAY P) X)))
+               ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+             X)))
+>     (AND)(BARBIE SAID THAT KEN) := (S/(S\NP))\*(S/(S\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) BARBIE)
+             ((LAM X
+               ((LAM P (LAM X ((SAY P) X)))
+                ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+              X))))
+<     (KEN)(AND BARBIE SAID THAT KEN) := S/(S\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) BARBIE)
+              ((LAM X
+                ((LAM P (LAM X ((SAY P) X)))
+                 ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+               X))))
+           ((LAM LF (LAM P (P LF))) KEN))
+LEX   (OWNS) := (S\NP)/NP
+        : (LAM X (LAM Y ((OWN X) Y)))
+>B    (KEN AND BARBIE SAID THAT KEN)(OWNS) := S/NP
+        : (LAM X
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) BARBIE)
+                ((LAM X
+                  ((LAM P (LAM X ((SAY P) X)))
+                   ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+                 X))))
+             ((LAM LF (LAM P (P LF))) KEN))
+            ((LAM X (LAM Y ((OWN X) Y))) X)))
+LEX   (THE) := (S\(S/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (HOUSE) := N
+        : (LAM X (HOUSE X))
+>     (THE)(HOUSE) := S\(S/NP)
+        : ((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+<     (KEN AND BARBIE SAID THAT KEN OWNS)(THE HOUSE) := S
+        : (((LAM X (LAM P (P X))) (LAM X (HOUSE X)))
+           (LAM X
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) BARBIE)
+                 ((LAM X
+                   ((LAM P (LAM X ((SAY P) X)))
+                    ((LAM X ((LAM P P) (((LAM LF (LAM P (P LF))) KEN) X))) X)))
+                  X))))
+              ((LAM LF (LAM P (P LF))) KEN))
+             ((LAM X (LAM Y ((OWN X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAY ((OWN (LAM X (HOUSE X))) KEN)) BARBIE))
+     ((OWN (LAM X (HOUSE X))) KEN)) =
+    (AND (SAY (OWN (\ X . HOUSE X) KEN) BARBIE) (OWN (\ X . HOUSE X) KEN))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+B3TEST
+========
+
+
+Derivation 1
+--------------
+LEX   (VER) := ((S\NP)\NP)\NP
+        : (LAM X (LAM Y (LAM Z (((GIVE Y) X) Z))))
+LEX   (-DIR) := ((S\NP)\NP)\(S\NP)
+        : (LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+<B2   (VER)(-DIR) := (((S\NP)\NP)\NP)\NP
+        : (LAM X
+           (LAM Y
+            ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+             (((LAM X (LAM Y (LAM Z (((GIVE Y) X) Z)))) X) Y))))
+LEX   (-T) := ((S\NP)\NP)\(S\NP)
+        : (LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+<B3   (VER -DIR)(-T) := ((((S\NP)\NP)\NP)\NP)\NP
+        : (LAM X
+           (LAM Y
+            (LAM Z
+             ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+              ((((LAM X
+                  (LAM Y
+                   ((LAM P (LAM X (LAM Y ((CAUSE (P X)) Y))))
+                    (((LAM X (LAM Y (LAM Z (((GIVE Y) X) Z)))) X) Y))))
+                 X)
+                Y)
+               Z)))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     (LAM Y
+      (LAM Z
+       (LAM G1065
+        (LAM G1066 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G1065)) G1066)))))) =
+    (\ X . \ Y . \ Z . \ G1092 . \ G1093 . CAUSE (CAUSE (GIVE Y X Z) G1092)
+     G1093)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)

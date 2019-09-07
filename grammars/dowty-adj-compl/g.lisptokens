@@ -1,0 +1,10 @@
+(
+
+
+
+john n  |:=|  s |/|  |*| vp  |:|   |\\| p |.| p !john |;| 
+spoke v  |:=|  vp |:|  |\\| x |.| !speak x |;| 
+mary n  |:=|  np |:| !mary |;| 
+to p  |:=|   |(| vp |\\|  |^| vp |)|  |/|  |*| np  |:|   |\\| x |\\| p |.| p  |(| !to x |)|  |;| 
+ |(| d-shift |)|  vp  |:|  lf  |-->|  vp |/|  |(| vp |\\| vp |)|   |:|   |\\| q |\\| lf |.|  q lf |;| 
+spoke v  |:=|  vp |/|  |^|  |(| vp |\\|  |^| vp |)|  |:|   |\\| q |\\| x |.| q |(| !speak x |)|  |;| )

@@ -1,0 +1,64 @@
+(
+
+
+
+i n   |:=|  s |/|  |(| s |\\| np |[| agr |=| 1s |]|  |)|   |:|   |\\| p |.|  p !i |;| 
+you n   |:=|  s |/|  |(| s |\\| np |[| agr |=| 2s |]|  |)|   |:|   |\\| p |.|  p !you |;| 
+know v  |:=|   |(| s |\\| np |)|  |/|  |^| s |:|   |\\| p |\\| x |.|  !know p x |;| 
+what wh  |:=|  s |/|  |^|  |(| s |/| np |)|   |:|   |\\| p |\\| x |.|  !what  |(| p x |)|  |;| 
+can aux  |:=|   |(| s |\\| np |)|  |/|  |^|  |(| s |\\| np |)|  |:|   |\\| p |\\| x |.|  !can  |(| p x |)|  |;| 
+should aux  |:=|   |(| s |\\| np |)|  |/|  |^|  |(| s |\\| np |)|  |:|   |\\| p |\\| x |.|  !shall  |(| p x |)|  |;| 
+not aux  |:=|   |(| s |\\| np |)|  |/|  |(| s |\\| np |)|  |:|   |\\| p |\\| x |.|  !not  |(| p x |)|  |;| 
+do v     |:=|   |(| s |\\|  |^| np |)|  |/|  |^| np |:|   |\\| x |\\| y |.|  !do x y |;| 
+and x   |:=|   |(| @X |\\|  |*| @X |)|  |/|  |*| @X |:|   |\\| p |\\| q |\\| x |.|  !and  |(| p x |)|  |(| q x |)|  |;| 
+
+
+
+think v  |:=|   |(| s |\\| np |)|  |/| sp  |:|   |\\| p |\\| x |.|  !think p x |;| 
+claims v  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| sp  |:|   |\\| p |\\| x |.|  !claim p x |;| 
+who wh  |:=|   |(| N |\\| N |)|  |/|  |(| S |\\| NP |)|   |:|   |\\| p |\\| q |\\| x |.|  !and  |(| p x |)|  |(| q x |)|  |;| 
+barry n   |:=|  s |/|  |(| s |\\| np |[| agr |=| 3s |]|  |)|   |:|   |\\| p |.|  p !barry |;| 
+owns v  |:=|   |(| sp |\\| np |)|  |/| np  |:|   |\\| x |\\| y |.| !own x y |;|    
+owns v  |:=|   |(| s |\\| np |)|  |/| np  |:|   |\\| x |\\| y |.| !own x y |;| 
+the n  |:=|   |(| s |/|  |(| s |\\| np |)|  |)|  |/|  |*| n  |:|   |\\| x |\\| p |.|  p x |;|             
+the n  |:=|   |(| s |\\|  |(| s |/| np |)|  |)|  |/|  |*| n  |:|   |\\| x |\\| p |.|  p x |;|             
+the n  |:=|   |(|  |(| sp |\\| np |)|  |\\|  |(|  |(| sp |\\| np |)|  |/| np |)|  |)|  |/|  |*| n  |:|   |\\| x |\\| p |.|  p x |;|   
+house n  |:=|  n  |:|   |\\| x |.|  !house x |;| 
+book n  |:=|  n  |:|   |\\| x |.|  !book x |;| 
+man n  |:=|  n  |:|   |\\| x |.|  !man x |;| 
+
+
+
+which wh  |:=|   |(| N |\\| N |)|  |/|  |(| S |/| NP |)|   |:|   |\\| p |\\| q |\\| x |.|  !and  |(| p x |)|  |(| q x |)|  |;| 
+read v  |:=|   |(| s |\\| np |)|  |/| np |:|   |\\| x |\\| y |.|  !read x y |;| 
+understanding ger  |:=|  c |[| type |=| ing |]|  |/| np |:|   |\\| x |\\| y |.| !understand x y |;| 
+without p  |:=|   |(|  |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|  |)|  |/| c |[| type |=| ing |]|   |:|   |\\| p |\\| q |\\| x |.|  !without  |(| p x |)|   |(| q x |)|  |;| 
+burns v  |:=|  s |\\| np |[| agr |=| 3s |]|  |:|   |\\| x |.| !burn x |;| 
+
+
+
+ver v  |:=|  s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| dat |]|  |\\| np |[| case |=| acc |]|  |:|   |\\| x |\\| y |\\| z |.|  !give y x z |;| 
+-dir aff  |:=|   |(| s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| ?c |]|  |)|  |\\|  |(| s |\\| np |[| case |=| nom |]|  |)|  
+ |:|   |\\| p |\\| x |\\| y |.|  !cause  |(| p x |)|  y |;| 
+-t aff  |:=|   |(| s |\\| np |[| case |=| nom |]|  |\\| np |[| case |=| ?c |]|  |)|  |\\|  |(| s |\\| np |[| case |=| nom |]|  |)|  
+ |:|   |\\| p |\\| x |\\| y |.|  !cause  |(| p x |)|  y |;| 
+
+
+
+
+
+
+
+
+
+
+
+ken n  |:=|  np  |:|  !ken |;| 
+barbie n  |:=|  np  |:|  !barbie |;| 
+ |(| mtr |)|  np  |:|  lf  |-->|  s |/|  |(| s |\\| np |)|   |:|   |\\| lf |\\| p |.|  p lf |;|   
+ |(| etr |)|  np  |:|  lf  |-->|  sp |/|  |(| sp |\\| np |)|   |:|   |\\| lf |\\| p |.|  p lf |;|  
+said v  |:=|   |(| s |\\| np |)|  |/| sp |:|   |\\| p |\\| x |.|  !say p x |;| 
+that c  |:=|  sp |/| s  |:|   |\\| p |.|  p |;| 
+ |(| mtr-o |)|  np  |:|  lf  |-->|   |(| s |\\| np |)|  |\\|  |(|  |(| s |\\| np |)|  |/| np |)|   |:|   |\\| lf |\\| p |.|  p lf |;|   
+ |(| etr-o |)|  np  |:|  lf  |-->|   |(| sp |\\| np |)|  |\\|  |(|  |(| sp |\\| np |)|  |/| np |)|   |:|   |\\| lf |\\| p |.|  p lf |;|  
+)

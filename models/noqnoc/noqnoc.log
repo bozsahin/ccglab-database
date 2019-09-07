@@ -1,0 +1,152 @@
+
+> (lg "noqnoc" :make t)
+
+
+=========================== p r e p a r i n g ===============================
+
+Project name: noqnoc
+  Input : noqnoc.lisptokens 
+  Output: noqnoc.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create noqnoc.lisptokens by running 'tokens noqnoc' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [noqnoc] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : noqnoc.ccg $
+    Its token form   : noqnoc.lisptokens $
+  Deduction grammar  : noqnoc.ded $ (derived from noqnoc.lisptokens)
+  Induction grammar  : noqnoc.ind #
+  Supervision source : noqnoc.sup ^
+  Model-specific code: noqnoc.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from noqnoc.ded
+  *LEX-RULES-TABLE*  : set from noqnoc.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (make-supervision "noqnoc")
+
+
+WARNING: redefining COMMON-LISP-USER::LALR-PARSER in DEFUN
+
+=========================== p r e p a r i n g ===============================
+
+Project name: noqnoc
+  Input : noqnoc.suptokens 
+  Output: noqnoc.sup 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create noqnoc.suptokens by running 'suptokens noqnoc' sed script offline.
+
+WARNING: redefining COMMON-LISP-USER::LALR-PARSER in DEFUN
+
+=========================== p r e p a r i n g ===============================
+
+Project name: noqnoc
+  Input : noqnoc.supervision and noqnoc.suptokens
+  Output: noqnoc.sup 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create noqnoc.suptokens by running 'suptokens noqnoc' sed script offline.
+NIL
+> (save-grammar "noqnoc.ind")
+
+NIL
+> (update-model "noqnoc" 10 1.0 1.0 :load t)
+
+*Beamp* = NIL  *Beam-exp* = 0.9
+
+======================= l o a d i n g =======================================
+
+Project [noqnoc] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : noqnoc.ccg $
+    Its token form   : noqnoc.lisptokens $
+  Deduction grammar  : noqnoc.ded $ (derived from noqnoc.lisptokens)
+  Induction grammar  : noqnoc.ind #
+  Supervision source : noqnoc.sup ^
+  Model-specific code: noqnoc.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from noqnoc.ind
+  *LEX-RULES-TABLE*  : set from noqnoc.ind
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Supervision file loaded: noqnoc.sup
+Done. use (show-training/save-training) to see/save the results
+NIL
+> (show-training)
+The rule set used in the experiment:
+
+
+CCGlab, version 6.0
+
+To change a switch, use (setf <switchname> <value>)
+	      where <value> is T (on) or NIL (off)
+	  *f-apply*     T
+	  *b-apply*     T
+	  *f-comp*      T
+	  *b-comp*      T
+	  *fx-comp*     T
+	  *bx-comp*     T
+	  *f-sub*       T
+	  *b-sub*       T
+	  *fx-sub*      T
+	  *bx-sub*      T
+          *f-subbar*    NIL
+	  *b-subbar*    NIL
+	  *fx-subbar*   NIL
+	  *bx-subbar*   NIL
+	  *f-subcomp*   NIL
+	  *b-subcomp*   NIL
+	  *fx-subcomp*  NIL
+	  *bx-subcomp*  NIL
+          *f2-comp*     T
+	  *b2-comp*     T
+	  *fx2-comp*    T
+	  *bx2-comp*    T
+	  *f2-sub*      T
+	  *b2-sub*      T
+	  *fx2-sub*     T
+	  *bx2-sub*     T
+	  *f2-subcomp*  NIL
+	  *f3-comp*     T
+	  *b3-comp*     T
+	  *fx3-comp*    T
+	  *bx3-comp*    T
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+*Beamp* = NIL  *Beam-exp* = 0.9
+
+Training parameters: N = 10 alpha0 = 1.0 c = 1.0 n = 6  
+Model parameters before and after training
+================================================
+key   lex             initial  final    diff 
+------------------------------------------------
+1     KNOWS             1.0 6.725861  (5.725861)
+2     KNOWS             1.0  3.43604  ( 2.43604)
+3     KNOWS             1.0 -1.86293  (-2.86293)
+4     KNOWS             1.0 -2.58007  (-3.58007)
+5     LOVES             1.0 7.482493  (6.482493)
+6     LOVES             1.0 -5.48249  (-6.48249)
+7     JOHN              1.0 5.533658  (4.533658)
+8     JOHN              1.0 2.982362  (1.982362)
+9     JOHN              1.0  3.86692  ( 2.86692)
+10    JOHN              1.0 -1.35396  (-2.35396)
+11    MARY              1.0 5.095231  (4.095231)
+12    MARY              1.0  3.27333  ( 2.27333)
+13    MARY              1.0 4.292733  (3.292733)
+14    MARY              1.0 -1.72071  (-2.72071)
+15    JOHN              1.0 -3.34851  (-4.34851)
+16    JOHN              1.0 -1.35396  (-2.35396)
+17    MARY              1.0 -3.17686  (-4.17686)
+18    MARY              1.0 -1.72071  (-2.72071)
+================================================
+NIL
+> (dribble)

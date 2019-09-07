@@ -1,0 +1,17 @@
+% example analyses for Turkish relativizers
+% -- cem bozsahin, aug 2017
+% -yan and -dik are autonomous items with single slash
+% -neg and -tense are not
+% NB. \\'d categories for relativizers fail when RC verb has phrasal scope
+adam n := np: \x.!man x;
+-in w := (s/vp[agr=3s])\*np : \x\p.p x;
+oku v := vp[typ=root]\np[case=acc] : \x\y.!read x y;
+-yan w := (np/np)\*vp[typ=root] : \p\q.!and (p x)(q x);
+-yan w := (np/np)\\vp[typ=root] : \p\q.!and (p x)(q x);
+kitap n := np: \x.!book x;
+-i w := (vp[typ=?t]/(vp[typ=?t]\np[case=acc]))\*np:\p\q.q p;
+-dugu w := (np/np)\*(s\np) : \p\q.!and (p x)(q x);
+-dugu w := (np/np)\\(s\np) : \p\q.!and (p x)(q x);
+-ma aff :=  (vp[typ=root]\np)\\(vp[typ=root]\np):\p.!neg p;
+-ma aff :=  vp[typ=root]\\vp[typ=root]:\p.!neg p;
+uyu v := vp[typ=root] : \x.!sleep x;

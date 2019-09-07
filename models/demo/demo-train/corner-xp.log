@@ -1,0 +1,170 @@
+
+> (lg "corner" :make t)
+
+
+=========================== p r e p a r i n g ===============================
+
+Project name: corner
+  Input : corner.lisptokens 
+  Output: corner.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create corner.lisptokens by running 'tokens corner' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [corner] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : corner.ccg $
+    Its token form   : corner.lisptokens $
+  Deduction grammar  : corner.ded $ (derived from corner.lisptokens)
+  Induction grammar  : corner.ind #
+  Supervision source : corner.sup ^
+  Model-specific code: corner.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from corner.ded
+  *LEX-RULES-TABLE*  : set from corner.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (save-grammar "corner.ind")
+
+NIL
+> (update-model-xp "corner" 1.0 1.0 :load t)
+
+*Beamp* = NIL  *Beam-exp* = 0.9
+
+======================= l o a d i n g =======================================
+
+Project [corner] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : corner.ccg $
+    Its token form   : corner.lisptokens $
+  Deduction grammar  : corner.ded $ (derived from corner.lisptokens)
+  Induction grammar  : corner.ind #
+  Supervision source : corner.sup ^
+  Model-specific code: corner.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from corner.ind
+  *LEX-RULES-TABLE*  : set from corner.ind
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Supervision file loaded: corner.sup
+Done. use (show-training-xp/save-training-xp) to see/save the results
+NIL
+> (show-training-xp)
+The rule set used in the experiment:
+
+
+CCGlab, version 6.0
+
+To change a switch, use (setf <switchname> <value>)
+	      where <value> is T (on) or NIL (off)
+	  *f-apply*     T
+	  *b-apply*     T
+	  *f-comp*      T
+	  *b-comp*      T
+	  *fx-comp*     T
+	  *bx-comp*     T
+	  *f-sub*       T
+	  *b-sub*       T
+	  *fx-sub*      T
+	  *bx-sub*      T
+          *f-subbar*    NIL
+	  *b-subbar*    NIL
+	  *fx-subbar*   NIL
+	  *bx-subbar*   NIL
+	  *f-subcomp*   NIL
+	  *b-subcomp*   NIL
+	  *fx-subcomp*  NIL
+	  *bx-subcomp*  NIL
+          *f2-comp*     T
+	  *b2-comp*     T
+	  *fx2-comp*    T
+	  *bx2-comp*    T
+	  *f2-sub*      T
+	  *b2-sub*      T
+	  *fx2-sub*     T
+	  *bx2-sub*     T
+	  *f2-subcomp*  NIL
+	  *f3-comp*     T
+	  *b3-comp*     T
+	  *fx3-comp*    T
+	  *bx3-comp*    T
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+*Beamp* = NIL  *Beam-exp* = 0.9
+
+Training parameters: N = 4 alpha0 = 1.0 c = 1.0 n = 5  
+Model parameters before and after training and extrapolation
+================================================
+key   lex             initial  final    diff 
+------------------------------------------------
+1     THE               1.0 1.034434  (.0344342)
+2     MAN               1.0 1.026202  (.0262022)
+3     BOY               1.0      1.0  (     0.0)
+4     IN                1.0 1.031886  (.0318856)
+5     CORNER            1.0 1.006895  (.0068951)
+6     STR               1.0 1.008256  (.0082558)
+7     BSTR              1.0 1.008256  (.0082558)
+8     OTR               1.0 1.008256  (.0082558)
+9     FOTR              1.0  1.02156  (.0215598)
+10    HITS              1.0      1.0  (     0.0)
+11    SEES              1.0      1.0  (     0.0)
+12    WANTS             1.0      1.0  (     0.0)
+13    TO                1.0      1.0  (     0.0)
+14    STUDY             1.0      1.0  (     0.0)
+15    READ              1.0      1.0  (     0.0)
+================================================
+NIL
+> (show-config)
+
+
+CCGlab, version 6.0
+
+To change a switch, use (setf <switchname> <value>)
+	      where <value> is T (on) or NIL (off)
+	  *f-apply*     T
+	  *b-apply*     T
+	  *f-comp*      T
+	  *b-comp*      T
+	  *fx-comp*     T
+	  *bx-comp*     T
+	  *f-sub*       T
+	  *b-sub*       T
+	  *fx-sub*      T
+	  *bx-sub*      T
+          *f-subbar*    NIL
+	  *b-subbar*    NIL
+	  *fx-subbar*   NIL
+	  *bx-subbar*   NIL
+	  *f-subcomp*   NIL
+	  *b-subcomp*   NIL
+	  *fx-subcomp*  NIL
+	  *bx-subcomp*  NIL
+          *f2-comp*     T
+	  *b2-comp*     T
+	  *fx2-comp*    T
+	  *bx2-comp*    T
+	  *f2-sub*      T
+	  *b2-sub*      T
+	  *fx2-sub*     T
+	  *bx2-sub*     T
+	  *f2-subcomp*  NIL
+	  *f3-comp*     T
+	  *b3-comp*     T
+	  *fx3-comp*    T
+	  *bx3-comp*    T
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+*Beamp* = NIL  *Beam-exp* = 0.9
+NIL
+> (dribble)

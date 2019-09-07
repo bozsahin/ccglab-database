@@ -1,0 +1,73 @@
+
+> (lg "corner-raised")
+
+======================= l o a d i n g =======================================
+
+Project [corner-raised] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : corner-raised.ccg $
+    Its token form   : corner-raised.lisptokens $
+  Deduction grammar  : corner-raised.ded $ (derived from corner-raised.lisptokens)
+  Induction grammar  : corner-raised.ind #
+  Supervision source : corner-raised.sup ^
+  Model-specific code: corner-raised.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from corner-raised.ded
+  *LEX-RULES-TABLE*  : set from corner-raised.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (type-raise-targets '(NP))
+
+(NP)
+> (onoff)
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : T
+NIL
+> (p '(the man hits the boy))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (MAN) := N
+        : MAN
+>     (THE)(MAN) := NP
+        : ((LAM X X) MAN)
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (BOY) := N
+        : BOY
+>     (THE)(BOY) := NP
+        : ((LAM X X) BOY)
+_MLU386 (THE MAN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+LEX   (HITS) := (S\NP)/NP
+        : (LAM X (LAM Y ((HITS X) Y)))
+_MLU388 (THE BOY) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+<     (HITS)(THE BOY) := S\NP
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+           (LAM X (LAM Y ((HITS X) Y))))
+>     (THE MAN)(HITS THE BOY) := S
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+           (((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+            (LAM X (LAM Y ((HITS X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((HITS BOY) MAN) =
+    (HITS BOY MAN)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)

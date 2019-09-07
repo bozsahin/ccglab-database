@@ -1,0 +1,11 @@
+% simple grammar to Dowty-shift a verb to look for its adjunct as argument
+%   e.g from vp to vp/(vp\vp) 
+% there are two ways to get it: another lex entry, unary rule.
+% -cem bozsahin
+
+john n := s/*vp : \p.p !john;
+spoke v := vp:\x.!speak x;
+mary n := np:!mary;
+to p := (vp\^vp)/*np : \x\p.p (!to x);
+(d-shift) vp : lf --> vp/(vp\vp) : \q\lf. q lf;
+spoke v := vp/^(vp\^vp): \q\x.q(!speak x);
