@@ -1,0 +1,1668 @@
+
+> (load "gtest")
+
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-en] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-en.ccg $
+    Its token form   : g-en.lisptokens $
+  Deduction grammar  : g-en.ded $ (derived from g-en.lisptokens)
+  Induction grammar  : g-en.ind #
+  Supervision source : g-en.sup ^
+  Model-specific code: g-en.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-en.ded
+  *LEX-RULES-TABLE*  : set from g-en.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 7
+--------------
+_MLU4466 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/S
+        : (LAM P (LAM X ((THINK P) X)))
+_MLU4468 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_TRC4459 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_MLU4468 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/NP)\(S/NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>B    (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             X)))
+_TRC4456 (CATS) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) CATS)
+<     (THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S\NP
+        : (((LAM LF (LAM P (P LF))) CATS)
+           (LAM X
+            ((LAM P (LAM X ((THINK P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              X))))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           (((LAM LF (LAM P (P LF))) CATS)
+            (LAM X
+             ((LAM P (LAM X ((THINK P) X)))
+              ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  (((LAM LF (LAM P (P LF))) YOU)
+                   ((LAM X
+                     ((LAM P (LAM X ((BELIEVE P) X)))
+                      ((LAM X
+                        (((LAM LF (LAM P (P LF))) MARY)
+                         ((LAM X (LAM Y ((HATE X) Y))) X)))
+                       X)))
+                    X))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))
+               X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+Derivation 1
+--------------
+LEX   (this book) := S/(S/NP)
+        : (LAM P ((AND (P BOOK)) (TOPIC BOOK)))
+_MLU4466 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (LIKE) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (I)(LIKE) := S/NP
+        : (LAM X (((LAM LF (LAM P (P LF))) I) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>     ("this book")(I LIKE) := S
+        : ((LAM P ((AND (P BOOK)) (TOPIC BOOK)))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((LIKE BOOK) I)) (TOPIC BOOK)) =
+    (AND (LIKE BOOK I) (TOPIC BOOK))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-ch] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-ch.ccg $
+    Its token form   : g-ch.lisptokens $
+  Deduction grammar  : g-ch.ded $ (derived from g-ch.lisptokens)
+  Induction grammar  : g-ch.ind #
+  Supervision source : g-ch.sup ^
+  Model-specific code: g-ch.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-ch.ded
+  *LEX-RULES-TABLE*  : set from g-ch.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 1
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+_MLU4517 (zhe-ben shu) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (XIHUAN)("zhe-ben shu") := S\NP
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK)) (LAM X (LAM Y ((LIKE X) Y))))
+>     (BU)(XIHUAN "zhe-ben shu") := S\NP
+        : ((LAM P (LAM X (NEG (P X))))
+           (((LAM LF (LAM P (P LF))) (DEF BOOK)) (LAM X (LAM Y ((LIKE X) Y)))))
+>     (LISI)(BU XIHUAN "zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) LISI)
+           ((LAM P (LAM X (NEG (P X))))
+            (((LAM LF (LAM P (P LF))) (DEF BOOK))
+             (LAM X (LAM Y ((LIKE X) Y))))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) LISI)
+            ((LAM P (LAM X (NEG (P X))))
+             (((LAM LF (LAM P (P LF))) (DEF BOOK))
+              (LAM X (LAM Y ((LIKE X) Y)))))))
+<Bx   (XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S/NP
+        : (LAM X
+           (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+             (((LAM LF (LAM P (P LF))) LISI)
+              ((LAM P (LAM X (NEG (P X))))
+               (((LAM LF (LAM P (P LF))) (DEF BOOK))
+                (LAM X (LAM Y ((LIKE X) Y)))))))
+            ((LAM X ((LIKE X) TOP)) X)))
+>     (ZHANGSAN)(XIHUAN DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+              (((LAM LF (LAM P (P LF))) LISI)
+               ((LAM P (LAM X (NEG (P X))))
+                (((LAM LF (LAM P (P LF))) (DEF BOOK))
+                 (LAM X (LAM Y ((LIKE X) Y)))))))
+             ((LAM X ((LIKE X) TOP)) X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       (LAM G4518
+        ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) G4518)) (((LIKE X) TOP) G4518))))
+      (TOPIC X))) =
+    (\ X . AND
+     (\ G4524 . BUT (NEG (LIKE (DEF BOOK) LISI) G4524) (LIKE X TOP G4524))
+     (TOPIC X))
+
+Derivation 2
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (BU)(XIHUAN) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+_MLU4517 (zhe-ben shu) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (BU XIHUAN)("zhe-ben shu") := S\NP
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK))
+           (LAM X
+            ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>     (LISI)(BU XIHUAN "zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) LISI)
+           (((LAM LF (LAM P (P LF))) (DEF BOOK))
+            (LAM X
+             ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) LISI)
+            (((LAM LF (LAM P (P LF))) (DEF BOOK))
+             (LAM X
+              ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X))))))
+<Bx   (XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S/NP
+        : (LAM X
+           (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+             (((LAM LF (LAM P (P LF))) LISI)
+              (((LAM LF (LAM P (P LF))) (DEF BOOK))
+               (LAM X
+                ((LAM P (LAM X (NEG (P X))))
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))))
+            ((LAM X ((LIKE X) TOP)) X)))
+>     (ZHANGSAN)(XIHUAN DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+              (((LAM LF (LAM P (P LF))) LISI)
+               (((LAM LF (LAM P (P LF))) (DEF BOOK))
+                (LAM X
+                 ((LAM P (LAM X (NEG (P X))))
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))))
+             ((LAM X ((LIKE X) TOP)) X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       (LAM G4531
+        ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) G4531)) (((LIKE X) TOP) G4531))))
+      (TOPIC X))) =
+    (\ X . AND
+     (\ G4538 . BUT (NEG (LIKE (DEF BOOK) LISI) G4538) (LIKE X TOP G4538))
+     (TOPIC X))
+
+Derivation 3
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (BU)(XIHUAN) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>B    (LISI)(BU XIHUAN) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) LISI)
+            ((LAM X
+              ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+             X)))
+_TRC4489 (zhe-ben shu) := S\(S/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (LISI BU XIHUAN)("zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) LISI)
+             ((LAM X
+               ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+              X))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) (DEF BOOK))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) LISI)
+              ((LAM X
+                ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+               X)))))
+<Bx   (XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S/NP
+        : (LAM X
+           (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+             (((LAM LF (LAM P (P LF))) (DEF BOOK))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) LISI)
+                ((LAM X
+                  ((LAM P (LAM X (NEG (P X))))
+                   ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                 X)))))
+            ((LAM X ((LIKE X) TOP)) X)))
+>     (ZHANGSAN)(XIHUAN DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+              (((LAM LF (LAM P (P LF))) (DEF BOOK))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) LISI)
+                 ((LAM X
+                   ((LAM P (LAM X (NEG (P X))))
+                    ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                  X)))))
+             ((LAM X ((LIKE X) TOP)) X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       (LAM G4545
+        ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) G4545)) (((LIKE X) TOP) G4545))))
+      (TOPIC X))) =
+    (\ X . AND
+     (\ G4550 . BUT (NEG (LIKE (DEF BOOK) LISI) G4550) (LIKE X TOP G4550))
+     (TOPIC X))
+
+Derivation 7
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+>     (ZHANGSAN)(XIHUAN) := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP)))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+_MLU4517 (zhe-ben shu) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (XIHUAN)("zhe-ben shu") := S\NP
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK)) (LAM X (LAM Y ((LIKE X) Y))))
+>     (BU)(XIHUAN "zhe-ben shu") := S\NP
+        : ((LAM P (LAM X (NEG (P X))))
+           (((LAM LF (LAM P (P LF))) (DEF BOOK)) (LAM X (LAM Y ((LIKE X) Y)))))
+>     (LISI)(BU XIHUAN "zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) LISI)
+           ((LAM P (LAM X (NEG (P X))))
+            (((LAM LF (LAM P (P LF))) (DEF BOOK))
+             (LAM X (LAM Y ((LIKE X) Y))))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) LISI)
+            ((LAM P (LAM X (NEG (P X))))
+             (((LAM LF (LAM P (P LF))) (DEF BOOK))
+              (LAM X (LAM Y ((LIKE X) Y)))))))
+<     (ZHANGSAN XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+            (((LAM LF (LAM P (P LF))) LISI)
+             ((LAM P (LAM X (NEG (P X))))
+              (((LAM LF (LAM P (P LF))) (DEF BOOK))
+               (LAM X (LAM Y ((LIKE X) Y)))))))
+           ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) X))
+      ((AND ((LIKE X) TOP)) (TOPIC X)))) =
+    (\ X . BUT (NEG (LIKE (DEF BOOK) LISI) X) (AND (LIKE X TOP) (TOPIC X)))
+
+Derivation 8
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+>     (ZHANGSAN)(XIHUAN) := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP)))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (BU)(XIHUAN) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+_MLU4517 (zhe-ben shu) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (BU XIHUAN)("zhe-ben shu") := S\NP
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK))
+           (LAM X
+            ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>     (LISI)(BU XIHUAN "zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) LISI)
+           (((LAM LF (LAM P (P LF))) (DEF BOOK))
+            (LAM X
+             ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) LISI)
+            (((LAM LF (LAM P (P LF))) (DEF BOOK))
+             (LAM X
+              ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X))))))
+<     (ZHANGSAN XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+            (((LAM LF (LAM P (P LF))) LISI)
+             (((LAM LF (LAM P (P LF))) (DEF BOOK))
+              (LAM X
+               ((LAM P (LAM X (NEG (P X))))
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))))
+           ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) X))
+      ((AND ((LIKE X) TOP)) (TOPIC X)))) =
+    (\ X . BUT (NEG (LIKE (DEF BOOK) LISI) X) (AND (LIKE X TOP) (TOPIC X)))
+
+Derivation 9
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+LEX   (XIHUAN) := S/NP
+        : (LAM X ((LIKE X) TOP))
+>     (ZHANGSAN)(XIHUAN) := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP)))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (BU)(XIHUAN) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>B    (LISI)(BU XIHUAN) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) LISI)
+            ((LAM X
+              ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+             X)))
+_TRC4489 (zhe-ben shu) := S\(S/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (LISI BU XIHUAN)("zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) LISI)
+             ((LAM X
+               ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+              X))))
+>     (DANSHI)(LISI BU XIHUAN "zhe-ben shu") := S\S
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (((LAM LF (LAM P (P LF))) (DEF BOOK))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) LISI)
+              ((LAM X
+                ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+               X)))))
+<     (ZHANGSAN XIHUAN)(DANSHI LISI BU XIHUAN "zhe-ben shu") := S
+        : (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+            (((LAM LF (LAM P (P LF))) (DEF BOOK))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) LISI)
+               ((LAM X
+                 ((LAM P (LAM X (NEG (P X))))
+                  ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                X)))))
+           ((LAM P (LAM X ((AND (P X)) (TOPIC X)))) (LAM X ((LIKE X) TOP))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((BUT ((NEG ((LIKE (DEF BOOK)) LISI)) X))
+      ((AND ((LIKE X) TOP)) (TOPIC X)))) =
+    (\ X . BUT (NEG (LIKE (DEF BOOK) LISI) X) (AND (LIKE X TOP) (TOPIC X)))
+
+Derivation 13
+--------------
+_MLU4515 (ZHANGSAN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) Z)
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (ZHANGSAN)(XIHUAN) := S/NP
+        : (LAM X (((LAM LF (LAM P (P LF))) Z) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (DANSHI) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+_MLU4515 (LISI) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) LISI)
+LEX   (BU) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (XIHUAN) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (BU)(XIHUAN) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>B    (LISI)(BU XIHUAN) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) LISI)
+            ((LAM X
+              ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+             X)))
+>     (DANSHI)(LISI BU XIHUAN) := (S/NP)\(S/NP)
+        : ((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) LISI)
+             ((LAM X
+               ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+              X))))
+<     (ZHANGSAN XIHUAN)(DANSHI LISI BU XIHUAN) := S/NP
+        : (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) LISI)
+              ((LAM X
+                ((LAM P (LAM X (NEG (P X)))) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) Z) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+_TRC4489 (zhe-ben shu) := S\(S/NP)
+        : ((LAM LF (LAM P (P LF))) (DEF BOOK))
+<     (ZHANGSAN XIHUAN DANSHI LISI BU XIHUAN)("zhe-ben shu") := S
+        : (((LAM LF (LAM P (P LF))) (DEF BOOK))
+           (((LAM P (LAM Q (LAM X ((BUT (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) LISI)
+               ((LAM X
+                 ((LAM P (LAM X (NEG (P X))))
+                  ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) Z) ((LAM X (LAM Y ((LIKE X) Y))) X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((BUT (NEG ((LIKE (DEF BOOK)) LISI))) ((LIKE (DEF BOOK)) Z)) =
+    (BUT (NEG (LIKE (DEF BOOK) LISI)) (LIKE (DEF BOOK) Z))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+Derivation 1
+--------------
+_MLU4515 (TA) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) HESHE)
+LEX   (DIGEI) := ((S\NP)/NP)/NP
+        : (LAM X (LAM Y (LAM Z (((GIVE X) Y) Z))))
+_TRC4488 (GEGE) := ((S\NP)/NP)\(((S\NP)/NP)/NP)
+        : ((LAM LF (LAM P (P LF))) BROTHER)
+_MLU4517 (yi-hu jiu) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (ONE WINE))
+<B    (GEGE)("yi-hu jiu") := (S\NP)\(((S\NP)/NP)/NP)
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) (ONE WINE))
+            (((LAM LF (LAM P (P LF))) BROTHER) X)))
+LEX   (ER) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_TRC4488 (JIEJIE) := ((S\NP)/NP)\(((S\NP)/NP)/NP)
+        : ((LAM LF (LAM P (P LF))) SISTER)
+_MLU4517 (yi-pan cai) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) (ONE DISH))
+<B    (JIEJIE)("yi-pan cai") := (S\NP)\(((S\NP)/NP)/NP)
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) (ONE DISH))
+            (((LAM LF (LAM P (P LF))) SISTER) X)))
+>     (ER)(JIEJIE "yi-pan cai") := ((S\NP)\(((S\NP)/NP)/NP))\((S\NP)\(((S\NP)/NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) (ONE DISH))
+             (((LAM LF (LAM P (P LF))) SISTER) X))))
+<     (GEGE "yi-hu jiu")(ER JIEJIE "yi-pan cai") := (S\NP)\(((S\NP)/NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) (ONE DISH))
+              (((LAM LF (LAM P (P LF))) SISTER) X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) (ONE WINE))
+             (((LAM LF (LAM P (P LF))) BROTHER) X))))
+<     (DIGEI)(GEGE "yi-hu jiu" ER JIEJIE "yi-pan cai") := S\NP
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) (ONE DISH))
+               (((LAM LF (LAM P (P LF))) SISTER) X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) (ONE WINE))
+              (((LAM LF (LAM P (P LF))) BROTHER) X))))
+           (LAM X (LAM Y (LAM Z (((GIVE X) Y) Z)))))
+>     (TA)(DIGEI GEGE "yi-hu jiu" ER JIEJIE "yi-pan cai") := S
+        : (((LAM LF (LAM P (P LF))) HESHE)
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) (ONE DISH))
+                (((LAM LF (LAM P (P LF))) SISTER) X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) (ONE WINE))
+               (((LAM LF (LAM P (P LF))) BROTHER) X))))
+            (LAM X (LAM Y (LAM Z (((GIVE X) Y) Z))))))
+
+Final LF, normal-order evaluated: 
+
+    (((AND (LAM Z (((GIVE SISTER) (ONE DISH)) Z)))
+      (LAM Z (((GIVE BROTHER) (ONE WINE)) Z)))
+     HESHE) =
+    (AND (\ Z . GIVE SISTER (ONE DISH) Z) (\ Z . GIVE BROTHER (ONE WINE) Z)
+     HESHE)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+Derivation 1
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+_MLU4515 (WO) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (QIDAI) := ((S\NP)/VP)/NP
+        : (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y))))
+LEX   (TA) := (((S\NP)/VP)/NP)\(((S\NP)/VP)/NP)
+        : (LAM P (RES P))
+<     (QIDAI)(TA) := ((S\NP)/VP)/NP
+        : ((LAM P (RES P)) (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y)))))
+_MLU4508 (yao lai) := (S\NP)\((S\NP)/VP)
+        : ((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+<Bx   (QIDAI TA)("yao lai") := (S\NP)/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+            (((LAM P (RES P)) (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y))))) X)))
+>B    (WO)(QIDAI TA "yao lai") := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) I)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+               (((LAM P (RES P)) (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y)))))
+                X)))
+             X)))
+>     (ZHANGSAN)(WO QIDAI TA "yao lai") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I)
+             ((LAM X
+               (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+                (((LAM P (RES P)) (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y)))))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       ((((RES (LAM X (LAM P (LAM Y ((FORESEE (P X)) Y))))) X)
+         (LAM X (WILLCOME X)))
+        I))
+      (TOPIC X))) =
+    (\ X . AND (RES (\ X . \ P . \ Y . FORESEE (P X) Y) X (\ X . WILLCOME X) I)
+     (TOPIC X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+Derivation 1
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+_MLU4515 (WO) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (QUAN) := ((S\NP)/VP)/NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (TA) := (((S\NP)/VP)/NP)\(((S\NP)/VP)/NP)
+        : (LAM P (RES P))
+<     (QUAN)(TA) := ((S\NP)/VP)/NP
+        : ((LAM P (RES P)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+_MLU4508 (yao lai) := (S\NP)\((S\NP)/VP)
+        : ((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+<Bx   (QUAN TA)("yao lai") := (S\NP)/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+            (((LAM P (RES P)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+             X)))
+>B    (WO)(QUAN TA "yao lai") := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) I)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+               (((LAM P (RES P))
+                 (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+                X)))
+             X)))
+>     (ZHANGSAN)(WO QUAN TA "yao lai") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I)
+             ((LAM X
+               (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+                (((LAM P (RES P))
+                  (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       ((((RES (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))) X)
+         (LAM X (WILLCOME X)))
+        I))
+      (TOPIC X))) =
+    (\ X . AND
+     (RES (\ X . \ P . \ Y . PERSUADE (P X) X Y) X (\ X . WILLCOME X) I)
+     (TOPIC X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+Derivation 1
+--------------
+LEX   (ZHANGSAN) := S/(S/NP)
+        : (LAM P (LAM X ((AND (P X)) (TOPIC X))))
+_MLU4515 (WO) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (DAYING) := ((S\NP)/VP)/NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (TA) := (((S\NP)/VP)/NP)\(((S\NP)/VP)/NP)
+        : (LAM P (RES P))
+<     (DAYING)(TA) := ((S\NP)/VP)/NP
+        : ((LAM P (RES P)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+_MLU4508 (yao lai) := (S\NP)\((S\NP)/VP)
+        : ((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+<Bx   (DAYING TA)("yao lai") := (S\NP)/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+            (((LAM P (RES P)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+             X)))
+>B    (WO)(DAYING TA "yao lai") := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) I)
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+               (((LAM P (RES P))
+                 (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+                X)))
+             X)))
+>     (ZHANGSAN)(WO DAYING TA "yao lai") := S
+        : ((LAM P (LAM X ((AND (P X)) (TOPIC X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I)
+             ((LAM X
+               (((LAM LF (LAM P (P LF))) (LAM X (WILLCOME X)))
+                (((LAM P (RES P))
+                  (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+                 X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X
+     ((AND
+       ((((RES (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))) X)
+         (LAM X (WILLCOME X)))
+        I))
+      (TOPIC X))) =
+    (\ X . AND
+     (RES (\ X . \ P . \ Y . PROMISE (P Y) X Y) X (\ X . WILLCOME X) I)
+     (TOPIC X))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-tr] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-tr.ccg $
+    Its token form   : g-tr.lisptokens $
+  Deduction grammar  : g-tr.ded $ (derived from g-tr.lisptokens)
+  Induction grammar  : g-tr.ind #
+  Supervision source : g-tr.sup ^
+  Model-specific code: g-tr.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-tr.ded
+  *LEX-RULES-TABLE*  : set from g-tr.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 1
+--------------
+LEX   (BEN-IM) := S/IV
+        : (LAM P (P I))
+_TRC4613 (ADAM-IN) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+LEX   (OKU) := IV\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+LEX   (-DUGU) := (S\NP)\IV
+        : (LAM P (LAM X (P X)))
+<B    (OKU)(-DUGU) := (S\NP)\NP
+        : (LAM X ((LAM P (LAM X (P X))) ((LAM X (LAM Y ((READ X) Y))) X)))
+LEX   (-NU) := S\S
+        : (LAM P P)
+<B2   (OKU -DUGU)(-NU) := (S\NP)\NP
+        : (LAM X
+           (LAM Y
+            ((LAM P P)
+             (((LAM X ((LAM P (LAM X (P X))) ((LAM X (LAM Y ((READ X) Y))) X)))
+               X)
+              Y))))
+LEX   (BIL) := IV\S
+        : (LAM P (LAM X ((KNOW P) X)))
+<B2   (OKU -DUGU -NU)(BIL) := (IV\NP)\NP
+        : (LAM X
+           (LAM Y
+            ((LAM P (LAM X ((KNOW P) X)))
+             (((LAM X
+                (LAM Y
+                 ((LAM P P)
+                  (((LAM X
+                     ((LAM P (LAM X (P X))) ((LAM X (LAM Y ((READ X) Y))) X)))
+                    X)
+                   Y))))
+               X)
+              Y))))
+>Bx   (ADAM-IN)(OKU -DUGU -NU BIL) := IV\NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MAN)
+            ((LAM X
+              (LAM Y
+               ((LAM P (LAM X ((KNOW P) X)))
+                (((LAM X
+                   (LAM Y
+                    ((LAM P P)
+                     (((LAM X
+                        ((LAM P (LAM X (P X)))
+                         ((LAM X (LAM Y ((READ X) Y))) X)))
+                       X)
+                      Y))))
+                  X)
+                 Y))))
+             X)))
+>Bx   (BEN-IM)(ADAM-IN OKU -DUGU -NU BIL) := S\NP
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MAN)
+               ((LAM X
+                 (LAM Y
+                  ((LAM P (LAM X ((KNOW P) X)))
+                   (((LAM X
+                      (LAM Y
+                       ((LAM P P)
+                        (((LAM X
+                           ((LAM P (LAM X (P X)))
+                            ((LAM X (LAM Y ((READ X) Y))) X)))
+                          X)
+                         Y))))
+                     X)
+                    Y))))
+                X)))
+             X)))
+LEX   (-DIGIM) := ((IV/(IV\NP))/(IV/(IV\NP)))\(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+<     (BEN-IM ADAM-IN OKU -DUGU -NU BIL)(-DIGIM) := (IV/(IV\NP))/(IV/(IV\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               (((LAM LF (LAM P (P LF))) MAN)
+                ((LAM X
+                  (LAM Y
+                   ((LAM P (LAM X ((KNOW P) X)))
+                    (((LAM X
+                       (LAM Y
+                        ((LAM P P)
+                         (((LAM X
+                            ((LAM P (LAM X (P X)))
+                             ((LAM X (LAM Y ((READ X) Y))) X)))
+                           X)
+                          Y))))
+                      X)
+                     Y))))
+                 X)))
+              X))))
+_TRC4613 (KITAP) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) BOOK)
+>     (BEN-IM ADAM-IN OKU -DUGU -NU BIL -DIGIM)(KITAP) := IV/(IV\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                (((LAM LF (LAM P (P LF))) MAN)
+                 ((LAM X
+                   (LAM Y
+                    ((LAM P (LAM X ((KNOW P) X)))
+                     (((LAM X
+                        (LAM Y
+                         ((LAM P P)
+                          (((LAM X
+                             ((LAM P (LAM X (P X)))
+                              ((LAM X (LAM Y ((READ X) Y))) X)))
+                            X)
+                           Y))))
+                       X)
+                      Y))))
+                  X)))
+               X))))
+           ((LAM LF (LAM P (P LF))) BOOK))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND (X (LAM X ((KNOW ((READ X) MAN)) I)))) (X (LAM P (P BOOK))))) =
+    (\ X . AND (X (\ X . KNOW (READ X MAN) I)) (X (\ P . P BOOK)))
+
+Derivation 2
+--------------
+LEX   (BEN-IM) := S/IV
+        : (LAM P (P I))
+_TRC4613 (ADAM-IN) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+LEX   (OKU) := IV\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+>     (ADAM-IN)(OKU) := IV
+        : (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))
+LEX   (-DUGU) := (S\NP)\IV
+        : (LAM P (LAM X (P X)))
+<     (ADAM-IN OKU)(-DUGU) := S\NP
+        : ((LAM P (LAM X (P X)))
+           (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y)))))
+LEX   (-NU) := S\S
+        : (LAM P P)
+<B    (ADAM-IN OKU -DUGU)(-NU) := S\NP
+        : (LAM X
+           ((LAM P P)
+            (((LAM P (LAM X (P X)))
+              (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y)))))
+             X)))
+LEX   (BIL) := IV\S
+        : (LAM P (LAM X ((KNOW P) X)))
+<B    (ADAM-IN OKU -DUGU -NU)(BIL) := IV\NP
+        : (LAM X
+           ((LAM P (LAM X ((KNOW P) X)))
+            ((LAM X
+              ((LAM P P)
+               (((LAM P (LAM X (P X)))
+                 (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y)))))
+                X)))
+             X)))
+>Bx   (BEN-IM)(ADAM-IN OKU -DUGU -NU BIL) := S\NP
+        : (LAM X
+           ((LAM P (P I))
+            ((LAM X
+              ((LAM P (LAM X ((KNOW P) X)))
+               ((LAM X
+                 ((LAM P P)
+                  (((LAM P (LAM X (P X)))
+                    (((LAM LF (LAM P (P LF))) MAN)
+                     (LAM X (LAM Y ((READ X) Y)))))
+                   X)))
+                X)))
+             X)))
+LEX   (-DIGIM) := ((IV/(IV\NP))/(IV/(IV\NP)))\(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+<     (BEN-IM ADAM-IN OKU -DUGU -NU BIL)(-DIGIM) := (IV/(IV\NP))/(IV/(IV\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+           (LAM X
+            ((LAM P (P I))
+             ((LAM X
+               ((LAM P (LAM X ((KNOW P) X)))
+                ((LAM X
+                  ((LAM P P)
+                   (((LAM P (LAM X (P X)))
+                     (((LAM LF (LAM P (P LF))) MAN)
+                      (LAM X (LAM Y ((READ X) Y)))))
+                    X)))
+                 X)))
+              X))))
+_TRC4613 (KITAP) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) BOOK)
+>     (BEN-IM ADAM-IN OKU -DUGU -NU BIL -DIGIM)(KITAP) := IV/(IV\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+            (LAM X
+             ((LAM P (P I))
+              ((LAM X
+                ((LAM P (LAM X ((KNOW P) X)))
+                 ((LAM X
+                   ((LAM P P)
+                    (((LAM P (LAM X (P X)))
+                      (((LAM LF (LAM P (P LF))) MAN)
+                       (LAM X (LAM Y ((READ X) Y)))))
+                     X)))
+                  X)))
+               X))))
+           ((LAM LF (LAM P (P LF))) BOOK))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND (X (LAM X ((KNOW ((READ MAN) X)) I)))) (X (LAM P (P BOOK))))) =
+    (\ X . AND (X (\ X . KNOW (READ MAN X) I)) (X (\ P . P BOOK)))
+
+Derivation 3
+--------------
+LEX   (BEN-IM) := S/IV
+        : (LAM P (P I))
+_TRC4613 (ADAM-IN) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+LEX   (OKU) := IV\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+>     (ADAM-IN)(OKU) := IV
+        : (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))
+>     (BEN-IM)(ADAM-IN OKU) := S
+        : ((LAM P (P I))
+           (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y)))))
+_TRC4612 (BEN-IM ADAM-IN OKU) := IV/(IV\S)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM P (P I))
+            (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+LEX   (-DUGU) := (S\NP)\IV
+        : (LAM P (LAM X (P X)))
+<Bx   (BEN-IM ADAM-IN OKU)(-DUGU) := (S\NP)/(IV\S)
+        : (LAM X
+           ((LAM P (LAM X (P X)))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM P (P I))
+               (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+             X)))
+LEX   (-NU) := S\S
+        : (LAM P P)
+LEX   (BIL) := IV\S
+        : (LAM P (LAM X ((KNOW P) X)))
+<B    (-NU)(BIL) := IV\S
+        : (LAM X ((LAM P (LAM X ((KNOW P) X))) ((LAM P P) X)))
+>     (BEN-IM ADAM-IN OKU -DUGU)(-NU BIL) := S\NP
+        : ((LAM X
+            ((LAM P (LAM X (P X)))
+             (((LAM LF (LAM P (P LF)))
+               ((LAM P (P I))
+                (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+              X)))
+           (LAM X ((LAM P (LAM X ((KNOW P) X))) ((LAM P P) X))))
+LEX   (-DIGIM) := ((IV/(IV\NP))/(IV/(IV\NP)))\(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+<     (BEN-IM ADAM-IN OKU -DUGU -NU BIL)(-DIGIM) := (IV/(IV\NP))/(IV/(IV\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+           ((LAM X
+             ((LAM P (LAM X (P X)))
+              (((LAM LF (LAM P (P LF)))
+                ((LAM P (P I))
+                 (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+               X)))
+            (LAM X ((LAM P (LAM X ((KNOW P) X))) ((LAM P P) X)))))
+_TRC4613 (KITAP) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) BOOK)
+>     (BEN-IM ADAM-IN OKU -DUGU -NU BIL -DIGIM)(KITAP) := IV/(IV\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+            ((LAM X
+              ((LAM P (LAM X (P X)))
+               (((LAM LF (LAM P (P LF)))
+                 ((LAM P (P I))
+                  (((LAM LF (LAM P (P LF))) MAN)
+                   (LAM X (LAM Y ((READ X) Y))))))
+                X)))
+             (LAM X ((LAM P (LAM X ((KNOW P) X))) ((LAM P P) X)))))
+           ((LAM LF (LAM P (P LF))) BOOK))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND (X (LAM X ((KNOW ((READ MAN) I)) X)))) (X (LAM P (P BOOK))))) =
+    (\ X . AND (X (\ X . KNOW (READ MAN I) X)) (X (\ P . P BOOK)))
+
+Derivation 4
+--------------
+LEX   (BEN-IM) := S/IV
+        : (LAM P (P I))
+_TRC4613 (ADAM-IN) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+LEX   (OKU) := IV\NP
+        : (LAM X (LAM Y ((READ X) Y)))
+>     (ADAM-IN)(OKU) := IV
+        : (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))
+>     (BEN-IM)(ADAM-IN OKU) := S
+        : ((LAM P (P I))
+           (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y)))))
+_TRC4612 (BEN-IM ADAM-IN OKU) := IV/(IV\S)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM P (P I))
+            (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+LEX   (-DUGU) := (S\NP)\IV
+        : (LAM P (LAM X (P X)))
+<Bx   (BEN-IM ADAM-IN OKU)(-DUGU) := (S\NP)/(IV\S)
+        : (LAM X
+           ((LAM P (LAM X (P X)))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM P (P I))
+               (((LAM LF (LAM P (P LF))) MAN) (LAM X (LAM Y ((READ X) Y))))))
+             X)))
+LEX   (-NU) := S\S
+        : (LAM P P)
+<B2   (BEN-IM ADAM-IN OKU -DUGU)(-NU) := (S\NP)/(IV\S)
+        : (LAM X
+           (LAM Y
+            ((LAM P P)
+             (((LAM X
+                ((LAM P (LAM X (P X)))
+                 (((LAM LF (LAM P (P LF)))
+                   ((LAM P (P I))
+                    (((LAM LF (LAM P (P LF))) MAN)
+                     (LAM X (LAM Y ((READ X) Y))))))
+                  X)))
+               X)
+              Y))))
+LEX   (BIL) := IV\S
+        : (LAM P (LAM X ((KNOW P) X)))
+>     (BEN-IM ADAM-IN OKU -DUGU -NU)(BIL) := S\NP
+        : ((LAM X
+            (LAM Y
+             ((LAM P P)
+              (((LAM X
+                 ((LAM P (LAM X (P X)))
+                  (((LAM LF (LAM P (P LF)))
+                    ((LAM P (P I))
+                     (((LAM LF (LAM P (P LF))) MAN)
+                      (LAM X (LAM Y ((READ X) Y))))))
+                   X)))
+                X)
+               Y))))
+           (LAM P (LAM X ((KNOW P) X))))
+LEX   (-DIGIM) := ((IV/(IV\NP))/(IV/(IV\NP)))\(S\NP)
+        : (LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+<     (BEN-IM ADAM-IN OKU -DUGU -NU BIL)(-DIGIM) := (IV/(IV\NP))/(IV/(IV\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+           ((LAM X
+             (LAM Y
+              ((LAM P P)
+               (((LAM X
+                  ((LAM P (LAM X (P X)))
+                   (((LAM LF (LAM P (P LF)))
+                     ((LAM P (P I))
+                      (((LAM LF (LAM P (P LF))) MAN)
+                       (LAM X (LAM Y ((READ X) Y))))))
+                    X)))
+                 X)
+                Y))))
+            (LAM P (LAM X ((KNOW P) X)))))
+_TRC4613 (KITAP) := IV/(IV\NP)
+        : ((LAM LF (LAM P (P LF))) BOOK)
+>     (BEN-IM ADAM-IN OKU -DUGU -NU BIL -DIGIM)(KITAP) := IV/(IV\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (X P)) (X Q)))))
+            ((LAM X
+              (LAM Y
+               ((LAM P P)
+                (((LAM X
+                   ((LAM P (LAM X (P X)))
+                    (((LAM LF (LAM P (P LF)))
+                      ((LAM P (P I))
+                       (((LAM LF (LAM P (P LF))) MAN)
+                        (LAM X (LAM Y ((READ X) Y))))))
+                     X)))
+                  X)
+                 Y))))
+             (LAM P (LAM X ((KNOW P) X)))))
+           ((LAM LF (LAM P (P LF))) BOOK))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND (X (LAM Y ((KNOW ((READ MAN) I)) Y)))) (X (LAM P (P BOOK))))) =
+    (\ X . AND (X (\ Y . KNOW (READ MAN I) Y)) (X (\ P . P BOOK)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-pt] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-pt.ccg $
+    Its token form   : g-pt.lisptokens $
+  Deduction grammar  : g-pt.ded $ (derived from g-pt.lisptokens)
+  Induction grammar  : g-pt.ind #
+  Supervision source : g-pt.sup ^
+  Model-specific code: g-pt.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-pt.ded
+  *LEX-RULES-TABLE*  : set from g-pt.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 1
+--------------
+_TRC4662 (O Paulo) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) PAUL)
+LEX   (NAO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NEG (P X))))
+LEX   (OS) := (S\NP)/((S\NP)/NP)
+        : (LAM P (P THEM))
+LEX   (VIU) := (S\NP)/NP
+        : (LAM X (LAM Y ((SEE X) Y)))
+>     (OS)(VIU) := S\NP
+        : ((LAM P (P THEM)) (LAM X (LAM Y ((SEE X) Y))))
+>     (NAO)(OS VIU) := S\NP
+        : ((LAM P (LAM X (NEG (P X))))
+           ((LAM P (P THEM)) (LAM X (LAM Y ((SEE X) Y)))))
+>     ("O Paulo")(NAO OS VIU) := S
+        : (((LAM LF (LAM P (P LF))) PAUL)
+           ((LAM P (LAM X (NEG (P X))))
+            ((LAM P (P THEM)) (LAM X (LAM Y ((SEE X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    (NEG ((SEE THEM) PAUL)) =
+    (NEG (SEE THEM PAUL))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-ko] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-ko.ccg $
+    Its token form   : g-ko.lisptokens $
+  Deduction grammar  : g-ko.ded $ (derived from g-ko.lisptokens)
+  Induction grammar  : g-ko.ind #
+  Supervision source : g-ko.sup ^
+  Model-specific code: g-ko.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-ko.ded
+  *LEX-RULES-TABLE*  : set from g-ko.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 1
+--------------
+_TRC4664 (HANKWUK-EY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KOREA)
+LEX   (SEWUL-I) := (S/(S\NP))/(S/(S\NP))
+        : (LAM P (SEUL P))
+_TRC4664 (NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARKET)
+>     (SEWUL-I)(NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+_TRC4664 (PUL-I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) FIRE)
+LEX   (NA-ASS-TA) := ((S\NP)\NP)\NP
+        : (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z))))
+>Bx2  (PUL-I)(NA-ASS-TA) := (S\NP)\NP
+        : (LAM X
+           (LAM Y
+            (((LAM LF (LAM P (P LF))) FIRE)
+             (((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X) Y))))
+>Bx   (SEWUL-I NAMTAYMUN-SICANG-I)(PUL-I NA-ASS-TA) := S\NP
+        : (LAM X
+           (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+            ((LAM X
+              (LAM Y
+               (((LAM LF (LAM P (P LF))) FIRE)
+                (((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X) Y))))
+             X)))
+>     (HANKWUK-EY)(SEWUL-I NAMTAYMUN-SICANG-I PUL-I NA-ASS-TA) := S
+        : (((LAM LF (LAM P (P LF))) KOREA)
+           (LAM X
+            (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+             ((LAM X
+               (LAM Y
+                (((LAM LF (LAM P (P LF))) FIRE)
+                 (((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X) Y))))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SEUL (LAM P (P MARKET))) (LAM Y (((BREAKOUT KOREA) Y) FIRE))) =
+    (SEUL (\ P . P MARKET) (\ Y . BREAKOUT KOREA Y FIRE))
+
+Derivation 2
+--------------
+_TRC4664 (HANKWUK-EY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KOREA)
+LEX   (SEWUL-I) := (S/(S\NP))/(S/(S\NP))
+        : (LAM P (SEUL P))
+_TRC4664 (NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARKET)
+>     (SEWUL-I)(NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+_TRC4665 (PUL-I) := (S\NP)/((S\NP)\NP)
+        : ((LAM LF (LAM P (P LF))) FIRE)
+LEX   (NA-ASS-TA) := ((S\NP)\NP)\NP
+        : (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z))))
+>Bx   (PUL-I)(NA-ASS-TA) := (S\NP)\NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) FIRE)
+            ((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X)))
+>Bx   (SEWUL-I NAMTAYMUN-SICANG-I)(PUL-I NA-ASS-TA) := S\NP
+        : (LAM X
+           (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) FIRE)
+               ((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X)))
+             X)))
+>     (HANKWUK-EY)(SEWUL-I NAMTAYMUN-SICANG-I PUL-I NA-ASS-TA) := S
+        : (((LAM LF (LAM P (P LF))) KOREA)
+           (LAM X
+            (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+             ((LAM X
+               (((LAM LF (LAM P (P LF))) FIRE)
+                ((LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))) X)))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SEUL (LAM P (P MARKET))) (LAM Z (((BREAKOUT KOREA) FIRE) Z))) =
+    (SEUL (\ P . P MARKET) (\ Z . BREAKOUT KOREA FIRE Z))
+
+Derivation 3
+--------------
+_TRC4664 (HANKWUK-EY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) KOREA)
+LEX   (SEWUL-I) := (S/(S\NP))/(S/(S\NP))
+        : (LAM P (SEUL P))
+_TRC4664 (NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARKET)
+>     (SEWUL-I)(NAMTAYMUN-SICANG-I) := S/(S\NP)
+        : ((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+_TRC4666 (PUL-I) := ((S\NP)\NP)/(((S\NP)\NP)\NP)
+        : ((LAM LF (LAM P (P LF))) FIRE)
+LEX   (NA-ASS-TA) := ((S\NP)\NP)\NP
+        : (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z))))
+>     (PUL-I)(NA-ASS-TA) := (S\NP)\NP
+        : (((LAM LF (LAM P (P LF))) FIRE)
+           (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))))
+>Bx   (SEWUL-I NAMTAYMUN-SICANG-I)(PUL-I NA-ASS-TA) := S\NP
+        : (LAM X
+           (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+            ((((LAM LF (LAM P (P LF))) FIRE)
+              (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))))
+             X)))
+>     (HANKWUK-EY)(SEWUL-I NAMTAYMUN-SICANG-I PUL-I NA-ASS-TA) := S
+        : (((LAM LF (LAM P (P LF))) KOREA)
+           (LAM X
+            (((LAM P (SEUL P)) ((LAM LF (LAM P (P LF))) MARKET))
+             ((((LAM LF (LAM P (P LF))) FIRE)
+               (LAM X (LAM Y (LAM Z (((BREAKOUT X) Y) Z)))))
+              X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SEUL (LAM P (P MARKET))) (LAM Z (((BREAKOUT FIRE) KOREA) Z))) =
+    (SEUL (\ P . P MARKET) (\ Z . BREAKOUT FIRE KOREA Z))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+
+=========================== p r e p a r i n g ===============================
+
+Project name: g
+  Input : g.lisptokens 
+  Output: g.ded 
+Check to see if output contains any spec errors.
+Fix and re-run if it does.
+You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+======================= l o a d i n g =======================================
+
+Project [g] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g.ccg $
+    Its token form   : g.lisptokens $
+  Deduction grammar  : g.ded $ (derived from g.lisptokens)
+  Induction grammar  : g.ind #
+  Supervision source : g.sup ^
+  Model-specific code: g.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g.ded
+  *LEX-RULES-TABLE*  : set from g.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+======================= l o a d i n g =======================================
+
+Project [g-dy] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : g-dy.ccg $
+    Its token form   : g-dy.lisptokens $
+  Deduction grammar  : g-dy.ded $ (derived from g-dy.lisptokens)
+  Induction grammar  : g-dy.ind #
+  Supervision source : g-dy.sup ^
+  Model-specific code: g-dy.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from g-dy.ded
+  *LEX-RULES-TABLE*  : set from g-dy.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+
+
+Derivation 1
+--------------
+_TRC4686 (bayi yara) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+_TRC4687 (NUMA-NGU) := (S\NP)/((S\NP)\NP)
+        : ((LAM LF (LAM P (P LF))) FATHER)
+LEX   (GIGA-N) := ((S\NP)\NP)/VP
+        : (LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))
+_TRC4685 (GUBI-NGU) := VP/(VP\NP)
+        : ((LAM LF (LAM P (P LF))) GUBI)
+LEX   (MAWA-LI) := VP\NP
+        : (LAM X (LAM Y ((EXAMINE Y) X)))
+>     (GUBI-NGU)(MAWA-LI) := VP
+        : (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X))))
+>     (GIGA-N)(GUBI-NGU MAWA-LI) := (S\NP)\NP
+        : ((LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))
+           (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))
+>     (NUMA-NGU)(GIGA-N GUBI-NGU MAWA-LI) := S\NP
+        : (((LAM LF (LAM P (P LF))) FATHER)
+           ((LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))
+            (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X))))))
+>     ("bayi yara")(NUMA-NGU GIGA-N GUBI-NGU MAWA-LI) := S
+        : (((LAM LF (LAM P (P LF))) MAN)
+           (((LAM LF (LAM P (P LF))) FATHER)
+            ((LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))
+             (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))))
+
+Final LF, normal-order evaluated: 
+
+    (((TELL ((EXAMINE MAN) GUBI)) MAN) FATHER) =
+    (TELL (EXAMINE MAN GUBI) MAN FATHER)
+
+Derivation 2
+--------------
+_TRC4685 (GUBI-NGU) := VP/(VP\NP)
+        : ((LAM LF (LAM P (P LF))) GUBI)
+LEX   (MAWA-LI) := VP\NP
+        : (LAM X (LAM Y ((EXAMINE Y) X)))
+>     (GUBI-NGU)(MAWA-LI) := VP
+        : (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X))))
+_TRC4686 (bayi yara) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MAN)
+_TRC4687 (NUMA-NGU) := (S\NP)/((S\NP)\NP)
+        : ((LAM LF (LAM P (P LF))) FATHER)
+LEX   (GIGA-N) := ((S\NP)\NP)/VP
+        : (LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))
+_TRC4688 (GUBI-NGU MAWA-LI) := ((S\NP)\NP)\(((S\NP)\NP)/VP)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))
+<     (GIGA-N)(GUBI-NGU MAWA-LI) := (S\NP)\NP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))
+           (LAM P (LAM Y (LAM X (((TELL (P X)) X) Y)))))
+>     (NUMA-NGU)(GIGA-N GUBI-NGU MAWA-LI) := S\NP
+        : (((LAM LF (LAM P (P LF))) FATHER)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))
+            (LAM P (LAM Y (LAM X (((TELL (P X)) X) Y))))))
+>     ("bayi yara")(NUMA-NGU GIGA-N GUBI-NGU MAWA-LI) := S
+        : (((LAM LF (LAM P (P LF))) MAN)
+           (((LAM LF (LAM P (P LF))) FATHER)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM LF (LAM P (P LF))) GUBI) (LAM X (LAM Y ((EXAMINE Y) X)))))
+             (LAM P (LAM Y (LAM X (((TELL (P X)) X) Y)))))))
+
+Final LF, normal-order evaluated: 
+
+    (((TELL ((EXAMINE MAN) GUBI)) MAN) FATHER) =
+    (TELL (EXAMINE MAN GUBI) MAN FATHER)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+T
+> (dribble)
