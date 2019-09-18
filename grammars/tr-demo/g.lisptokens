@@ -38,8 +38,8 @@ oku tr  |:=|  iv |\\| np |[| case |=| acc |]|   |:|   |\\| x |\\| y |.| !read x 
 -dugu comp  |:=|   |(| s |[| agr |=| ?a |]|  |\\| np |[| agr |=| ?a |]|  |)|  |\\| iv |[| agr |=| ?a |]|   |:|   |\\| p |\\| x |.| p x |;| 
 -nu case   |:=|  s |[| case |=| acc |]|  |\\| s |[| agr |=| 3s |]|   |:|   |\\| p |.| p  |;| 
 bil tr  |:=|  iv |\\| s |[| case |=| acc |]|   |:|   |\\| p |\\| x |.| !know p x |;|  
--digim rel  |:=|   |(|  |(| iv |/|  |(| iv |\\| np |)|  |)|  |/|  |(| iv |/|  |(| iv |\\| np |)|  |)|  |)|  |\\|  |(| s |[| agr |=| 1s |]|  |\\| np |)|   |:|   |\\| p |\\| q |\\| x |.| !and  |(| x p |)|  |(| x q |)|  |;|  
-kitap n  |:=|  np  |:|  !book |;| 
+-digim rel  |:=|   |(| np |/| np |)|  |\\|  |(| s |[| agr |=| 1s |]|  |\\| np |)|   |:|   |\\| p |\\| q |\\| x |.| !and  |(| p x |)|  |(| q x |)|  |;|  
+kitap n  |:=|  np |\\|  |(| np |/| np |)|   |:|   |\\| p |.| p !book |;|   
 
 "O Paulo" n  |:=|  np |[| agr |=| 3s |]|  |:|  !paul |;| 
 nao neg  |:=|   |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/|  |(| s |[| fop |=| p |]|  |\\| np |[| agr |=| ?a |]|  |)|   |:|   |\\| p |\\| x |.| !neg  |(| p x |)|  |;| 

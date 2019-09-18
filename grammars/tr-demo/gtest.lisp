@@ -32,7 +32,7 @@
 (lg "g-tr")                ; lg assumes .ded suffix
 (type-raise-targets '(NP)) ; turns lowest type elimination on, only for NP
 (p '(ben-im adam-in oku -dugu -nu bil -digim kitap))
-(ders)                     ; shows derivations
+(ders)                     ; shows derivations (including TR'd results)
 
 
 (lg "g" :make t)           ; makes g.ded from g.ccg 
