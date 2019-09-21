@@ -2,6 +2,7 @@
 % language name is used as POS to index that language's argument takers
 %  for convenience
 
+% English
 i n := np[agr=1s] : !i;
 think en := (s\np[agr=1s])/s : \p\x.!think p x;
 john n := np[agr=3s] : !john;
@@ -12,7 +13,10 @@ believe en := (s\np[agr=2s])/s : \p\x.!believe p x;
 mary n := np[agr=3s] : !mary;
 hates en := (s\np[agr=3s])/np : \x\y.!hate x y;
 cats n := np[agr=3p] : !cats;
+"this book" n := s/(s/np[top=p]): \p.!and (p !book) (!topic !book);
+like en := (s\np[agr=1s])/np : \x\y.!like x y;
 
+% Chinese
 zhangsan n := np: !z;
 xihuan ch := (s\np)/np : \x\y.!like x y;
 xihuan ch := s/np : \x.!like x !top;   % this is needed for s\(s/np) topic-drop is lexicalized
@@ -21,17 +25,21 @@ er co := (@X\@X)/@X : \p\q\x.!and (p x)(q x);
 lisi n := np: !lisi;
 bu neg := (s\np)/(s\np): \p\x.!neg (p x);
 "zhe-ben shu" n := np: !def !book;
-
 ta n := np : !heshe;
 digei ch := (s\np)/np/np : \x\y\z.!give x y z;
 gege n := np : !brother;
 "yi-hu jiu" n := np : !one !wine;
 jiejie n := np : !sister;
 "yi-pan cai" n := np :!one !dish;
+zhangsan n := s/(s/np[top=p,pro=p,pers=3s]) : \p\x.!and (p x)(!topic x); % not quite TR
+wo n := np[pers=1s] : !i;
+qidai ch := (s\np)/vp/np: \x\p\y.!foresee (p x)y; % ECM
+quan ch := (s\np)/vp/np: \x\p\y.!persuade (p x) x y; % control
+daying ch := (s\np)/vp/np: \x\p\y.!promise (p y) x y; % raise to object
+ta pro := ((s\np)/vp/np[pro=p,pers=3s])\((s\np)/vp/np) : \p.!res p; % resumptive
+"yao lai" ch := vp : \x.!willcome x;  % x is for arg inside vp
 
-"this book" n := s/(s/np[top=p]): \p.!and (p !book) (!topic !book);
-like en := (s\np[agr=1s])/np : \x\y.!like x y;
-
+% Turkish
 ben-im n := s[agr=1s]/iv[agr=1s] : \p.p !i;  % only semantic TR
 adam-in n := np[agr=3s] : !man;              % poss is just agr
 oku tr := iv\np[case=acc] : \x\y.!read x y;  % y is for IV's arg
@@ -41,27 +49,34 @@ bil tr := iv\s[case=acc] : \p\x.!know p x; % x for IV's arg
 -digim rel := (np/np)\(s[agr=1s]\np) : \p\q\x.!and (p x)(q x); 
 kitap n := np\(np/np) : \p.p !book;  % not tr'd by the algorithm: NP not a thematic argument taker
 
+% Portuguese
 "O Paulo" n := np[agr=3s]: !paul;
 nao neg := (s\np[agr=?a])/(s[fop=p]\np[agr=?a]) : \p\x.!neg (p x);
 os pro := (s[fop=p]\np[agr=?a])/((s\np[agr=?a])/np[typ=pro,kind=plu]) : \p.p !them;
 viu pt := (s[tense=past]\np[agr=3s])/np : \x\y.!see x y;
 
+% Korean
 Hankwuk-ey n := np : !korea;
 Sewul-i n := (s/(s\np[case=?c]))/(s/(s\np[case=?c])) : \p.!seul p;  %reversed because value-raised by apposition
 namtaymun-sicang-i n := np[case=nom] : !market;
 pul-i n := np[case=nom] : !fire;
 na-ass-ta ko := (s\np[case=?c1])\np[case=?c2]\np[case=nom]: \x\y\z.!breakout x y z;
 
+% Dyirbal
 "bayi yara" n := np[case=abs] : !man;
 numa-ngu n := np[acse=erg] : !father;
 giga-n dy := ((s\np[case=abs])\np[case=erg])/vp : \p\y\x.!tell (p x)x y;
 gubi-ngu n := np[case=erg] : !gubi;
 mawa-li dy := vp\np[case=erg] : \x\y.!examine y x;  % ergative is agent
 
-zhangsan n := s/(s/np[top=p,pro=p,pers=3s]) : \p\x.!and (p x)(!topic x); % not quite TR
-wo n := np[pers=1s] : !i;
-qidai ch := (s\np)/vp/np: \x\p\y.!foresee (p x)y; % ECM
-quan ch := (s\np)/vp/np: \x\p\y.!persuade (p x) x y; % control
-daying ch := (s\np)/vp/np: \x\p\y.!promise (p y) x y; % raise to object
-ta pro := ((s\np)/vp/np[pro=p,pers=3s])\((s\np)/vp/np) : \p.!res p; % resumptive
-"yao lai" ch := vp : \x.!willcome x;  % x is for arg inside vp
+% German
+"Dass sie kommt" c := s/(s/s[top=p]) : \p.p (!comes !she);
+glaubt de := (s\np)/s : \p\x.!believe p x;
+er pro := s\(s\np) : \p.p !he;
+nicht f := s\s : \p.!neg p;
+"Die Diplomarbeit" n := np: !the-ma;
+zu c := (s\np)\(s\np) : \p.p;
+schreiben de := (s\np)\np: \x\y.!write x y;
+hat f := (s\np)\(s\np): \p.p;
+"die Studentin" n :=s\(s\np):\p.p  !student; % extraposed, not tr'd
+gelanweilt de :=s\s : \p.!bore p;

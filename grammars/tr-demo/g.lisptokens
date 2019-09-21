@@ -2,6 +2,7 @@
 
 
 
+
 i n  |:=|  np |[| agr |=| 1s |]|   |:|  !i |;| 
 think en  |:=|   |(| s |\\| np |[| agr |=| 1s |]|  |)|  |/| s  |:|   |\\| p |\\| x |.| !think p x |;| 
 john n  |:=|  np |[| agr |=| 3s |]|   |:|  !john |;| 
@@ -12,6 +13,9 @@ believe en  |:=|   |(| s |\\| np |[| agr |=| 2s |]|  |)|  |/| s  |:|   |\\| p |\
 mary n  |:=|  np |[| agr |=| 3s |]|   |:|  !mary |;| 
 hates en  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !hate x y |;| 
 cats n  |:=|  np |[| agr |=| 3p |]|   |:|  !cats |;| 
+"this book" n  |:=|  s |/|  |(| s |/| np |[| top |=| p |]|  |)|  |:|   |\\| p |.| !and  |(| p !book |)|   |(| !topic !book |)|  |;| 
+like en  |:=|   |(| s |\\| np |[| agr |=| 1s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !like x y |;| 
+
 
 zhangsan n  |:=|  np |:|  !z |;| 
 xihuan ch  |:=|   |(| s |\\| np |)|  |/| np  |:|   |\\| x |\\| y |.| !like x y |;| 
@@ -21,16 +25,20 @@ er co  |:=|   |(| @X |\\| @X |)|  |/| @X  |:|   |\\| p |\\| q |\\| x |.| !and  |
 lisi n  |:=|  np |:|  !lisi |;| 
 bu neg  |:=|   |(| s |\\| np |)|  |/|  |(| s |\\| np |)|  |:|   |\\| p |\\| x |.| !neg  |(| p x |)|  |;| 
 "zhe-ben shu" n  |:=|  np |:|  !def !book |;| 
-
 ta n  |:=|  np  |:|  !heshe |;| 
 digei ch  |:=|   |(| s |\\| np |)|  |/| np |/| np  |:|   |\\| x |\\| y |\\| z |.| !give x y z |;| 
 gege n  |:=|  np  |:|  !brother |;| 
 "yi-hu jiu" n  |:=|  np  |:|  !one !wine |;| 
 jiejie n  |:=|  np  |:|  !sister |;| 
 "yi-pan cai" n  |:=|  np  |:| !one !dish |;| 
+zhangsan n  |:=|  s |/|  |(| s |/| np |[| top |=| p |,| pro |=| p |,| pers |=| 3s |]|  |)|   |:|   |\\| p |\\| x |.| !and  |(| p x |)|  |(| !topic x |)|  |;|  
+wo n  |:=|  np |[| pers |=| 1s |]|   |:|  !i |;| 
+qidai ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !foresee  |(| p x |)| y |;|  
+quan ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !persuade  |(| p x |)|  x y |;|  
+daying ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !promise  |(| p y |)|  x y |;|  
+ta pro  |:=|   |(|  |(| s |\\| np |)|  |/| vp |/| np |[| pro |=| p |,| pers |=| 3s |]|  |)|  |\\|  |(|  |(| s |\\| np |)|  |/| vp |/| np |)|   |:|   |\\| p |.| !res p |;|  
+"yao lai" ch  |:=|  vp  |:|   |\\| x |.| !willcome x |;|   
 
-"this book" n  |:=|  s |/|  |(| s |/| np |[| top |=| p |]|  |)|  |:|   |\\| p |.| !and  |(| p !book |)|   |(| !topic !book |)|  |;| 
-like en  |:=|   |(| s |\\| np |[| agr |=| 1s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !like x y |;| 
 
 ben-im n  |:=|  s |[| agr |=| 1s |]|  |/| iv |[| agr |=| 1s |]|   |:|   |\\| p |.| p !i |;|   
 adam-in n  |:=|  np |[| agr |=| 3s |]|   |:|  !man |;|               
@@ -41,10 +49,12 @@ bil tr  |:=|  iv |\\| s |[| case |=| acc |]|   |:|   |\\| p |\\| x |.| !know p x
 -digim rel  |:=|   |(| np |/| np |)|  |\\|  |(| s |[| agr |=| 1s |]|  |\\| np |)|   |:|   |\\| p |\\| q |\\| x |.| !and  |(| p x |)|  |(| q x |)|  |;|  
 kitap n  |:=|  np |\\|  |(| np |/| np |)|   |:|   |\\| p |.| p !book |;|   
 
+
 "O Paulo" n  |:=|  np |[| agr |=| 3s |]|  |:|  !paul |;| 
 nao neg  |:=|   |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/|  |(| s |[| fop |=| p |]|  |\\| np |[| agr |=| ?a |]|  |)|   |:|   |\\| p |\\| x |.| !neg  |(| p x |)|  |;| 
 os pro  |:=|   |(| s |[| fop |=| p |]|  |\\| np |[| agr |=| ?a |]|  |)|  |/|  |(|  |(| s |\\| np |[| agr |=| ?a |]|  |)|  |/| np |[| typ |=| pro |,| kind |=| plu |]|  |)|   |:|   |\\| p |.| p !them |;| 
 viu pt  |:=|   |(| s |[| tense |=| past |]|  |\\| np |[| agr |=| 3s |]|  |)|  |/| np  |:|   |\\| x |\\| y |.| !see x y |;| 
+
 
 Hankwuk-ey n  |:=|  np  |:|  !korea |;| 
 Sewul-i n  |:=|   |(| s |/|  |(| s |\\| np |[| case |=| ?c |]|  |)|  |)|  |/|  |(| s |/|  |(| s |\\| np |[| case |=| ?c |]|  |)|  |)|   |:|   |\\| p |.| !seul p |;|   
@@ -52,16 +62,25 @@ namtaymun-sicang-i n  |:=|  np |[| case |=| nom |]|   |:|  !market |;|
 pul-i n  |:=|  np |[| case |=| nom |]|   |:|  !fire |;| 
 na-ass-ta ko  |:=|   |(| s |\\| np |[| case |=| ?c1 |]|  |)|  |\\| np |[| case |=| ?c2 |]|  |\\| np |[| case |=| nom |]|  |:|   |\\| x |\\| y |\\| z |.| !breakout x y z |;| 
 
+
 "bayi yara" n  |:=|  np |[| case |=| abs |]|   |:|  !man |;| 
 numa-ngu n  |:=|  np |[| acse |=| erg |]|   |:|  !father |;| 
 giga-n dy  |:=|   |(|  |(| s |\\| np |[| case |=| abs |]|  |)|  |\\| np |[| case |=| erg |]|  |)|  |/| vp  |:|   |\\| p |\\| y |\\| x |.| !tell  |(| p x |)| x y |;| 
 gubi-ngu n  |:=|  np |[| case |=| erg |]|   |:|  !gubi |;| 
 mawa-li dy  |:=|  vp |\\| np |[| case |=| erg |]|   |:|   |\\| x |\\| y |.| !examine y x |;|   
 
-zhangsan n  |:=|  s |/|  |(| s |/| np |[| top |=| p |,| pro |=| p |,| pers |=| 3s |]|  |)|   |:|   |\\| p |\\| x |.| !and  |(| p x |)|  |(| !topic x |)|  |;|  
-wo n  |:=|  np |[| pers |=| 1s |]|   |:|  !i |;| 
-qidai ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !foresee  |(| p x |)| y |;|  
-quan ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !persuade  |(| p x |)|  x y |;|  
-daying ch  |:=|   |(| s |\\| np |)|  |/| vp |/| np |:|   |\\| x |\\| p |\\| y |.| !promise  |(| p y |)|  x y |;|  
-ta pro  |:=|   |(|  |(| s |\\| np |)|  |/| vp |/| np |[| pro |=| p |,| pers |=| 3s |]|  |)|  |\\|  |(|  |(| s |\\| np |)|  |/| vp |/| np |)|   |:|   |\\| p |.| !res p |;|  
-"yao lai" ch  |:=|  vp  |:|   |\\| x |.| !willcome x |;|   )
+
+"Dass sie kommt" c  |:=|  s |/|  |(| s |/| s |[| top |=| p |]|  |)|   |:|   |\\| p |.| p  |(| !comes !she |)|  |;| 
+glaubt de  |:=|   |(| s |\\| np |)|  |/| s  |:|   |\\| p |\\| x |.| !believe p x |;| 
+er pro  |:=|  s |\\|  |(| s |\\| np |)|   |:|   |\\| p |.| p !he |;| 
+nicht f  |:=|  s |\\| s  |:|   |\\| p |.| !neg p |;| 
+"Die Diplomarbeit" n  |:=|  np |:|  !the-ma |;| 
+zu c  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|   |:|   |\\| p |.| p |;| 
+schreiben de  |:=|   |(| s |\\| np |)|  |\\| np |:|   |\\| x |\\| y |.| !write x y |;| 
+hat f  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|  |:|   |\\| p |.| p |;| 
+"die Studentin" n  |:=| s |\\|  |(| s |\\| np |)|  |:|  |\\| p |.| p  !student |;|  
+gelanweilt de  |:=| s |\\| s  |:|   |\\| p |.| !bore p |;| 
+zz z  |:=|  s |/| s  |:|  |\\| p |.| p |;| 
+zz2 z  |:=|  s |\\| s  |:|  |\\| p |.| p |;| 
+
+)

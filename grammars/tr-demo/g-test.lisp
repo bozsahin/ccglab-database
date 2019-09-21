@@ -58,3 +58,14 @@
 (type-raise-targets '(NP)) ; turns lowest type elimination on, only for NP
 (p '("bayi yara" numa-ngu giga-n gubi-ngu mawa-li))
 (ders 'S)                     ; shows derivations
+
+
+(lg "g" :make t)           ; makes g.ded from g.ccg 
+(tr "g.ded" '(de))         ; German TR
+(savetr "g-de.ded")        ; saves grammar with TR rules
+(lg "g-de")                ; lg assumes .ded suffix
+(type-raise-targets '(NP S)) ; turns lowest type elimination on, only for NP
+(p '("Dass sie kommt" glaubt er nicht))
+(ders 'S)                     ; shows derivations
+(p '("Die Diplomarbeit" zu schreiben hat "die Studentin" gelanweilt))
+(ders 'S)
