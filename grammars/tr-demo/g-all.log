@@ -2250,4 +2250,220 @@ Final LF, normal-order evaluated:
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
 T
-> (dribble)
+> (type-raise nil)
+
+NIL
+> (onoff)
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+NIL
+> (p '("ADass sie kommt" glaubt er nicht))
+No lex entry for ADass sie kommt! Exiting without parse.
+NIL
+> (p '("Dass sie kommt" glaubt er nicht))
+
+NIL
+> (p '(glaubt er nicht))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := S\(S\NP)
+        : (LAM P (P HE))
+LEX   (NICHT) := S\S
+        : (LAM P (NEG P))
+<B    (ER)(NICHT) := S\(S\NP)
+        : (LAM X ((LAM P (NEG P)) ((LAM P (P HE)) X)))
+>Bx   (GLAUBT)(ER NICHT) := (S\NP)\(S\NP)
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X ((LAM P (NEG P)) ((LAM P (P HE)) X))) X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM G650 ((BELIEVE (NEG (X HE))) G650))) =
+    (\ X . \ G654 . BELIEVE (NEG (X HE)) G654)
+
+Derivation 2
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (NICHT) := S\S
+        : (LAM P (NEG P))
+>     (ER)(NICHT) := (S\S)\(S\S)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) (LAM P (NEG P)))
+>Bx2  (GLAUBT)(ER NICHT) := ((S\NP)\S)\(S\S)
+        : (LAM X
+           (LAM Y
+            ((LAM P (LAM X ((BELIEVE P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X))))) (LAM P (NEG P))) X)
+              Y))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM Y (LAM G658 ((BELIEVE ((AND (NEG Y)) (X Y))) G658)))) =
+    (\ X . \ Y . \ G671 . BELIEVE (AND (NEG Y) (X Y)) G671)
+
+Derivation 3
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := S\(S\NP)
+        : (LAM P (P HE))
+>Bx   (GLAUBT)(ER) := (S\NP)\(S\NP)
+        : (LAM X ((LAM P (LAM X ((BELIEVE P) X))) ((LAM P (P HE)) X)))
+LEX   (NICHT) := S\S
+        : (LAM P (NEG P))
+<B2   (GLAUBT ER)(NICHT) := (S\NP)\(S\NP)
+        : (LAM X
+           (LAM Y
+            ((LAM P (NEG P))
+             (((LAM X ((LAM P (LAM X ((BELIEVE P) X))) ((LAM P (P HE)) X))) X)
+              Y))))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM Y (NEG ((BELIEVE (X HE)) Y)))) =
+    (\ X . \ Y . NEG (BELIEVE (X HE) Y))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (p '(glaubt er))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := S\(S\NP)
+        : (LAM P (P HE))
+>Bx   (GLAUBT)(ER) := (S\NP)\(S\NP)
+        : (LAM X ((LAM P (LAM X ((BELIEVE P) X))) ((LAM P (P HE)) X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM G698 ((BELIEVE (X HE)) G698))) =
+    (\ X . \ G702 . BELIEVE (X HE) G702)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (basic-ccg 'off)
+
+All rules set. Rule set to be controlled by user.
+T
+> (p '(glaubt er))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := S\(S\NP)
+        : (LAM P (P HE))
+>Bx   (GLAUBT)(ER) := (S\NP)\(S\NP)
+        : (LAM X ((LAM P (LAM X ((BELIEVE P) X))) ((LAM P (P HE)) X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM G706 ((BELIEVE (X HE)) G706))) =
+    (\ X . \ G710 . BELIEVE (X HE) G710)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (onoff)
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+NIL
+> (nf-parse 'off)
+
+NIL
+> (p '(glaubt er))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (GLAUBT) := (S\NP)/S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+LEX   (ER) := S\(S\NP)
+        : (LAM P (P HE))
+>Bx   (GLAUBT)(ER) := (S\NP)\(S\NP)
+        : (LAM X ((LAM P (LAM X ((BELIEVE P) X))) ((LAM P (P HE)) X)))
+
+Final LF, normal-order evaluated: 
+
+    (LAM X (LAM G714 ((BELIEVE (X HE)) G714))) =
+    (\ X . \ G718 . BELIEVE (X HE) G718)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (onoff)
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : NIL
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+NIL
+> (ab)
+BETA  BETA-NORMALIZE-OUTER
+CD    CCG-DEDUCE
+CI    CCG-INDUCE
+CPP   CKY-PPRINT-PROBS
+CRS   CKY-REVEAL-CELL
+CSD   CKY-SHOW-DEDUCTION
+CSI   CKY-SHOW-INDUCTION
+CSLE  CKY-SHOW-LF-EQV
+CSNF  CKY-SHOW-NORMAL-FORMS
+DERS  CKY-SHOW-DEDUCTION
+HELP  AB
+LG    LOAD-GRAMMAR
+LM    LOAD-MODEL
+LOADS SAFELY-LOAD
+MS    MAKE-SUPERVISION
+P     CCG-DEDUCE
+PP    CCG-INDUCE
+PROBS CKY-SHOW-INDUCTION
+RANK  CCG-INDUCE
+SAVET SAVE-TRAINING
+SAVETR SAVE-SUBSUMPTION
+SAVETXP SAVE-TRAINING-XP
+SG    SAVE-GRAMMAR
+ST    SHOW-TRAINING
+STXP  SHOW-TRAINING-XP
+SWITCHES ONOFF
+TR    COMPILE-AND-SUBSUME-TR
+TRC   COMPILE-TR
+TRT   TYPE-RAISE-TARGETS
+UM    UPDATE-MODEL
+UMXP  UPDATE-MODEL-XP
+Z     Z-SCORE-GRAMMAR
+NIL
+> 

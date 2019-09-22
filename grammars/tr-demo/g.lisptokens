@@ -79,8 +79,4 @@ zu c  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|   |:|   |\\| p |.| p |;|
 schreiben de  |:=|   |(| s |\\| np |)|  |\\| np |:|   |\\| x |\\| y |.| !write x y |;| 
 hat f  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|  |:|   |\\| p |.| p |;| 
 "die Studentin" n  |:=| s |\\|  |(| s |\\| np |)|  |:|  |\\| p |.| p  !student |;|  
-gelanweilt de  |:=| s |\\| s  |:|   |\\| p |.| !bore p |;| 
-zz z  |:=|  s |/| s  |:|  |\\| p |.| p |;| 
-zz2 z  |:=|  s |\\| s  |:|  |\\| p |.| p |;| 
-
-)
+gelanweilt de  |:=| s |\\| s  |:|   |\\| p |.| !bore p |;| )
