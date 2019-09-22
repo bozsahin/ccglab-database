@@ -16,7 +16,7 @@
 (type-raise-targets '(NP)) ; turns lowest type elimination on, only for NP
 (p '(zhangsan xihuan danshi lisi bu xihuan "zhe-ben shu")) ; parses the type-raised grammar
 (ders 'S)                     ; shows derivations onto S
-(p '(ta digei gege "yi-hu jiu" er jiejie "yi-pan cai"))       ; parses the type-raised grammar
+(p '(ta digei gege "yi-hu jiu" e2r jiejie "yi-pan cai"))       ; parses the type-raised grammar
 (ders 'S)                     ; shows derivations onto S
 (p '(zhangsan wo qidai ta "yao lai"))
 (ders 'S)

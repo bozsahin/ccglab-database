@@ -66,7 +66,7 @@
       ((((BCAT @X) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT @X) (FEATS NIL)))
        (DIR FS) (MODAL ALL) ((BCAT @X) (FEATS NIL))))
      (SEM (LAM P (LAM Q (LAM X (("BUT" (P X)) (Q X)))))) (PARAM 1.0))
-    ((KEY 17) (PHON ER) (MORPH CO)
+    ((KEY 17) (PHON E2R) (MORPH CO)
      (SYN
       ((((BCAT @X) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT @X) (FEATS NIL)))
        (DIR FS) (MODAL ALL) ((BCAT @X) (FEATS NIL))))
