@@ -68,6 +68,7 @@ numa-ngu n  |:=|  np |[| acse |=| erg |]|   |:|  !father |;|
 giga-n dy  |:=|   |(|  |(| s |\\| np |[| case |=| abs |]|  |)|  |\\| np |[| case |=| erg |]|  |)|  |/| vp  |:|   |\\| p |\\| y |\\| x |.| !tell  |(| p x |)| x y |;| 
 gubi-ngu n  |:=|  np |[| case |=| erg |]|   |:|  !gubi |;| 
 mawa-li dy  |:=|  vp |\\| np |[| case |=| erg |]|   |:|   |\\| x |\\| y |.| !examine y x |;|   
+banaga-nyu dy  |:=|  vp |:|   |\\| x |.| !return x |;| 
 
 
 "Dass sie kommt" c  |:=|  s |/|  |(| s |/| s |[| top |=| p |]|  |)|   |:|   |\\| p |.| p  |(| !comes !she |)|  |;| 
