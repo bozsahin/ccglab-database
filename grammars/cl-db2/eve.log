@@ -1,0 +1,72 @@
+
+> (tr "eve.ded" (read1 "eve.vmorphs"))
+
+NIL
+> (length *raised-lex-rules*) 
+7419
+>  ; show the number derived by algorithm 1
+(hash-table-count *ht-tr*) 
+523
+>   ; show the number reduced, by algorithm 2
+(status)
+
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : 
+ *CCG-GRAMMAR*              : 4054 items
+ *LEX-RULES-TABLE*          : 0 items
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+  ---------------------------
+NIL
+> (savetr "eve-raised.ded")
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+NIL
+> (lg "eve-raised")
+
+======================= l o a d i n g =======================================
+
+Project [eve-raised] is assumed to consist of
+-----------------------------------------------------------------------------
+  CCG grammar source : eve-raised.ccg $
+    Its token form   : eve-raised.lisptokens $
+  Deduction grammar  : eve-raised.ded $ (derived from eve-raised.lisptokens)
+  Induction grammar  : eve-raised.ind #
+  Supervision source : eve-raised.sup ^
+  Model-specific code: eve-raised.lisp ^
+   and other model-specific files you may create.
+       *CCG-GRAMMAR* : set from eve-raised.ded
+  *LEX-RULES-TABLE*  : set from eve-raised.ded
+Expected files       : $ for deduction, # for induction, ^ for model development
+=============================================================================
+T
+> (status)
+
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : eve-raised.ded
+ *CCG-GRAMMAR*              : 4577 items
+ *LEX-RULES-TABLE*          : 525 items
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+  ---------------------------
+NIL
+> (dribble)
