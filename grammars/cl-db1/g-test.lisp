@@ -21,6 +21,9 @@
 (lg "g-en")                ; lg assumes .ded suffix
 (p-aux '(i think john likes and you believe mary hates cats) '(NP) 'S) ; parses the type-raised grammar
 (p-aux '("this book" i like) '(NP) 'S)     ; parses the type-raised grammar
+(p-aux '(i picked the book up) '(NP UP) 'S)
+(p-aux '(i picked up the book) '(NP UP) 'S)
+
 
 ;; Mandarin Chinese
 

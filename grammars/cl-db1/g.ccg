@@ -13,8 +13,13 @@ believe en := (s\np[agr=2s])/s : \p\x.!believe p x;
 mary n := np[agr=3s] : !mary;
 hates en := (s\np[agr=3s])/np : \x\y.!hate x y;
 cats n := np[agr=3p] : !cats;
+the  d := np/n: \x.!def x;
+book n := n : !book;
 "this book" n := s/(s/np[top=p]): \p.!and (p !book) (!topic !book);
 like en := (s\np[agr=1s])/np : \x\y.!like x y;
+picked en := (s\np)/"up"/NP[heavy=m] : \y\x\z.!cause(!init (!hold _ (!reach x) y z)) z;
+picked en := ((s\np)/np[lexc=p])/"up" : \x\y\z.!pick _ x y z;
+up p := ((s\np)\(s\np))/np : \x\p.!up (p x);
 
 % Chinese
 zhangsan n := np: !z;
