@@ -129,3 +129,11 @@ schreiben de := (s\np)\np: \x\y.!write x y;
 hat f := (s\np)\(s\np): \p.p;
 "die Studentin" n :=s\(s\np):\p.p  !student; % extraposed, not tr'd
 gelanweilt de :=s\s : \p.!bore p;
+
+% Hungarian
+janos n := np[agr=3s] : !john;
+lat-t-a hu := (s\np[agr=3s])/np[agr=3s] : \x\y.!see x y;
+ot n := np[agr=3s,typ=pro] : !him;
+lat-ott hu := (s\np[agr=3s])/np[agr=1s] : \x\y.!see x y; % block agreement on obj
+lat-ott hu := (s\np[agr=3s])/np[agr=2s] : \x\y.!see x y; % block agreement on obj
+engem n := np[agr=1s] : !me;

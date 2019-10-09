@@ -128,4 +128,12 @@ zu c  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|   |:|   |\\| p |.| p |;|
 schreiben de  |:=|   |(| s |\\| np |)|  |\\| np |:|   |\\| x |\\| y |.| !write x y |;| 
 hat f  |:=|   |(| s |\\| np |)|  |\\|  |(| s |\\| np |)|  |:|   |\\| p |.| p |;| 
 "die Studentin" n  |:=| s |\\|  |(| s |\\| np |)|  |:|  |\\| p |.| p  !student |;|  
-gelanweilt de  |:=| s |\\| s  |:|   |\\| p |.| !bore p |;| )
+gelanweilt de  |:=| s |\\| s  |:|   |\\| p |.| !bore p |;| 
+
+
+janos n  |:=|  np |[| agr |=| 3s |]|   |:|  !john |;| 
+lat-t-a hu  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np |[| agr |=| 3s |]|   |:|   |\\| x |\\| y |.| !see x y |;| 
+ot n  |:=|  np |[| agr |=| 3s |,| typ |=| pro |]|   |:|  !him |;| 
+lat-ott hu  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np |[| agr |=| 1s |]|   |:|   |\\| x |\\| y |.| !see x y |;|  
+lat-ott hu  |:=|   |(| s |\\| np |[| agr |=| 3s |]|  |)|  |/| np |[| agr |=| 2s |]|   |:|   |\\| x |\\| y |.| !see x y |;|  
+engem n  |:=|  np |[| agr |=| 1s |]|   |:|  !me |;| )

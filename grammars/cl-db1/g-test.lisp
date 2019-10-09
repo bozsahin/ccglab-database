@@ -109,3 +109,13 @@
 (lg "g-de")                ; lg assumes .ded suffix
 (p-aux '("Dass sie kommt" glaubt er nicht) '(NP S) 'S)
 (p-aux '("Die Diplomarbeit" zu schreiben hat "die Studentin" gelanweilt) '(NP S) 'S)
+ 
+;; Hungarian
+
+(lg "g" :make t)
+(tr "g.ded" '(hu))         ; TR Magyar
+(savetr "g-hu.ded")
+(lg "g-hu")
+(p-aux '(Janos lat-t-a ot) '(NP) 'S)
+(p-aux '(Janos lat-t-a engem) '(NP) 'S)
+(p-aux '(Janos lat-ott engem) '(NP) 'S)
