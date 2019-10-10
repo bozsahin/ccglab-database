@@ -4,22 +4,22 @@
 
 % English
 i n := np[agr=1s] : !i;
-think en := (s\np[agr=1s])/s : \p\x.!think p x;
+think en := (s\np[agr=1s])/^s : \p\x.!think p x;
 john n := np[agr=3s] : !john;
 likes en := (s\np[agr=3s])/np : \x\y.!like x y;
 and co := (@X\@X)/@X : \p\q\x.!and(p x)(q x);
 you n := np[agr=2s] : !you;
-believe en := (s\np[agr=2s])/s : \p\x.!believe p x;
+believe en := (s\np[agr=2s])/^s : \p\x.!believe p x;
 mary n := np[agr=3s] : !mary;
-hates en := (s\np[agr=3s])/np : \x\y.!hate x y;
+hates en := (s\np[agr=3s])/^np : \x\y.!hate x y;
 cats n := np[agr=3p] : !cats;
-the  d := np[head=?h]/n[head=?h]: \x.!def x;
+the  d := np[head=?h]/^n[head=?h]: \x.!def x;
 book n := n : !book;
 "this book" n := s/(s/np[top=p]): \p.!and (p !book) (!topic !book);
-like en := (s\np[agr=1s])/np : \x\y.!like x y;
-picked en := (s\np)/"up"/NP[heavy=m] : \y\x\z.!cause(!init (!hold _ (!reach x) y z)) z;
-picked en := ((s\np)/np[lexc=p])/"up" : \x\y\z.!pick _ x y z;
-thinks en := (s\np[agr=3s])/sp : \p\x.!think p x;
+like en := (s\np[agr=1s])/^np : \x\y.!like x y;
+picked en := (s\np)/"up"/^np[heavy=m] : \y\x\z.!cause(!init (!hold _ (!reach x) y z)) z;
+picked en := ((s\np)/^np[lexc=p])/"up" : \x\y\z.!pick _ x y z;
+thinks en := (s\np[agr=3s])/^sp : \p\x.!think p x;
 she n := np[agr=3s] : !she;
 harry np := np[agr=3s]: !harry;
 barry np := np[agr=3s]: !barry;
@@ -27,17 +27,18 @@ mary np := np[agr=3s]: !mary;
 up p := ((s\np)\(s\np))/np : \x\p.!up (p x);
 beans n := n[head=beans] : !beans;
 that rel := (n[head=?h]\n[head=?h])/(s[head=?h]/np[head=?h]) : \p\q\x.!and (p x)(q x);
-spilled en := (s[head=beans]\np)/np[head=beans] : \x\y.!divulge _ (!public x) !secret y;
-caused en := (s\np)/np : \x\y.!cause x y;
-"quite a stir" n := np : !stirrr;
+spilled en := (s[head=beans]\np)/^np[head=beans] : \x\y.!divulge _ (!public x) !secret y;
+caused en := (s\np)/^np : \x\y.!cause x y;
+"quite a stir" n := np : !stir;
 
 %Japanese
 Taroo-wa n := np[top=p] : !taroo;
-hanako-ni n := predp[case=dat]/cing : \p\x.p x !hanako;
+hanako-ni n := predp[case=dat]/(cing\np\np) : \p\x.p x !hanako;
 hanako-ni n := np[case=dat] : !hanako;
-huku-o n := predp[case=acc]\cing : \p.p !clothes;
+huku-o n := predp[case=acc]\(cing\np\np) : \p.p !clothes;
 huku-o n := np[case=acc] : !clothes;
-kiteiru jp := cing : \x\y.!wearing x y;
+kiteiru jp := cing\np\np : \x\y.!wearing x y;
+kiteiru jp := s\np\np : \x\y.!wear x y;
 yogos-are-ta jp := s\np[case=top]\np[case=dat]\predp[case=acc] : \x\y\z.!let (!dirty (x z)y) y z;
 yogos-are-ta jp := s\np[case=top]\predp[case=dat]\np[case=acc] : \x\y\z.!let (!dirty (x y)y) y z;
 
@@ -56,7 +57,7 @@ gege n := np : !brother;
 "yi-hu jiu" n := np : !one !wine;
 jiejie n := np : !sister;
 "yi-pan cai" n := np :!one !dish;
-zhangsan n := s/(s/np[top=p,pro=p,pers=3s]) : \p\x.!and (p x)(!topic x); % not quite TR
+zhangsan n := s/(s/np[top=p,pro=p,pers=3s]) : \p.!and (p z)(!topic z); % not quite TR
 wo n := np[pers=1s] : !i;
 qidai ch := (s\np)/vp/np: \x\p\y.!foresee (p x)y; % ECM
 quan ch := (s\np)/vp/np: \x\p\y.!persuade (p x) x y; % control
@@ -69,10 +70,10 @@ ben-im n := s[agr=1s]/iv[agr=1s] : \p.p !i;  % only semantic TR
 adam-in n := np[agr=3s] : !man;              % poss is just agr
 oku tr := iv\np[case=acc] : \x\y.!read x y;  % y is for IV's arg
 okudu tr := (s\np[case=nom,agr=3s])\np[case=acc] : \x\y. !read x y; % need this finite type for TR
--dugu comp := (s[agr=?a]\np[agr=?a])\iv[agr=?a] : \p\x.p x;
--nu case  := s[case=acc]\s[agr=3s] : \p.p ;
+-dugu comp := (s[agr=?a]\np[agr=?a])\^iv[agr=?a] : \p\x.p x;
+-nu case  := s[case=acc]\^s[agr=3s] : \p.p ;
 bil tr := iv\s[case=acc] : \p\x.!know p x; % x for IV's arg
--digim rel := (np/np)\(s[agr=1s]\np) : \p\q\x.!and (p x)(q x); 
+-digim rel := (np/np)\^(s[agr=1s]\np) : \p\q\x.!and (p x)(q x); 
 kitap n := np\(np/np) : \p.p !book;  % not tr'd by the algorithm: NP not a thematic argument taker
 
 % Portuguese
