@@ -1,0 +1,2895 @@
+
+> (mlg "fragments")
+
+
+======================= c o m p i l i n g ===================================
+
+Project name: fragments
+  Input : (fragments.ccg, fragments.lisptokens)
+  Output: fragments.ccg.lisp 
+** Check fragments.ccg.lisp for THE FIRST ERROR in fragments.ccg if load fails.
+======================= l o a d i n g =======================================
+
+Project fragments files
+-----------------------------------------------------------------------------
+  CCG grammar source      : fragments.ccg
+    Its token form        : fragments.lisptokens
+  Compiled/loaded grammar : fragments.ccg.lisp
+  Supervision source      : fragments.sup (optional)
+       *CCG-GRAMMAR*      : 78 entries
+   *LEX-RULES-TABLE*      : 1 entries
+=============================================================================
+T
+> (load "fragments.testsuite.lisp")
+
+T
+> (test-ders)
+
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : fragments.ccg.lisp
+ *CCG-GRAMMAR*              : 78 items
+ *LEX-RULES-TABLE*          : 1 item
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+  ---------------------------
+
+"CCGlab, version 7.0"
+=======
+4
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|4P|
+========
+
+
+Derivation 1
+--------------
+LEX   (CAN) := S/(S\NP)
+        : (LAM P (P CAN))
+LEX   (KEDIYI) := (S\NP)/((S\NP)\NP)
+        : (LAM P (P CAT))
+>B    (CAN)(KEDIYI) := S/((S\NP)\NP)
+        : (LAM X ((LAM P (P CAN)) ((LAM P (P CAT)) X)))
+LEX   (VE) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (AYŞE) := S/(S\NP)
+        : (LAM P (P AYSE))
+LEX   (KÖPEĞI) := (S\NP)/((S\NP)\NP)
+        : (LAM P (P DOG))
+>B    (AYŞE)(KÖPEĞI) := S/((S\NP)\NP)
+        : (LAM X ((LAM P (P AYSE)) ((LAM P (P DOG)) X)))
+>     (VE)(AYŞE KÖPEĞI) := (S/((S\NP)\NP))\*(S/((S\NP)\NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X ((LAM P (P AYSE)) ((LAM P (P DOG)) X))))
+<     (CAN KEDIYI)(VE AYŞE KÖPEĞI) := S/((S\NP)\NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X ((LAM P (P AYSE)) ((LAM P (P DOG)) X))))
+           (LAM X ((LAM P (P CAN)) ((LAM P (P CAT)) X))))
+LEX   (OKŞADı) := (S\NP)\NP
+        : (LAM X (LAM Y ((PET X) Y)))
+>     (CAN KEDIYI VE AYŞE KÖPEĞI)(OKŞADı) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X ((LAM P (P AYSE)) ((LAM P (P DOG)) X))))
+            (LAM X ((LAM P (P CAN)) ((LAM P (P CAT)) X))))
+           (LAM X (LAM Y ((PET X) Y))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((PET DOG) AYSE)) ((PET CAT) CAN)) =
+    (AND (PET DOG AYSE) (PET CAT CAN))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+7
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (HITS) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HITS)(THE TARGET) := S\^NP
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (MARY)(HITS THE TARGET) := S
+        : ((LAM P (P M)) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+
+Final LF, normal-order evaluated: 
+
+    ((HIT (DEF TARGET)) M) =
+    (HIT (DEF TARGET) M)
+
+Derivation 2
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (HITS) := (S\^NP)/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HITS)(THE TARGET) := S\^NP
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+<     (MARY)(HITS THE TARGET) := S
+        : (((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)) M)
+
+Final LF, normal-order evaluated: 
+
+    ((HIT (DEF TARGET)) M) =
+    (HIT (DEF TARGET) M)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG1A
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 2
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 3
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 4
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 5
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 6
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 7
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 8
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 9
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 10
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 11
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 12
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG1B
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+>     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))))
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 2
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+>     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))))
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Derivation 3
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+>     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 4
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+>     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Derivation 5
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PROMISES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 6
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PROMISES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Derivation 7
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PROMISES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 8
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PROMISES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Derivation 9
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 10
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Derivation 11
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT TARGET) M)) J) M) =
+    (PROMISE (HIT TARGET M) J M)
+
+Derivation 12
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PROMISES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PROMISES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PROMISES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PROMISES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PROMISE (P Y)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PROMISE ((HIT (DEF TARGET)) M)) J) M) =
+    (PROMISE (HIT (DEF TARGET) M) J M)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG1C
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+>     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))))
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 2
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+>     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))))
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Derivation 3
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+>     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 4
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+>     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Derivation 5
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (EXPECTS)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 6
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (EXPECTS)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Derivation 7
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (EXPECTS)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 8
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (EXPECTS)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Derivation 9
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 10
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Derivation 11
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT TARGET) J)) M) =
+    (EXPECT (HIT TARGET J) M)
+
+Derivation 12
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (EXPECTS) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y ((EXPECT (P X)) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (EXPECTS)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (EXPECTS JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(EXPECTS JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y ((EXPECT (P X)) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    ((EXPECT ((HIT (DEF TARGET)) J)) M) =
+    (EXPECT (HIT (DEF TARGET) J) M)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|21A|
+========
+
+
+Derivation 1
+--------------
+LEX   (GIVE) := ((S\^NP)/^NP)/^NP
+        : (LAM X (LAM Y (LAM Z (((GIVE Y) X) Z))))
+LEX   (MARY) := ((S\NP)/NP)\(((S\NP)/NP)/NP)
+        : (LAM P (P M))
+LEX   (BOOKS) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P BOOKS))
+<B    (MARY)(BOOKS) := (S\NP)\(((S\NP)/NP)/NP)
+        : (LAM X ((LAM P (P BOOKS)) ((LAM P (P M)) X)))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (KLAUS) := ((S\NP)/NP)\(((S\NP)/NP)/NP)
+        : (LAM P (P KLAUS))
+LEX   (CDS) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P CDS))
+<B    (KLAUS)(CDS) := (S\NP)\(((S\NP)/NP)/NP)
+        : (LAM X ((LAM P (P CDS)) ((LAM P (P KLAUS)) X)))
+>     (AND)(KLAUS CDS) := ((S\NP)\(((S\NP)/NP)/NP))\*((S\NP)\(((S\NP)/NP)/NP))
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X ((LAM P (P CDS)) ((LAM P (P KLAUS)) X))))
+<     (MARY BOOKS)(AND KLAUS CDS) := (S\NP)\(((S\NP)/NP)/NP)
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X ((LAM P (P CDS)) ((LAM P (P KLAUS)) X))))
+           (LAM X ((LAM P (P BOOKS)) ((LAM P (P M)) X))))
+<     (GIVE)(MARY BOOKS AND KLAUS CDS) := S\NP
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X ((LAM P (P CDS)) ((LAM P (P KLAUS)) X))))
+            (LAM X ((LAM P (P BOOKS)) ((LAM P (P M)) X))))
+           (LAM X (LAM Y (LAM Z (((GIVE Y) X) Z)))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND (LAM Z (((GIVE CDS) KLAUS) Z))) (LAM Z (((GIVE BOOKS) M) Z))) =
+    (AND (\ Z . GIVE CDS KLAUS Z) (\ Z . GIVE BOOKS M Z))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|21B|
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (MARY)(LIKES) := S/NP
+        : (LAM X ((LAM P (P M)) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\*@X)/*@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+LEX   (JOHN) := S/(S\NP)
+        : (LAM P (P J))
+LEX   (HATES) := (S\NP)/NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (JOHN)(HATES) := S/NP
+        : (LAM X ((LAM P (P J)) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>     (AND)(JOHN HATES) := (S/NP)\*(S/NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X ((LAM P (P J)) ((LAM X (LAM Y ((HATE X) Y))) X))))
+<     (MARY LIKES)(AND JOHN HATES) := S/NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X ((LAM P (P J)) ((LAM X (LAM Y ((HATE X) Y))) X))))
+           (LAM X ((LAM P (P M)) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := S\(S/NP)
+        : (LAM P (P CATS))
+<     (MARY LIKES AND JOHN HATES)(CATS) := S
+        : ((LAM P (P CATS))
+           (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X ((LAM P (P J)) ((LAM X (LAM Y ((HATE X) Y))) X))))
+            (LAM X ((LAM P (P M)) ((LAM X (LAM Y ((LIKE X) Y))) X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((HATE CATS) J)) ((LIKE CATS) M)) =
+    (AND (HATE CATS J) (LIKE CATS M))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+22
+========
+
+
+Derivation 1
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 2
+--------------
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 3
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 4
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := S/(S\NP)
+        : (LAM P (P M))
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+>     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((LAM P (P M))
+           (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P))))
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 5
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 6
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 7
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 8
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := ((S\NP)/VP)\(((S\NP)/VP)/NP)
+        : (LAM P (P J))
+<     (PERSUADES)(JOHN) := (S\NP)/VP
+        : ((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\NP
+        : (((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM P (P J)) (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))))
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 9
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P)
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P)
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P)
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 10
+--------------
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+>     (TO)(HIT THE TARGET) := VP
+        : ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            ((LAM P P) ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Derivation 11
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := (V\(V/NP))/*N
+        : (LAM X (LAM P (P X)))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := V\(V/NP)
+        : ((LAM X (LAM P (P X))) TARGET)
+<     (HIT)(THE TARGET) := V
+        : (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y))))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              (((LAM X (LAM P (P X))) TARGET) (LAM X (LAM Y ((HIT X) Y)))))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT TARGET) J)) J) M) =
+    (PERSUADE (HIT TARGET J) J M)
+
+Derivation 12
+--------------
+LEX   (HIT) := V/^NP
+        : (LAM X (LAM Y ((HIT X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X (DEF X))
+LEX   (TARGET) := N
+        : TARGET
+>     (THE)(TARGET) := NP
+        : ((LAM X (DEF X)) TARGET)
+>     (HIT)(THE TARGET) := V
+        : ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET))
+LEX   (MARY) := NP
+        : M
+LEX   (PERSUADES) := ((S\^NP)/^VP)/^NP
+        : (LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y))))
+LEX   (JOHN) := NP
+        : J
+>     (PERSUADES)(JOHN) := (S\^NP)/^VP
+        : ((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+LEX   (TO) := VP/V
+        : (LAM P P)
+VP-INF-RAISE (HIT THE TARGET) := VP\(VP/V)
+        : ((LAM LF (LAM P (P LF)))
+           ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+<     (TO)(HIT THE TARGET) := VP
+        : (((LAM LF (LAM P (P LF)))
+            ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+           (LAM P P))
+>     (PERSUADES JOHN)(TO HIT THE TARGET) := S\^NP
+        : (((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+           (((LAM LF (LAM P (P LF)))
+             ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+            (LAM P P)))
+<     (MARY)(PERSUADES JOHN TO HIT THE TARGET) := S
+        : ((((LAM X (LAM P (LAM Y (((PERSUADE (P X)) X) Y)))) J)
+            (((LAM LF (LAM P (P LF)))
+              ((LAM X (LAM Y ((HIT X) Y))) ((LAM X (DEF X)) TARGET)))
+             (LAM P P)))
+           M)
+
+Final LF, normal-order evaluated: 
+
+    (((PERSUADE ((HIT (DEF TARGET)) J)) J) M) =
+    (PERSUADE (HIT (DEF TARGET) J) J M)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|33A|
+========
+
+
+Derivation 1
+--------------
+LEX   (DYNES) := N
+        : WOMAN
+LEX   (WELODD) := (N\N)/NP
+        : (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X)))))
+LEX   (GATH) := (N\N)\((N\N)/NP)
+        : (LAM P (P CAT))
+<     (WELODD)(GATH) := N\N
+        : ((LAM P (P CAT)) (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X))))))
+<     (DYNES)(WELODD GATH) := N
+        : (((LAM P (P CAT)) (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X))))))
+           WOMAN)
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND ((SAW X) CAT)) (WOMAN X))) =
+    (\ X . AND (SAW X CAT) (WOMAN X))
+
+Derivation 2
+--------------
+LEX   (DYNES) := N
+        : WOMAN
+LEX   (WELODD) := (N\N)/NP
+        : (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y)))))
+LEX   (GATH) := (N\N)\((N\N)/NP)
+        : (LAM P (P CAT))
+<     (WELODD)(GATH) := N\N
+        : ((LAM P (P CAT)) (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y))))))
+<     (DYNES)(WELODD GATH) := N
+        : (((LAM P (P CAT)) (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y))))))
+           WOMAN)
+
+Final LF, normal-order evaluated: 
+
+    (LAM Y ((AND ((SAW CAT) Y)) (WOMAN Y))) =
+    (\ Y . AND (SAW CAT Y) (WOMAN Y))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|33B|
+========
+
+
+Derivation 1
+--------------
+LEX   (DYNES) := N
+        : WOMAN
+LEX   (WELODD) := (N\N)/NP
+        : (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X)))))
+LEX   (CATH) := (N\N)\((N\N)/NP)
+        : (LAM P (P CAT))
+<     (WELODD)(CATH) := N\N
+        : ((LAM P (P CAT)) (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X))))))
+<     (DYNES)(WELODD CATH) := N
+        : (((LAM P (P CAT)) (LAM Y (LAM Q (LAM X ((AND ((SAW X) Y)) (Q X))))))
+           WOMAN)
+
+Final LF, normal-order evaluated: 
+
+    (LAM X ((AND ((SAW X) CAT)) (WOMAN X))) =
+    (\ X . AND (SAW X CAT) (WOMAN X))
+
+Derivation 2
+--------------
+LEX   (DYNES) := N
+        : WOMAN
+LEX   (WELODD) := (N\N)/NP
+        : (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y)))))
+LEX   (CATH) := (N\N)\((N\N)/NP)
+        : (LAM P (P CAT))
+<     (WELODD)(CATH) := N\N
+        : ((LAM P (P CAT)) (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y))))))
+<     (DYNES)(WELODD CATH) := N
+        : (((LAM P (P CAT)) (LAM X (LAM Q (LAM Y ((AND ((SAW X) Y)) (Q Y))))))
+           WOMAN)
+
+Final LF, normal-order evaluated: 
+
+    (LAM Y ((AND ((SAW CAT) Y)) (WOMAN Y))) =
+    (\ Y . AND (SAW CAT Y) (WOMAN Y))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG2A
+========
+
+
+Derivation 1
+--------------
+LEX   (ARı) := NP
+        : BEE
+LEX   (SOK) := V\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+<     (ARı)(SOK) := V
+        : ((LAM X (LAM Y ((STING X) Y))) BEE)
+LEX   (-AN) := (NP/NP)\V
+        : (LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+<     (ARı SOK)(-AN) := NP/NP
+        : ((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+           ((LAM X (LAM Y ((STING X) Y))) BEE))
+LEX   (KıZ) := NP
+        : GIRL
+>     (ARı SOK -AN)(KıZ) := NP
+        : (((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+            ((LAM X (LAM Y ((STING X) Y))) BEE))
+           GIRL)
+
+Final LF, normal-order evaluated: 
+
+    (LAM Z ((AND ((STING BEE) Z)) (GIRL Z))) =
+    (\ Z . AND (STING BEE Z) (GIRL Z))
+
+Derivation 2
+--------------
+LEX   (ARı) := V/(V\NP)
+        : (LAM P (P BEE))
+LEX   (SOK) := V\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+>     (ARı)(SOK) := V
+        : ((LAM P (P BEE)) (LAM X (LAM Y ((STING X) Y))))
+LEX   (-AN) := (NP/NP)\V
+        : (LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+<     (ARı SOK)(-AN) := NP/NP
+        : ((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+           ((LAM P (P BEE)) (LAM X (LAM Y ((STING X) Y)))))
+LEX   (KıZ) := NP
+        : GIRL
+>     (ARı SOK -AN)(KıZ) := NP
+        : (((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+            ((LAM P (P BEE)) (LAM X (LAM Y ((STING X) Y)))))
+           GIRL)
+
+Final LF, normal-order evaluated: 
+
+    (LAM Z ((AND ((STING BEE) Z)) (GIRL Z))) =
+    (\ Z . AND (STING BEE Z) (GIRL Z))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG2B
+========
+
+
+Derivation 1
+--------------
+LEX   (arı sok) := V
+        : (LAM X ((CAUSE (INIT (STUNG X))) BEE))
+LEX   (-AN) := (NP/NP)\V
+        : (LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+<     ("arı sok")(-AN) := NP/NP
+        : ((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+           (LAM X ((CAUSE (INIT (STUNG X))) BEE)))
+LEX   (KıZ) := NP
+        : GIRL
+>     ("arı sok" -AN)(KıZ) := NP
+        : (((LAM P (LAM Q (LAM Z ((AND (P Z)) (Q Z)))))
+            (LAM X ((CAUSE (INIT (STUNG X))) BEE)))
+           GIRL)
+
+Final LF, normal-order evaluated: 
+
+    (LAM Z ((AND ((CAUSE (INIT (STUNG Z))) BEE)) (GIRL Z))) =
+    (\ Z . AND (CAUSE (INIT (STUNG Z)) BEE) (GIRL Z))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG3
+========
+
+
+Derivation 1
+--------------
+LEX   (KıZı) := S/(S\NP)
+        : (LAM P (P (TOP GIRL)))
+LEX   (HER) := (S/(S\NP))/NP
+        : (LAM W (LAM Q ((FORALL XX) ((IMP (W XX)) (Q XX)))))
+LEX   (ARı) := NP
+        : BEE
+>     (HER)(ARı) := S/(S\NP)
+        : ((LAM W (LAM Q ((FORALL XX) ((IMP (W XX)) (Q XX))))) BEE)
+LEX   (SOKTU) := (S\NP)\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+>Bx   (HER ARı)(SOKTU) := S\NP
+        : (LAM X
+           (((LAM W (LAM Q ((FORALL XX) ((IMP (W XX)) (Q XX))))) BEE)
+            ((LAM X (LAM Y ((STING X) Y))) X)))
+>     (KıZı)(HER ARı SOKTU) := S
+        : ((LAM P (P (TOP GIRL)))
+           (LAM X
+            (((LAM W (LAM Q ((FORALL XX) ((IMP (W XX)) (Q XX))))) BEE)
+             ((LAM X (LAM Y ((STING X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((FORALL XX) ((IMP (BEE XX)) ((STING (TOP GIRL)) XX))) =
+    (FORALL XX (IMP (BEE XX) (STING (TOP GIRL) XX)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG4A
+========
+
+
+Derivation 1
+--------------
+LEX   (SOKTU) := (S\NP)\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+LEX   (ARı) := S\(S\NP)
+        : (LAM P (P (BACK BEE)))
+<B    (SOKTU)(ARı) := S\NP
+        : (LAM X ((LAM P (P (BACK BEE))) ((LAM X (LAM Y ((STING X) Y))) X)))
+LEX   (KıZı) := S\(S\NP)
+        : (LAM P (P (BACK GIRL)))
+<     (SOKTU ARı)(KıZı) := S
+        : ((LAM P (P (BACK GIRL)))
+           (LAM X ((LAM P (P (BACK BEE))) ((LAM X (LAM Y ((STING X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((STING (BACK GIRL)) (BACK BEE)) =
+    (STING (BACK GIRL) (BACK BEE))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG4B
+========
+
+
+Derivation 1
+--------------
+LEX   (SOKTU) := (S\NP)\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+LEX   (KıZı) := (S\NP)\((S\NP)\NP)
+        : (LAM P (P (BACK GIRL)))
+<     (SOKTU)(KıZı) := S\NP
+        : ((LAM P (P (BACK GIRL))) (LAM X (LAM Y ((STING X) Y))))
+LEX   (ARı) := S\(S\NP)
+        : (LAM P (P (BACK BEE)))
+<     (SOKTU KıZı)(ARı) := S
+        : ((LAM P (P (BACK BEE)))
+           ((LAM P (P (BACK GIRL))) (LAM X (LAM Y ((STING X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((STING (BACK GIRL)) (BACK BEE)) =
+    (STING (BACK GIRL) (BACK BEE))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG5
+========
+
+
+Derivation 1
+--------------
+LEX   (BÜTÜN) := (S/(S\NP))/NP
+        : (LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX)))))
+LEX   (ARıLAR) := NP
+        : BEES
+>     (BÜTÜN)(ARıLAR) := S/(S\NP)
+        : ((LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX))))) BEES)
+LEX   (SOKTU) := (S\NP)\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+LEX   (KıZı) := (S\NP)\((S\NP)\NP)
+        : (LAM P (P (BACK GIRL)))
+<     (SOKTU)(KıZı) := S\NP
+        : ((LAM P (P (BACK GIRL))) (LAM X (LAM Y ((STING X) Y))))
+>     (BÜTÜN ARıLAR)(SOKTU KıZı) := S
+        : (((LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX))))) BEES)
+           ((LAM P (P (BACK GIRL))) (LAM X (LAM Y ((STING X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((RHEME (FORALL XX)) ((IMP (BEES XX)) ((STING (BACK GIRL)) XX))) =
+    (RHEME (FORALL XX) (IMP (BEES XX) (STING (BACK GIRL) XX)))
+
+Derivation 2
+--------------
+LEX   (BÜTÜN) := (S/(S\NP))/NP
+        : (LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX)))))
+LEX   (ARıLAR) := NP
+        : BEES
+>     (BÜTÜN)(ARıLAR) := S/(S\NP)
+        : ((LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX))))) BEES)
+LEX   (SOKTU) := (S\NP)\NP
+        : (LAM X (LAM Y ((STING X) Y)))
+>Bx   (BÜTÜN ARıLAR)(SOKTU) := S\NP
+        : (LAM X
+           (((LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX))))) BEES)
+            ((LAM X (LAM Y ((STING X) Y))) X)))
+LEX   (KıZı) := S\(S\NP)
+        : (LAM P (P (BACK GIRL)))
+<     (BÜTÜN ARıLAR SOKTU)(KıZı) := S
+        : ((LAM P (P (BACK GIRL)))
+           (LAM X
+            (((LAM W (LAM Q ((RHEME (FORALL XX)) ((IMP (W XX)) (Q XX))))) BEES)
+             ((LAM X (LAM Y ((STING X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((RHEME (FORALL XX)) ((IMP (BEES XX)) ((STING (BACK GIRL)) XX))) =
+    (RHEME (FORALL XX) (IMP (BEES XX) (STING (BACK GIRL) XX)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|44A|
+========
+
+
+Derivation 1
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+LEX   (os carros) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P (PLU CAR)))
+<     (VI)("os carros") := S\NP
+        : ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y))))
+>     (NÃO)(VI "os carros") := S\NP
+        : ((LAM P (LAM X (NOT (P X))))
+           ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y)))))
+>     (EU)(NÃO VI "os carros") := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X (NOT (P X))))
+            ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((SAW (PLU CAR)) I)) =
+    (NOT (SAW (PLU CAR) I))
+
+Derivation 2
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+>B    (NÃO)(VI) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X)))
+LEX   (os carros) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P (PLU CAR)))
+<     (NÃO VI)("os carros") := S\NP
+        : ((LAM P (P (PLU CAR)))
+           (LAM X
+            ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X))))
+>     (EU)(NÃO VI "os carros") := S
+        : ((LAM P (P I))
+           ((LAM P (P (PLU CAR)))
+            (LAM X
+             ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X)))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((SAW (PLU CAR)) I)) =
+    (NOT (SAW (PLU CAR) I))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|44B|
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|44C|
+========
+
+
+Derivation 1
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (OS) := (S\NP)/((S\NP)/NP)
+        : (LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+>     (OS)(VI) := S\NP
+        : ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+           (LAM X (LAM Y ((SAW X) Y))))
+>     (NÃO)(OS VI) := S\NP
+        : ((LAM P (LAM X (NOT (P X))))
+           ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+            (LAM X (LAM Y ((SAW X) Y)))))
+>     (EU)(NÃO OS VI) := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X (NOT (P X))))
+            ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+             (LAM X (LAM Y ((SAW X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((AND ((SAW THEM) I)) ((NOTEQ I) THEM))) =
+    (NOT (AND (SAW THEM I) (NOTEQ I THEM)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+|44D|
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+44EE1
+========
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+43EE2
+========
+
+
+Derivation 1
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+LEX   (OS) := (S\NP)\\((S\NP)/NP)
+        : (LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+<     (VI)(OS) := S\NP
+        : ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+           (LAM X (LAM Y ((SAW X) Y))))
+>     (EU)(VI OS) := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+            (LAM X (LAM Y ((SAW X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAW THEM) I)) ((NOTEQ I) THEM)) =
+    (AND (SAW THEM I) (NOTEQ I THEM))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG5A
+========
+
+
+Derivation 1
+--------------
+LEX   (O Paulo) := S/(S\NP)
+        : (LAM P (P PAUL))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (OS) := (S\NP)/((S\NP)/NP)
+        : (LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+LEX   (VIU) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+>     (OS)(VIU) := S\NP
+        : ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+           (LAM X (LAM Y ((SAW X) Y))))
+>     (NÃO)(OS VIU) := S\NP
+        : ((LAM P (LAM X (NOT (P X))))
+           ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+            (LAM X (LAM Y ((SAW X) Y)))))
+>     ("O Paulo")(NÃO OS VIU) := S
+        : ((LAM P (P PAUL))
+           ((LAM P (LAM X (NOT (P X))))
+            ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+             (LAM X (LAM Y ((SAW X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((AND ((SAW THEM) PAUL)) ((NOTEQ PAUL) THEM))) =
+    (NOT (AND (SAW THEM PAUL) (NOTEQ PAUL THEM)))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG6B
+========
+
+
+Derivation 1
+--------------
+LEX   (TODOS) := S/(S\NP)
+        : (LAM P (P EVERYBODY))
+LEX   (OS) := (S\NP)/((S\NP)/NP)
+        : (LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+LEX   (VIRAM) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+>     (OS)(VIRAM) := S\NP
+        : ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+           (LAM X (LAM Y ((SAW X) Y))))
+>     (TODOS)(OS VIRAM) := S
+        : ((LAM P (P EVERYBODY))
+           ((LAM P (LAM X ((AND ((P THEM) X)) ((NOTEQ X) THEM))))
+            (LAM X (LAM Y ((SAW X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((SAW THEM) EVERYBODY)) ((NOTEQ EVERYBODY) THEM)) =
+    (AND (SAW THEM EVERYBODY) (NOTEQ EVERYBODY THEM))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+FIG6C
+========
+
+
+Derivation 1
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+LEX   (os carros) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P (PLU CAR)))
+<     (VI)("os carros") := S\NP
+        : ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y))))
+>     (NÃO)(VI "os carros") := S\NP
+        : ((LAM P (LAM X (NOT (P X))))
+           ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y)))))
+>     (EU)(NÃO VI "os carros") := S
+        : ((LAM P (P I))
+           ((LAM P (LAM X (NOT (P X))))
+            ((LAM P (P (PLU CAR))) (LAM X (LAM Y ((SAW X) Y))))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((SAW (PLU CAR)) I)) =
+    (NOT (SAW (PLU CAR) I))
+
+Derivation 2
+--------------
+LEX   (EU) := S/(S\NP)
+        : (LAM P (P I))
+LEX   (NÃO) := (S\NP)/(S\NP)
+        : (LAM P (LAM X (NOT (P X))))
+LEX   (VI) := (S\NP)/NP
+        : (LAM X (LAM Y ((SAW X) Y)))
+>B    (NÃO)(VI) := (S\NP)/NP
+        : (LAM X ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X)))
+LEX   (os carros) := (S\NP)\((S\NP)/NP)
+        : (LAM P (P (PLU CAR)))
+<     (NÃO VI)("os carros") := S\NP
+        : ((LAM P (P (PLU CAR)))
+           (LAM X
+            ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X))))
+>     (EU)(NÃO VI "os carros") := S
+        : ((LAM P (P I))
+           ((LAM P (P (PLU CAR)))
+            (LAM X
+             ((LAM P (LAM X (NOT (P X)))) ((LAM X (LAM Y ((SAW X) Y))) X)))))
+
+Final LF, normal-order evaluated: 
+
+    (NOT ((SAW (PLU CAR)) I)) =
+    (NOT (SAW (PLU CAR) I))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+=======
+48
+========
+
+
+Derivation 1
+--------------
+LEX   (A sopa) := S/(S/NP)
+        : (LAM P (P (TOP SOUP)))
+LEX   (O Paulo) := S/(S\NP)
+        : (LAM P (P PAUL))
+LEX   (COMEU) := (S\NP)/NP
+        : (LAM X (LAM Y ((EAT X) Y)))
+>B    ("O Paulo")(COMEU) := S/NP
+        : (LAM X ((LAM P (P PAUL)) ((LAM X (LAM Y ((EAT X) Y))) X)))
+>     ("A sopa")("O Paulo" COMEU) := S
+        : ((LAM P (P (TOP SOUP)))
+           (LAM X ((LAM P (P PAUL)) ((LAM X (LAM Y ((EAT X) Y))) X))))
+
+Final LF, normal-order evaluated: 
+
+    ((EAT (TOP SOUP)) PAUL) =
+    (EAT (TOP SOUP) PAUL)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)

@@ -1,0 +1,26 @@
+(DEFPARAMETER *CCG-GRAMMAR*
+  '(((KEY 1) (PHON JOHN) (MORPH N)
+     (SYN
+      (((BCAT S) (FEATS NIL)) (DIR FS) (MODAL STAR) ((BCAT VP) (FEATS NIL))))
+     (SEM (LAM P (P "JOHN"))) (PARAM 1.0))
+    ((KEY 2) (PHON SPOKE) (MORPH V) (SYN ((BCAT VP) (FEATS NIL)))
+     (SEM (LAM X ("SPEAK" X))) (PARAM 1.0))
+    ((KEY 3) (PHON MARY) (MORPH N) (SYN ((BCAT NP) (FEATS NIL))) (SEM "MARY")
+     (PARAM 1.0))
+    ((KEY 4) (PHON TO) (MORPH P)
+     (SYN
+      ((((BCAT VP) (FEATS NIL)) (DIR BS) (MODAL HARMONIC)
+        ((BCAT VP) (FEATS NIL)))
+       (DIR FS) (MODAL STAR) ((BCAT NP) (FEATS NIL))))
+     (SEM (LAM X (LAM P (P ("TO" X))))) (PARAM 1.0))
+    ((KEY 5) (INSYN ((BCAT VP) (FEATS NIL))) (INSEM LF)
+     (OUTSYN
+      (((BCAT VP) (FEATS NIL)) (DIR FS) (MODAL ALL)
+       (((BCAT VP) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT VP) (FEATS NIL)))))
+     (OUTSEM (LAM Q (LAM LF (Q LF)))) (INDEX D-SHIFT) (PARAM 1.0))
+    ((KEY 6) (PHON SPOKE) (MORPH V)
+     (SYN
+      (((BCAT VP) (FEATS NIL)) (DIR FS) (MODAL HARMONIC)
+       (((BCAT VP) (FEATS NIL)) (DIR BS) (MODAL HARMONIC)
+        ((BCAT VP) (FEATS NIL)))))
+     (SEM (LAM Q (LAM X (Q ("SPEAK" X))))) (PARAM 1.0))))
