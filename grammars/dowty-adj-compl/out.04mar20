@@ -1,0 +1,119 @@
+
+> (lg "g")
+
+======================= l o a d i n g =======================================
+
+Project g files
+-----------------------------------------------------------------------------
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 6 entries
+   *LEX-RULES-TABLE*      : 1 entries
+=============================================================================
+T
+> (p '(john spoke))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (JOHN) := S/*VP
+        : (LAM P (P JOHN))
+LEX   (SPOKE) := VP
+        : (LAM X (SPEAK X))
+>     (JOHN)(SPOKE) := S
+        : ((LAM P (P JOHN)) (LAM X (SPEAK X)))
+
+Final LF, normal-order evaluated: 
+
+    (SPEAK JOHN) =
+    (SPEAK JOHN)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (p '(john spoke to mary))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (JOHN) := S/*VP
+        : (LAM P (P JOHN))
+LEX   (SPOKE) := VP/^(VP\^VP)
+        : (LAM Q (LAM X (Q (SPEAK X))))
+LEX   (TO) := (VP\^VP)/*NP
+        : (LAM X (LAM P (P (TO X))))
+LEX   (MARY) := NP
+        : MARY
+>     (TO)(MARY) := VP\^VP
+        : ((LAM X (LAM P (P (TO X)))) MARY)
+>     (SPOKE)(TO MARY) := VP
+        : ((LAM Q (LAM X (Q (SPEAK X)))) ((LAM X (LAM P (P (TO X)))) MARY))
+>     (JOHN)(SPOKE TO MARY) := S
+        : ((LAM P (P JOHN))
+           ((LAM Q (LAM X (Q (SPEAK X)))) ((LAM X (LAM P (P (TO X)))) MARY)))
+
+Final LF, normal-order evaluated: 
+
+    ((SPEAK JOHN) (TO MARY)) =
+    (SPEAK JOHN (TO MARY))
+
+Derivation 2
+--------------
+LEX   (JOHN) := S/*VP
+        : (LAM P (P JOHN))
+LEX   (SPOKE) := VP
+        : (LAM X (SPEAK X))
+LEX   (TO) := (VP\^VP)/*NP
+        : (LAM X (LAM P (P (TO X))))
+LEX   (MARY) := NP
+        : MARY
+>     (TO)(MARY) := VP\^VP
+        : ((LAM X (LAM P (P (TO X)))) MARY)
+<     (SPOKE)(TO MARY) := VP
+        : (((LAM X (LAM P (P (TO X)))) MARY) (LAM X (SPEAK X)))
+>     (JOHN)(SPOKE TO MARY) := S
+        : ((LAM P (P JOHN))
+           (((LAM X (LAM P (P (TO X)))) MARY) (LAM X (SPEAK X))))
+
+Final LF, normal-order evaluated: 
+
+    ((SPEAK (TO MARY)) JOHN) =
+    (SPEAK (TO MARY) JOHN)
+
+Derivation 3
+--------------
+LEX   (JOHN) := S/*VP
+        : (LAM P (P JOHN))
+D-SHIFT (SPOKE) := VP/(VP\VP)
+        : ((LAM Q (LAM LF (Q LF))) (LAM X (SPEAK X)))
+LEX   (TO) := (VP\^VP)/*NP
+        : (LAM X (LAM P (P (TO X))))
+LEX   (MARY) := NP
+        : MARY
+>     (TO)(MARY) := VP\^VP
+        : ((LAM X (LAM P (P (TO X)))) MARY)
+>     (SPOKE)(TO MARY) := VP
+        : (((LAM Q (LAM LF (Q LF))) (LAM X (SPEAK X)))
+           ((LAM X (LAM P (P (TO X)))) MARY))
+>     (JOHN)(SPOKE TO MARY) := S
+        : ((LAM P (P JOHN))
+           (((LAM Q (LAM LF (Q LF))) (LAM X (SPEAK X)))
+            ((LAM X (LAM P (P (TO X)))) MARY)))
+
+Final LF, normal-order evaluated: 
+
+    ((SPEAK (LAM P (P (TO MARY)))) JOHN) =
+    (SPEAK (\ P . P (TO MARY)) JOHN)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)

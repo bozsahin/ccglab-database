@@ -11,9 +11,7 @@ In each folder:
 
   <code>.ccg</code> file is the source grammar you type. (the grammar)
 
-  <code>.ded</code> file is the lisp-ready code ccglab generates for linguistic analysis. (the lisp-ready grammar)
-
-  <code>.ind</code> file is the lisp-ready code ccglab uses for model development, training and parse ranking. (the model- and lisp-ready grammar). It has the same format with <code>.ded</code>.
+  <code>.ccg.lisp</code> file is the lisp-ready code ccglab uses for model development, training and parse ranking. (the model- and lisp-ready grammar). 
 
   <code>.sup</code> and <code>.supervision</code> files are for model training from sentence-lf pairs.
 

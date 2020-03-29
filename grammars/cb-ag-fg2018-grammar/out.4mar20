@@ -1,21 +1,26 @@
 
-> (lg "fg2018")
+> (mlg "fg2018")
 
+=============================================================================
+*** CCGlab warning *** There are 13 string-constant categories in your grammar
+ make sure NONE are void
+
+======================= c o m p i l i n g ===================================
+
+Project name: fg2018
+  Input : (fg2018.ccg, fg2018.lisptokens)
+  Output: fg2018.ccg.lisp 
+** Check fg2018.ccg.lisp for THE FIRST ERROR in fg2018.ccg if load fails.
 ======================= l o a d i n g =======================================
-; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/cb-ag-fg2018-grammar/fg2018.ded"
 
-Project [fg2018] is assumed to consist of
+Project fg2018 files
 -----------------------------------------------------------------------------
-  CCG grammar source : fg2018.ccg $
-    Its token form   : fg2018.lisptokens $
-  Deduction grammar  : fg2018.ded $ (derived from fg2018.lisptokens)
-  Induction grammar  : fg2018.ind #
-  Supervision source : fg2018.sup ^
-  Model-specific code: fg2018.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from fg2018.ded
-  *LEX-RULES-TABLE*  : set from fg2018.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : fg2018.ccg
+    Its token form        : fg2018.lisptokens
+  Compiled/loaded grammar : fg2018.ccg.lisp
+  Supervision source      : fg2018.sup (optional)
+       *CCG-GRAMMAR*      : 60 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 T
 > (load "fg2018.testsuite.lisp")
@@ -23,13 +28,11 @@ T
 T
 > (test-ders)
 
-To see rule switches, do (switches)
-  To beam or not to beam    : NIL
-  Normal Form (NF) parse    : T
-  Out of vocabulary flag    : NIL
- *PRINT-READABLY*           : NIL
- *PRINT-PRETTY*             : T
-  Currently loaded grammar  : fg2018.ded
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : fg2018.ccg.lisp
  *CCG-GRAMMAR*              : 60 items
  *LEX-RULES-TABLE*          : 0 items
  *CKY-HASHTABLE*            : 0 items
@@ -40,8 +43,9 @@ To see rule switches, do (switches)
   Most likely LF's cells    : NIL 
   Number of differing LFs   : 0 
   Most weighted derivation  : NIL 
+  ---------------------------
 
-"CCGlab, version 5.2"
+"CCGlab, version 7.0"
 =======
 2
 ========

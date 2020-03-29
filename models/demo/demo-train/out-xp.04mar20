@@ -1,62 +1,29 @@
 
-> (lg "corner" :make t)
-
-
-=========================== p r e p a r i n g ===============================
-
-Project name: corner
-  Input : corner.lisptokens 
-  Output: corner.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create corner.lisptokens by running 'tokens corner' sed script offline.
-======================= l o a d i n g =======================================
-
-Project [corner] is assumed to consist of
------------------------------------------------------------------------------
-  CCG grammar source : corner.ccg $
-    Its token form   : corner.lisptokens $
-  Deduction grammar  : corner.ded $ (derived from corner.lisptokens)
-  Induction grammar  : corner.ind #
-  Supervision source : corner.sup ^
-  Model-specific code: corner.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from corner.ded
-  *LEX-RULES-TABLE*  : set from corner.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
-=============================================================================
-T
-> (save-grammar "corner.ind")
-
-NIL
 > (update-model-xp "corner" 1.0 1.0 :load t)
 
 *Beamp* = NIL  *Beam-exp* = 0.9
 
 ======================= l o a d i n g =======================================
 
-Project [corner] is assumed to consist of
+Project corner files
 -----------------------------------------------------------------------------
-  CCG grammar source : corner.ccg $
-    Its token form   : corner.lisptokens $
-  Deduction grammar  : corner.ded $ (derived from corner.lisptokens)
-  Induction grammar  : corner.ind #
-  Supervision source : corner.sup ^
-  Model-specific code: corner.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from corner.ind
-  *LEX-RULES-TABLE*  : set from corner.ind
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : corner.ccg
+    Its token form        : corner.lisptokens
+  Compiled/loaded grammar : corner.ccg.lisp
+  Supervision source      : corner.sup (optional)
+       *CCG-GRAMMAR*      : 15 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 
 Supervision file loaded: corner.sup
+
 Done. use (show-training-xp/save-training-xp) to see/save the results
 NIL
 > (show-training-xp)
 The rule set used in the experiment:
 
 
-CCGlab, version 6.0
+CCGlab, version 7.0
 
 To change a switch, use (setf <switchname> <value>)
 	      where <value> is T (on) or NIL (off)
@@ -124,7 +91,7 @@ NIL
 > (show-config)
 
 
-CCGlab, version 6.0
+CCGlab, version 7.0
 
 To change a switch, use (setf <switchname> <value>)
 	      where <value> is T (on) or NIL (off)

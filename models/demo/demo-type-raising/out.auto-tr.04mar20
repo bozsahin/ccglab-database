@@ -1,0 +1,227 @@
+;; with version 7.0
+> (mlg "corner")
+
+
+======================= c o m p i l i n g ===================================
+
+Project name: corner
+  Input : (corner.ccg, corner.lisptokens)
+  Output: corner.ccg.lisp 
+** Check corner.ccg.lisp for THE FIRST ERROR in corner.ccg if load fails.
+======================= l o a d i n g =======================================
+
+Project corner files
+-----------------------------------------------------------------------------
+  CCG grammar source      : corner.ccg
+    Its token form        : corner.lisptokens
+  Compiled/loaded grammar : corner.ccg.lisp
+  Supervision source      : corner.sup (optional)
+       *CCG-GRAMMAR*      : 11 entries
+   *LEX-RULES-TABLE*      : 0 entries
+=============================================================================
+T
+> (tr "corner" '(V))
+
+======================= l o a d i n g =======================================
+
+Project corner files
+-----------------------------------------------------------------------------
+  CCG grammar source      : corner.ccg
+    Its token form        : corner.lisptokens
+  Compiled/loaded grammar : corner.ccg.lisp
+  Supervision source      : corner.sup (optional)
+       *CCG-GRAMMAR*      : 11 entries
+   *LEX-RULES-TABLE*      : 0 entries
+=============================================================================
+NIL
+> (save-tr "corner-raised.ccg.lisp")
+; in: SAVE-TR "corner-raised.ccg.lisp"
+;     (SAVE-TR "corner-raised.ccg.lisp")
+; 
+; caught STYLE-WARNING:
+;   undefined function: COMMON-LISP-USER::SAVE-TR
+; 
+; compilation unit finished
+;   Undefined function:
+;     SAVE-TR
+;   caught 1 STYLE-WARNING condition
+
+debugger invoked on a UNDEFINED-FUNCTION in thread
+#<THREAD "main thread" RUNNING {1000518083}>:
+  The function COMMON-LISP-USER::SAVE-TR is undefined.
+
+> (savetr "corner-raised.ccg.lisp")
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+NIL
+> (lg "corner-raised")
+
+======================= l o a d i n g =======================================
+
+Project corner-raised files
+-----------------------------------------------------------------------------
+  CCG grammar source      : corner-raised.ccg
+    Its token form        : corner-raised.lisptokens
+  Compiled/loaded grammar : corner-raised.ccg.lisp
+  Supervision source      : corner-raised.sup (optional)
+       *CCG-GRAMMAR*      : 15 entries
+   *LEX-RULES-TABLE*      : 4 entries
+=============================================================================
+T
+> (onoff)
+
+*BEAMP* : NIL
+*LFFLAG* : T
+*NF-PARSE* : T
+*OOVP* : NIL
+*TYPE-RAISED-P* : NIL
+NIL
+> (p '(the man hits the boy))
+
+T
+> (ders)
+
+
+Derivation 1
+--------------
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (MAN) := N
+        : MAN
+>     (THE)(MAN) := NP
+        : ((LAM X X) MAN)
+LEX   (HITS) := (S\NP)/NP
+        : (LAM X (LAM Y ((HITS X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (BOY) := N
+        : BOY
+>     (THE)(BOY) := NP
+        : ((LAM X X) BOY)
+>     (HITS)(THE BOY) := S\NP
+        : ((LAM X (LAM Y ((HITS X) Y))) ((LAM X X) BOY))
+<     (THE MAN)(HITS THE BOY) := S
+        : (((LAM X (LAM Y ((HITS X) Y))) ((LAM X X) BOY)) ((LAM X X) MAN))
+
+Final LF, normal-order evaluated: 
+
+    ((HITS BOY) MAN) =
+    (HITS BOY MAN)
+
+Derivation 2
+--------------
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (BOY) := N
+        : BOY
+>     (THE)(BOY) := NP
+        : ((LAM X X) BOY)
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (MAN) := N
+        : MAN
+>     (THE)(MAN) := NP
+        : ((LAM X X) MAN)
+LEX   (HITS) := (S\NP)/NP
+        : (LAM X (LAM Y ((HITS X) Y)))
+_MLU387 (THE BOY) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+<     (HITS)(THE BOY) := S\NP
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+           (LAM X (LAM Y ((HITS X) Y))))
+<     (THE MAN)(HITS THE BOY) := S
+        : ((((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+            (LAM X (LAM Y ((HITS X) Y))))
+           ((LAM X X) MAN))
+
+Final LF, normal-order evaluated: 
+
+    ((HITS BOY) MAN) =
+    (HITS BOY MAN)
+
+Derivation 3
+--------------
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (MAN) := N
+        : MAN
+>     (THE)(MAN) := NP
+        : ((LAM X X) MAN)
+_MLU385 (THE MAN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+LEX   (HITS) := (S\NP)/NP
+        : (LAM X (LAM Y ((HITS X) Y)))
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (BOY) := N
+        : BOY
+>     (THE)(BOY) := NP
+        : ((LAM X X) BOY)
+>     (HITS)(THE BOY) := S\NP
+        : ((LAM X (LAM Y ((HITS X) Y))) ((LAM X X) BOY))
+>     (THE MAN)(HITS THE BOY) := S
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+           ((LAM X (LAM Y ((HITS X) Y))) ((LAM X X) BOY)))
+
+Final LF, normal-order evaluated: 
+
+    ((HITS BOY) MAN) =
+    (HITS BOY MAN)
+
+Derivation 4
+--------------
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (MAN) := N
+        : MAN
+>     (THE)(MAN) := NP
+        : ((LAM X X) MAN)
+LEX   (THE) := NP/*N
+        : (LAM X X)
+LEX   (BOY) := N
+        : BOY
+>     (THE)(BOY) := NP
+        : ((LAM X X) BOY)
+_MLU385 (THE MAN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+LEX   (HITS) := (S\NP)/NP
+        : (LAM X (LAM Y ((HITS X) Y)))
+_MLU387 (THE BOY) := (S\NP)\((S\NP)/NP)
+        : ((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+<     (HITS)(THE BOY) := S\NP
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+           (LAM X (LAM Y ((HITS X) Y))))
+>     (THE MAN)(HITS THE BOY) := S
+        : (((LAM LF (LAM P (P LF))) ((LAM X X) MAN))
+           (((LAM LF (LAM P (P LF))) ((LAM X X) BOY))
+            (LAM X (LAM Y ((HITS X) Y)))))
+
+Final LF, normal-order evaluated: 
+
+    ((HITS BOY) MAN) =
+    (HITS BOY MAN)
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (status)
+
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : corner-raised.ccg.lisp
+ *CCG-GRAMMAR*              : 15 items
+ *LEX-RULES-TABLE*          : 4 items
+ *CKY-HASHTABLE*            : 20 items
+ *CKY-INPUT* for the table  : (THE MAN HITS THE BOY) 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+  ---------------------------
+NIL
+> (dribble)

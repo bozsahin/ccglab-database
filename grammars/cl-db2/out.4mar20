@@ -1,22 +1,35 @@
 
-> (tr "eve.ded" (read1 "eve.vmorphs"))
+> (which-ccglab)
 
+"CCGlab, version 7.0"
+> (tr "eve" (read1 "eve.vmorphs"))
+
+======================= l o a d i n g =======================================
+
+Project eve files
+-----------------------------------------------------------------------------
+  CCG grammar source      : eve.ccg
+    Its token form        : eve.lisptokens
+  Compiled/loaded grammar : eve.ccg.lisp
+  Supervision source      : eve.sup (optional)
+       *CCG-GRAMMAR*      : 4054 entries
+   *LEX-RULES-TABLE*      : 2 entries
+=============================================================================
 NIL
-> (length *raised-lex-rules*) 
-7419
->  ; show the number derived by algorithm 1
-(hash-table-count *ht-tr*) 
-523
->   ; show the number reduced, by algorithm 2
-(status)
+> (length *raised-lex-rules*)
 
+7419
+> (hash-table-count *ht-tr*)
+
+523
+> (status) 
 
   do (rules) or (onoff) for rules and switches
   ---------------------------
   Any non-standard rule     ? NO
-  Currently loaded grammar  : 
+  Currently loaded grammar  : eve.ccg.lisp
  *CCG-GRAMMAR*              : 4054 items
- *LEX-RULES-TABLE*          : 0 items
+ *LEX-RULES-TABLE*          : 2 items
  *CKY-HASHTABLE*            : 0 items
  *CKY-INPUT* for the table  : NIL 
   Most likely LF w/weight   : NIL 
@@ -27,27 +40,24 @@ NIL
   Most weighted derivation  : NIL 
   ---------------------------
 NIL
-> (savetr "eve-raised.ded")
+> ; to show the reduction of rules and its inclusion in grammar
+(savetr "eve-wtr.ccg.lisp")
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 NIL
-> (lg "eve-raised")
+> (lg "eve-wtr")
 
 ======================= l o a d i n g =======================================
 
-Project [eve-raised] is assumed to consist of
+Project eve-wtr files
 -----------------------------------------------------------------------------
-  CCG grammar source : eve-raised.ccg $
-    Its token form   : eve-raised.lisptokens $
-  Deduction grammar  : eve-raised.ded $ (derived from eve-raised.lisptokens)
-  Induction grammar  : eve-raised.ind #
-  Supervision source : eve-raised.sup ^
-  Model-specific code: eve-raised.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from eve-raised.ded
-  *LEX-RULES-TABLE*  : set from eve-raised.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : eve-wtr.ccg
+    Its token form        : eve-wtr.lisptokens
+  Compiled/loaded grammar : eve-wtr.ccg.lisp
+  Supervision source      : eve-wtr.sup (optional)
+       *CCG-GRAMMAR*      : 4577 entries
+   *LEX-RULES-TABLE*      : 525 entries
 =============================================================================
 T
 > (status)
@@ -56,7 +66,7 @@ T
   do (rules) or (onoff) for rules and switches
   ---------------------------
   Any non-standard rule     ? NO
-  Currently loaded grammar  : eve-raised.ded
+  Currently loaded grammar  : eve-wtr.ccg.lisp
  *CCG-GRAMMAR*              : 4577 items
  *LEX-RULES-TABLE*          : 525 items
  *CKY-HASHTABLE*            : 0 items
