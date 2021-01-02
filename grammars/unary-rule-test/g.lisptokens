@@ -1,0 +1,8 @@
+(
+
+
+
+john n  |:=|  np |:|  !john |;| 
+mary n  |:=|  np |:|  !mary |;| 
+likes v  |:=|   |(| s |\\| np |)|  |/| np  |:|   |\\| x |\\| y |.| !like x y |;| 
+ |(| otr |)|  np  |:|  lf  |-->|   |(| s |\\| np |)|  |\\|  |(|  |(| s |\\| np |)|  |/| np |)|   |:|   |\\| lf |\\| p |.| p lf |;|   )

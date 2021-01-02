@@ -1,0 +1,8 @@
+% This mini example shows that input and output of unary rules
+% are both available if unconstrained in projection.
+% Try (p '(john likes mary)) parse to see that there are two derivations, because of 'mary'.
+% -cem bozsahin
+john n := np: !john;
+mary n := np: !mary;
+likes v := (s\np)/np : \x\y.!like x y;
+(otr) np : lf --> (s\np)\((s\np)/np) : \lf\p.p lf;  % object type-raising

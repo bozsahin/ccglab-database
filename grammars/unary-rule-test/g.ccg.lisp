@@ -1,0 +1,17 @@
+(DEFPARAMETER *CCG-GRAMMAR*
+  '(((KEY 1) (PHON JOHN) (MORPH N) (SYN ((BCAT NP) (FEATS NIL))) (SEM "JOHN")
+     (PARAM 1.0))
+    ((KEY 2) (PHON MARY) (MORPH N) (SYN ((BCAT NP) (FEATS NIL))) (SEM "MARY")
+     (PARAM 1.0))
+    ((KEY 3) (PHON LIKES) (MORPH V)
+     (SYN
+      ((((BCAT S) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT NP) (FEATS NIL)))
+       (DIR FS) (MODAL ALL) ((BCAT NP) (FEATS NIL))))
+     (SEM (LAM X (LAM Y (("LIKE" X) Y)))) (PARAM 1.0))
+    ((KEY 4) (INSYN ((BCAT NP) (FEATS NIL))) (INSEM LF)
+     (OUTSYN
+      ((((BCAT S) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT NP) (FEATS NIL)))
+       (DIR BS) (MODAL ALL)
+       ((((BCAT S) (FEATS NIL)) (DIR BS) (MODAL ALL) ((BCAT NP) (FEATS NIL)))
+        (DIR FS) (MODAL ALL) ((BCAT NP) (FEATS NIL)))))
+     (OUTSEM (LAM LF (LAM P (P LF)))) (INDEX OTR) (PARAM 1.0))))
