@@ -1,47 +1,51 @@
 
-> (lg "g")
+> (mlg "g")
 
+
+======================= c o m p i l i n g ===================================
+
+Project name: g
+  Input : (g.ccg, g.lisptokens)
+  Output: g.ccg.lisp 
+** Check g.ccg.lisp for THE FIRST ERROR in g.ccg if load fails.
 ======================= l o a d i n g =======================================
-; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/single-double-slash-and-morphology/g.ded"
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 12 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 T
+> (which-ccglab)
+
+"CCGlab, version 7.0"
 > (load "g.testsuite.lisp")
 
 T
 > (test-ders)
 
-To see rule switches, do (switches)
-  To beam or not to beam    : NIL
-  Normal Form (NF) parse    : T
-  Out of vocabulary flag    : NIL
- *PRINT-READABLY*           : NIL
- *PRINT-PRETTY*             : T
-  Currently loaded grammar  : g.ded
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : g.ccg.lisp
  *CCG-GRAMMAR*              : 12 items
  *LEX-RULES-TABLE*          : 0 items
- *CKY-HASHTABLE*            : 0 items
- *CKY-INPUT* for the table  : NIL 
+ *CKY-HASHTABLE*            : 11 items
+ *CKY-INPUT* for the table  : (UYU -MA -YAN ADAM) 
   Most likely LF w/weight   : NIL 
   Its most likely derivation: NIL
   Sum of weighted counts    : 0.0 
   Most likely LF's cells    : NIL 
   Number of differing LFs   : 0 
   Most weighted derivation  : NIL 
+  ---------------------------
 
-"CCGlab, version 5.2"
+"CCGlab, version 7.0"
 =======
 1
 (ADAM -IN OKU -DUGU KITAP)

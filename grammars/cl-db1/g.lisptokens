@@ -33,8 +33,8 @@ caused en  |:=|   |(| s |\\| np |)|  |/|  |^| np  |:|   |\\| x |\\| y |.| !cause
 
 
 Taroo-wa n  |:=|  np |[| top |=| p |]|   |:|  !taroo |;| 
-hanako-ni n  |:=|  predp |[| case |=| dat |]|  |/|  |(| cing |\\| np |\\| np |)|   |:|   |\\| p |\\| x |.| p x !hanako |;| 
-hanako-ni n  |:=|  np |[| case |=| dat |]|   |:|  !hanako |;| 
+Hanako-ni n  |:=|  predp |[| case |=| dat |]|  |/|  |(| cing |\\| np |\\| np |)|   |:|   |\\| p |\\| x |.| p x !hanako |;| 
+Hanako-ni n  |:=|  np |[| case |=| dat |]|   |:|  !hanako |;| 
 huku-o n  |:=|  predp |[| case |=| acc |]|  |\\|  |(| cing |\\| np |\\| np |)|   |:|   |\\| p |.| p !clothes |;| 
 huku-o n  |:=|  np |[| case |=| acc |]|   |:|  !clothes |;| 
 kiteiru jp  |:=|  cing |\\| np |\\| np  |:|   |\\| x |\\| y |.| !wearing x y |;| 

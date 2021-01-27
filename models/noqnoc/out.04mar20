@@ -1,87 +1,53 @@
 
-> (lg "noqnoc" :make t)
+> (mlg "noqnoc")
 
 
-=========================== p r e p a r i n g ===============================
+======================= c o m p i l i n g ===================================
 
 Project name: noqnoc
-  Input : noqnoc.lisptokens 
-  Output: noqnoc.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create noqnoc.lisptokens by running 'tokens noqnoc' sed script offline.
+  Input : (noqnoc.ccg, noqnoc.lisptokens)
+  Output: noqnoc.ccg.lisp 
+** Check noqnoc.ccg.lisp for THE FIRST ERROR in noqnoc.ccg if load fails.
 ======================= l o a d i n g =======================================
 
-Project [noqnoc] is assumed to consist of
+Project noqnoc files
 -----------------------------------------------------------------------------
-  CCG grammar source : noqnoc.ccg $
-    Its token form   : noqnoc.lisptokens $
-  Deduction grammar  : noqnoc.ded $ (derived from noqnoc.lisptokens)
-  Induction grammar  : noqnoc.ind #
-  Supervision source : noqnoc.sup ^
-  Model-specific code: noqnoc.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from noqnoc.ded
-  *LEX-RULES-TABLE*  : set from noqnoc.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : noqnoc.ccg
+    Its token form        : noqnoc.lisptokens
+  Compiled/loaded grammar : noqnoc.ccg.lisp
+  Supervision source      : noqnoc.sup (optional)
+       *CCG-GRAMMAR*      : 18 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 T
-> (make-supervision "noqnoc")
+> (which-ccglab)
 
-
-WARNING: redefining COMMON-LISP-USER::LALR-PARSER in DEFUN
-
-=========================== p r e p a r i n g ===============================
-
-Project name: noqnoc
-  Input : noqnoc.suptokens 
-  Output: noqnoc.sup 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create noqnoc.suptokens by running 'suptokens noqnoc' sed script offline.
-
-WARNING: redefining COMMON-LISP-USER::LALR-PARSER in DEFUN
-
-=========================== p r e p a r i n g ===============================
-
-Project name: noqnoc
-  Input : noqnoc.supervision and noqnoc.suptokens
-  Output: noqnoc.sup 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create noqnoc.suptokens by running 'suptokens noqnoc' sed script offline.
-NIL
-> (save-grammar "noqnoc.ind")
-
-NIL
+"CCGlab, version 7.0"
 > (update-model "noqnoc" 10 1.0 1.0 :load t)
 
 *Beamp* = NIL  *Beam-exp* = 0.9
 
 ======================= l o a d i n g =======================================
 
-Project [noqnoc] is assumed to consist of
+Project noqnoc files
 -----------------------------------------------------------------------------
-  CCG grammar source : noqnoc.ccg $
-    Its token form   : noqnoc.lisptokens $
-  Deduction grammar  : noqnoc.ded $ (derived from noqnoc.lisptokens)
-  Induction grammar  : noqnoc.ind #
-  Supervision source : noqnoc.sup ^
-  Model-specific code: noqnoc.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from noqnoc.ind
-  *LEX-RULES-TABLE*  : set from noqnoc.ind
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : noqnoc.ccg
+    Its token form        : noqnoc.lisptokens
+  Compiled/loaded grammar : noqnoc.ccg.lisp
+  Supervision source      : noqnoc.sup (optional)
+       *CCG-GRAMMAR*      : 18 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Supervision file loaded: noqnoc.sup
+
 Done. use (show-training/save-training) to see/save the results
 NIL
 > (show-training)
 The rule set used in the experiment:
 
 
-CCGlab, version 6.0
+CCGlab, version 7.0
 
 To change a switch, use (setf <switchname> <value>)
 	      where <value> is T (on) or NIL (off)

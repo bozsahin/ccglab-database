@@ -1,21 +1,23 @@
 
-> (lg "fragments")
+> (mlg "fragments")
 
+
+======================= c o m p i l i n g ===================================
+
+Project name: fragments
+  Input : (fragments.ccg, fragments.lisptokens)
+  Output: fragments.ccg.lisp 
+** Check fragments.ccg.lisp for THE FIRST ERROR in fragments.ccg if load fails.
 ======================= l o a d i n g =======================================
-; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/cb-word-order-chapter/fragments.ded"
 
-Project [fragments] is assumed to consist of
+Project fragments files
 -----------------------------------------------------------------------------
-  CCG grammar source : fragments.ccg $
-    Its token form   : fragments.lisptokens $
-  Deduction grammar  : fragments.ded $ (derived from fragments.lisptokens)
-  Induction grammar  : fragments.ind #
-  Supervision source : fragments.sup ^
-  Model-specific code: fragments.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from fragments.ded
-  *LEX-RULES-TABLE*  : set from fragments.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : fragments.ccg
+    Its token form        : fragments.lisptokens
+  Compiled/loaded grammar : fragments.ccg.lisp
+  Supervision source      : fragments.sup (optional)
+       *CCG-GRAMMAR*      : 78 entries
+   *LEX-RULES-TABLE*      : 1 entries
 =============================================================================
 T
 > (load "fragments.testsuite.lisp")
@@ -23,13 +25,11 @@ T
 T
 > (test-ders)
 
-To see rule switches, do (switches)
-  To beam or not to beam    : NIL
-  Normal Form (NF) parse    : T
-  Out of vocabulary flag    : NIL
- *PRINT-READABLY*           : NIL
- *PRINT-PRETTY*             : T
-  Currently loaded grammar  : fragments.ded
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : fragments.ccg.lisp
  *CCG-GRAMMAR*              : 78 items
  *LEX-RULES-TABLE*          : 1 item
  *CKY-HASHTABLE*            : 0 items
@@ -40,8 +40,9 @@ To see rule switches, do (switches)
   Most likely LF's cells    : NIL 
   Number of differing LFs   : 0 
   Most weighted derivation  : NIL 
+  ---------------------------
 
-"CCGlab, version 5.2"
+"CCGlab, version 7.0"
 =======
 4
 ========

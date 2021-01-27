@@ -1,46 +1,33 @@
 
+> (lg "pftl")
+
+======================= l o a d i n g =======================================
+
+Project pftl files
+-----------------------------------------------------------------------------
+  CCG grammar source      : pftl.ccg
+    Its token form        : pftl.lisptokens
+  Compiled/loaded grammar : pftl.ccg.lisp
+  Supervision source      : pftl.sup (optional)
+       *CCG-GRAMMAR*      : 251 entries
+   *LEX-RULES-TABLE*      : 0 entries
+=============================================================================
+T
 > (load "pftl-test")
 
 T
-> (lg "pftl" :make t)
-
-
-=========================== p r e p a r i n g ===============================
-
-Project name: pftl
-  Input : pftl.lisptokens 
-  Output: pftl.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create pftl.lisptokens by running 'tokens pftl' sed script offline.
-======================= l o a d i n g =======================================
-
-Project [pftl] is assumed to consist of
------------------------------------------------------------------------------
-  CCG grammar source : pftl.ccg $
-    Its token form   : pftl.lisptokens $
-  Deduction grammar  : pftl.ded $ (derived from pftl.lisptokens)
-  Induction grammar  : pftl.ind #
-  Supervision source : pftl.sup ^
-  Model-specific code: pftl.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from pftl.ded
-  *LEX-RULES-TABLE*  : set from pftl.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
-=============================================================================
-T
 > (test-ders)
 
-"CCGlab, version 6.0.1"
+"CCGlab, version 7.0"
 
   do (rules) or (onoff) for rules and switches
   ---------------------------
   Any non-standard rule     ? NO
-  Currently loaded grammar  : pftl.ded
+  Currently loaded grammar  : pftl.ccg.lisp
  *CCG-GRAMMAR*              : 251 items
  *LEX-RULES-TABLE*          : 0 items
- *CKY-HASHTABLE*            : 0 items
- *CKY-INPUT* for the table  : NIL 
+ *CKY-HASHTABLE*            : 5 items
+ *CKY-INPUT* for the table  : (GAVE WITHOUT READING) 
   Most likely LF w/weight   : NIL 
   Its most likely derivation: NIL
   Sum of weighted counts    : 0.0 
@@ -1074,10 +1061,10 @@ LEX   (VULT) := (S\NP)\(S\NP)
 Final LF, normal-order evaluated: 
 
     (LAM X
-     ((AND ((BUILD (LAM G482 ((WANT (X G482)) G482))) BALB))
-      (WALL (LAM G482 ((WANT (X G482)) G482))))) =
-    (\ X . AND (BUILD (\ G489 . WANT (X G489) G489) BALB)
-     (WALL (\ G489 . WANT (X G489) G489)))
+     ((AND ((BUILD (LAM G1144 ((WANT (X G1144)) G1144))) BALB))
+      (WALL (LAM G1144 ((WANT (X G1144)) G1144))))) =
+    (\ X . AND (BUILD (\ G1151 . WANT (X G1151) G1151) BALB)
+     (WALL (\ G1151 . WANT (X G1151) G1151)))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
@@ -1890,24 +1877,24 @@ Final LF, normal-order evaluated:
      (P
       (((AND
          (LAM Q
-          (LAM G538
-           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G538))) CAMIER))
-            (Q G538)))))
+          (LAM G1200
+           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1200))) CAMIER))
+            (Q G1200)))))
         (LAM Q
-         (LAM G541
+         (LAM G1203
           ((AND
             ((BELIEVE
-              ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G541))) CAMIER))
+              ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1203))) CAMIER))
              MERCIER))
-           (Q G541)))))
+           (Q G1203)))))
        (LAM X (CEO X))))) =
     (\ P . P
      (AND
-      (\ Q . \ G552 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G552)) CAMIER)
-       (Q G552))
-      (\ Q . \ G555 . AND
-       (BELIEVE (HOPE (MIGHT (SAVE (\ X . COMPANY X) G555)) CAMIER) MERCIER)
-       (Q G555))
+      (\ Q . \ G1214 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1214)) CAMIER)
+       (Q G1214))
+      (\ Q . \ G1217 . AND
+       (BELIEVE (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1217)) CAMIER) MERCIER)
+       (Q G1217))
       (\ X . CEO X)))
 
 Derivation 2
@@ -2042,20 +2029,20 @@ Final LF, normal-order evaluated:
      (P
       (((AND
          (LAM Q
-          (LAM G567
-           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G567))) CAMIER))
-            (Q G567)))))
+          (LAM G1229
+           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1229))) CAMIER))
+            (Q G1229)))))
         (LAM Q
-         (LAM G570
-          ((AND ((BELIEVE (MIGHT ((SAVE (LAM X (COMPANY X))) G570))) MERCIER))
-           (Q G570)))))
+         (LAM G1232
+          ((AND ((BELIEVE (MIGHT ((SAVE (LAM X (COMPANY X))) G1232))) MERCIER))
+           (Q G1232)))))
        (LAM X (CEO X))))) =
     (\ P . P
      (AND
-      (\ Q . \ G582 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G582)) CAMIER)
-       (Q G582))
-      (\ Q . \ G585 . AND
-       (BELIEVE (MIGHT (SAVE (\ X . COMPANY X) G585)) MERCIER) (Q G585))
+      (\ Q . \ G1244 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1244)) CAMIER)
+       (Q G1244))
+      (\ Q . \ G1247 . AND
+       (BELIEVE (MIGHT (SAVE (\ X . COMPANY X) G1247)) MERCIER) (Q G1247))
       (\ X . CEO X)))
 
 Derivation 3
@@ -2196,24 +2183,24 @@ Final LF, normal-order evaluated:
      (P
       (((AND
          (LAM Q
-          (LAM G596
-           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G596))) CAMIER))
-            (Q G596)))))
+          (LAM G1258
+           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1258))) CAMIER))
+            (Q G1258)))))
         (LAM Q
-         (LAM G599
+         (LAM G1261
           ((AND
             ((BELIEVE
-              ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G599))) CAMIER))
+              ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1261))) CAMIER))
              MERCIER))
-           (Q G599)))))
+           (Q G1261)))))
        (LAM X (CEO X))))) =
     (\ P . P
      (AND
-      (\ Q . \ G610 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G610)) CAMIER)
-       (Q G610))
-      (\ Q . \ G613 . AND
-       (BELIEVE (HOPE (MIGHT (SAVE (\ X . COMPANY X) G613)) CAMIER) MERCIER)
-       (Q G613))
+      (\ Q . \ G1272 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1272)) CAMIER)
+       (Q G1272))
+      (\ Q . \ G1275 . AND
+       (BELIEVE (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1275)) CAMIER) MERCIER)
+       (Q G1275))
       (\ X . CEO X)))
 
 Derivation 4
@@ -2348,20 +2335,20 @@ Final LF, normal-order evaluated:
      (P
       (((AND
          (LAM Q
-          (LAM G625
-           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G625))) CAMIER))
-            (Q G625)))))
+          (LAM G1287
+           ((AND ((HOPE (MIGHT ((SAVE (LAM X (COMPANY X))) G1287))) CAMIER))
+            (Q G1287)))))
         (LAM Q
-         (LAM G628
-          ((AND ((BELIEVE (MIGHT ((SAVE (LAM X (COMPANY X))) G628))) MERCIER))
-           (Q G628)))))
+         (LAM G1290
+          ((AND ((BELIEVE (MIGHT ((SAVE (LAM X (COMPANY X))) G1290))) MERCIER))
+           (Q G1290)))))
        (LAM X (CEO X))))) =
     (\ P . P
      (AND
-      (\ Q . \ G640 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G640)) CAMIER)
-       (Q G640))
-      (\ Q . \ G643 . AND
-       (BELIEVE (MIGHT (SAVE (\ X . COMPANY X) G643)) MERCIER) (Q G643))
+      (\ Q . \ G1302 . AND (HOPE (MIGHT (SAVE (\ X . COMPANY X) G1302)) CAMIER)
+       (Q G1302))
+      (\ Q . \ G1305 . AND
+       (BELIEVE (MIGHT (SAVE (\ X . COMPANY X) G1305)) MERCIER) (Q G1305))
       (\ X . CEO X)))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
@@ -3739,17 +3726,18 @@ Final LF, normal-order evaluated:
 
     (LAM X
      (LAM Y
-      (LAM G790 ((AND (((GIVE X) Y) G790)) ((NOT (LAM Y ((READ X) Y))) G790))))) =
-    (\ X . \ Y . \ G802 . AND (GIVE X Y G802) (NOT (\ Y . READ X Y) G802))
+      (LAM G1452
+       ((AND (((GIVE X) Y) G1452)) ((NOT (LAM Y ((READ X) Y))) G1452))))) =
+    (\ X . \ Y . \ G1464 . AND (GIVE X Y G1464) (NOT (\ Y . READ X Y) G1464))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-"CCGlab, version 6.0.1"
+"CCGlab, version 7.0"
 
   do (rules) or (onoff) for rules and switches
   ---------------------------
   Any non-standard rule     ? YES
-  Currently loaded grammar  : pftl.ded
+  Currently loaded grammar  : pftl.ccg.lisp
  *CCG-GRAMMAR*              : 251 items
  *LEX-RULES-TABLE*          : 0 items
  *CKY-HASHTABLE*            : 5 items
@@ -4662,10 +4650,10 @@ LEX   (VULT) := (S\NP)\(S\NP)
 Final LF, normal-order evaluated: 
 
     (LAM X
-     ((AND ((BUILD (LAM G892 ((WANT (X G892)) G892))) BALB))
-      (WALL (LAM G892 ((WANT (X G892)) G892))))) =
-    (\ X . AND (BUILD (\ G899 . WANT (X G899) G899) BALB)
-     (WALL (\ G899 . WANT (X G899) G899)))
+     ((AND ((BUILD (LAM G1554 ((WANT (X G1554)) G1554))) BALB))
+      (WALL (LAM G1554 ((WANT (X G1554)) G1554))))) =
+    (\ X . AND (BUILD (\ G1561 . WANT (X G1561) G1561) BALB)
+     (WALL (\ G1561 . WANT (X G1561) G1561)))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
@@ -6485,8 +6473,9 @@ Final LF, normal-order evaluated:
 
     (LAM X
      (LAM Y
-      (LAM G998 ((AND (((GIVE X) Y) G998)) ((NOT (LAM Y ((READ X) Y))) G998))))) =
-    (\ X . \ Y . \ G1010 . AND (GIVE X Y G1010) (NOT (\ Y . READ X Y) G1010))
+      (LAM G1660
+       ((AND (((GIVE X) Y) G1660)) ((NOT (LAM Y ((READ X) Y))) G1660))))) =
+    (\ X . \ Y . \ G1672 . AND (GIVE X Y G1672) (NOT (\ Y . READ X Y) G1672))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.

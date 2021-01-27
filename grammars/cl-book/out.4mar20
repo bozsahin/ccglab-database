@@ -1,21 +1,23 @@
 
-> (lg "cl-book")
+> (mlg "cl-book")
 
+
+======================= c o m p i l i n g ===================================
+
+Project name: cl-book
+  Input : (cl-book.ccg, cl-book.lisptokens)
+  Output: cl-book.ccg.lisp 
+** Check cl-book.ccg.lisp for THE FIRST ERROR in cl-book.ccg if load fails.
 ======================= l o a d i n g =======================================
-; loading #P"/Users/bozsahin/myrepos/ccglab-grammars/cl-book/cl-book.ded"
 
-Project [cl-book] is assumed to consist of
+Project cl-book files
 -----------------------------------------------------------------------------
-  CCG grammar source : cl-book.ccg $
-    Its token form   : cl-book.lisptokens $
-  Deduction grammar  : cl-book.ded $ (derived from cl-book.lisptokens)
-  Induction grammar  : cl-book.ind #
-  Supervision source : cl-book.sup ^
-  Model-specific code: cl-book.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from cl-book.ded
-  *LEX-RULES-TABLE*  : set from cl-book.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : cl-book.ccg
+    Its token form        : cl-book.lisptokens
+  Compiled/loaded grammar : cl-book.ccg.lisp
+  Supervision source      : cl-book.sup (optional)
+       *CCG-GRAMMAR*      : 37 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 T
 > (load "cl-book.testsuite.lisp")
@@ -23,13 +25,11 @@ T
 T
 > (test-ders)
 
-To see rule switches, do (switches)
-  To beam or not to beam    : NIL
-  Normal Form (NF) parse    : T
-  Out of vocabulary flag    : NIL
- *PRINT-READABLY*           : NIL
- *PRINT-PRETTY*             : T
-  Currently loaded grammar  : cl-book.ded
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : cl-book.ccg.lisp
  *CCG-GRAMMAR*              : 37 items
  *LEX-RULES-TABLE*          : 4 items
  *CKY-HASHTABLE*            : 0 items
@@ -40,8 +40,11 @@ To see rule switches, do (switches)
   Most likely LF's cells    : NIL 
   Number of differing LFs   : 0 
   Most weighted derivation  : NIL 
+  ---------------------------
 
-"CCGlab, version 5.2"
+"CCGlab, version 7.0"
+All rules set. Rule set to be controlled by user.
+
 =======
 OTEST
 ========
@@ -152,12 +155,12 @@ LEX   (DO) := (S\^NP)/^NP
 Final LF, normal-order evaluated: 
 
     ((KNOW
-      ((AND (LAM G738 (WHAT (SHALL (NOT ((DO G738) YOU))))))
-       (LAM G743 (WHAT (CAN (SHALL (NOT ((DO G743) YOU))))))))
+      ((AND (LAM G377 (WHAT (SHALL (NOT ((DO G377) YOU))))))
+       (LAM G382 (WHAT (CAN (SHALL (NOT ((DO G382) YOU))))))))
      I) =
     (KNOW
-     (AND (\ G748 . WHAT (SHALL (NOT (DO G748 YOU))))
-      (\ G753 . WHAT (CAN (SHALL (NOT (DO G753 YOU))))))
+     (AND (\ G387 . WHAT (SHALL (NOT (DO G387 YOU))))
+      (\ G392 . WHAT (CAN (SHALL (NOT (DO G392 YOU))))))
      I)
 
 Derivation 2
@@ -269,12 +272,12 @@ LEX   (DO) := (S\^NP)/^NP
 Final LF, normal-order evaluated: 
 
     ((KNOW
-      ((AND (LAM G758 (WHAT (SHALL (NOT ((DO G758) YOU))))))
-       (LAM G763 (WHAT (CAN (NOT ((DO G763) YOU)))))))
+      ((AND (LAM G397 (WHAT (SHALL (NOT ((DO G397) YOU))))))
+       (LAM G402 (WHAT (CAN (NOT ((DO G402) YOU)))))))
      I) =
     (KNOW
-     (AND (\ G768 . WHAT (SHALL (NOT (DO G768 YOU))))
-      (\ G773 . WHAT (CAN (NOT (DO G773 YOU)))))
+     (AND (\ G407 . WHAT (SHALL (NOT (DO G407 YOU))))
+      (\ G412 . WHAT (CAN (NOT (DO G412 YOU)))))
      I)
 
 Derivation 3
@@ -419,12 +422,12 @@ LEX   (DO) := (S\^NP)/^NP
 Final LF, normal-order evaluated: 
 
     ((KNOW
-      ((AND (LAM G778 (WHAT (SHALL (NOT ((DO G778) YOU))))))
-       (LAM G783 (WHAT (CAN ((DO G783) YOU))))))
+      ((AND (LAM G417 (WHAT (SHALL (NOT ((DO G417) YOU))))))
+       (LAM G422 (WHAT (CAN ((DO G422) YOU))))))
      I) =
     (KNOW
-     (AND (\ G788 . WHAT (SHALL (NOT (DO G788 YOU))))
-      (\ G793 . WHAT (CAN (DO G793 YOU))))
+     (AND (\ G427 . WHAT (SHALL (NOT (DO G427 YOU))))
+      (\ G432 . WHAT (CAN (DO G432 YOU))))
      I)
 
 Derivation 4
@@ -532,10 +535,10 @@ LEX   (DO) := (S\^NP)/^NP
 
 Final LF, normal-order evaluated: 
 
-    ((AND (LAM G798 (WHAT (SHALL (NOT ((DO G798) YOU))))))
-     ((KNOW (LAM G801 (WHAT (CAN (SHALL (NOT ((DO G801) YOU))))))) I)) =
-    (AND (\ G809 . WHAT (SHALL (NOT (DO G809 YOU))))
-     (KNOW (\ G812 . WHAT (CAN (SHALL (NOT (DO G812 YOU))))) I))
+    ((AND (LAM G437 (WHAT (SHALL (NOT ((DO G437) YOU))))))
+     ((KNOW (LAM G440 (WHAT (CAN (SHALL (NOT ((DO G440) YOU))))))) I)) =
+    (AND (\ G448 . WHAT (SHALL (NOT (DO G448 YOU))))
+     (KNOW (\ G451 . WHAT (CAN (SHALL (NOT (DO G451 YOU))))) I))
 
 Derivation 5
 --------------
@@ -647,10 +650,10 @@ LEX   (DO) := (S\^NP)/^NP
 
 Final LF, normal-order evaluated: 
 
-    ((AND (LAM G820 (WHAT (SHALL (NOT ((DO G820) YOU))))))
-     ((KNOW (LAM G824 (WHAT (CAN (NOT ((DO G824) YOU)))))) I)) =
-    (AND (\ G831 . WHAT (SHALL (NOT (DO G831 YOU))))
-     (KNOW (\ G835 . WHAT (CAN (NOT (DO G835 YOU)))) I))
+    ((AND (LAM G459 (WHAT (SHALL (NOT ((DO G459) YOU))))))
+     ((KNOW (LAM G463 (WHAT (CAN (NOT ((DO G463) YOU)))))) I)) =
+    (AND (\ G470 . WHAT (SHALL (NOT (DO G470 YOU))))
+     (KNOW (\ G474 . WHAT (CAN (NOT (DO G474 YOU)))) I))
 
 Derivation 6
 --------------
@@ -787,10 +790,10 @@ LEX   (DO) := (S\^NP)/^NP
 
 Final LF, normal-order evaluated: 
 
-    ((AND (LAM G842 (WHAT (SHALL (NOT ((DO G842) YOU))))))
-     ((KNOW (LAM G847 (WHAT (CAN ((DO G847) YOU))))) I)) =
-    (AND (\ G853 . WHAT (SHALL (NOT (DO G853 YOU))))
-     (KNOW (\ G858 . WHAT (CAN (DO G858 YOU))) I))
+    ((AND (LAM G481 (WHAT (SHALL (NOT ((DO G481) YOU))))))
+     ((KNOW (LAM G486 (WHAT (CAN ((DO G486) YOU))))) I)) =
+    (AND (\ G492 . WHAT (SHALL (NOT (DO G492 YOU))))
+     (KNOW (\ G497 . WHAT (CAN (DO G497 YOU))) I))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
@@ -937,16 +940,16 @@ Final LF, normal-order evaluated:
     (BURN
      (((AND
         (LAM Q
-         (LAM G864
-          ((AND ((CLAIM ((OWN (LAM X (HOUSE X))) G864)) BARRY)) (Q G864)))))
+         (LAM G503
+          ((AND ((CLAIM ((OWN (LAM X (HOUSE X))) G503)) BARRY)) (Q G503)))))
        (LAM Q
-        (LAM G867
-         ((AND ((THINK ((OWN (LAM X (HOUSE X))) G867)) I)) (Q G867)))))
+        (LAM G506
+         ((AND ((THINK ((OWN (LAM X (HOUSE X))) G506)) I)) (Q G506)))))
       (LAM X (MAN X)))) =
     (BURN
      (AND
-      (\ Q . \ G876 . AND (CLAIM (OWN (\ X . HOUSE X) G876) BARRY) (Q G876))
-      (\ Q . \ G879 . AND (THINK (OWN (\ X . HOUSE X) G879) I) (Q G879))
+      (\ Q . \ G515 . AND (CLAIM (OWN (\ X . HOUSE X) G515) BARRY) (Q G515))
+      (\ Q . \ G518 . AND (THINK (OWN (\ X . HOUSE X) G518) I) (Q G518))
       (\ X . MAN X)))
 
 Try (cky-pprint) to see the details including the features and slash modalities.
@@ -1778,8 +1781,8 @@ Final LF, normal-order evaluated:
     (LAM X
      (LAM Y
       (LAM Z
-       (LAM G971 (LAM G972 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G971)) G972)))))) =
-    (\ X . \ Y . \ Z . \ G998 . \ G999 . CAUSE (CAUSE (GIVE Y X Z) G998) G999)
+       (LAM G610 (LAM G611 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G610)) G611)))))) =
+    (\ X . \ Y . \ Z . \ G637 . \ G638 . CAUSE (CAUSE (GIVE Y X Z) G637) G638)
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
@@ -2380,10 +2383,8 @@ Final LF, normal-order evaluated:
     (LAM X
      (LAM Y
       (LAM Z
-       (LAM G1065
-        (LAM G1066 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G1065)) G1066)))))) =
-    (\ X . \ Y . \ Z . \ G1092 . \ G1093 . CAUSE (CAUSE (GIVE Y X Z) G1092)
-     G1093)
+       (LAM G704 (LAM G705 ((CAUSE ((CAUSE (((GIVE Y) X) Z)) G704)) G705)))))) =
+    (\ X . \ Y . \ Z . \ G731 . \ G732 . CAUSE (CAUSE (GIVE Y X Z) G731) G732)
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.

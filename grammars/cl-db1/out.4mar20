@@ -1,50 +1,53 @@
 
 > (load "g-test.lisp")
 
-"CCGlab, version 6.0.1"
+"CCGlab, version 7.0"
 =============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
+*** CCGlab warning *** There are 2 string-constant categories in your grammar
+ make sure NONE are void
 
-=========================== p r e p a r i n g ===============================
+======================= c o m p i l i n g ===================================
 
 Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
+  Input : (g.ccg, g.lisptokens)
+  Output: g.ccg.lisp 
+** Check g.ccg.lisp for THE FIRST ERROR in g.ccg if load fails.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
+=============================================================================
+
+======================= l o a d i n g =======================================
+
+Project g files
+-----------------------------------------------------------------------------
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-en] is assumed to consist of
+Project g-en files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-en.ccg $
-    Its token form   : g-en.lisptokens $
-  Deduction grammar  : g-en.ded $ (derived from g-en.lisptokens)
-  Induction grammar  : g-en.ind #
-  Supervision source : g-en.sup ^
-  Model-specific code: g-en.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-en.ded
-  *LEX-RULES-TABLE*  : set from g-en.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-en.ccg
+    Its token form        : g-en.lisptokens
+  Compiled/loaded grammar : g-en.ccg.lisp
+  Supervision source      : g-en.sup (optional)
+       *CCG-GRAMMAR*      : 122 entries
+   *LEX-RULES-TABLE*      : 8 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -510,49 +513,30 @@ Derivations of (SHE THINKS HARRY AND BARRY LIKES MARY) onto S
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-ch] is assumed to consist of
+Project g-ch files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-ch.ccg $
-    Its token form   : g-ch.lisptokens $
-  Deduction grammar  : g-ch.ded $ (derived from g-ch.lisptokens)
-  Induction grammar  : g-ch.ind #
-  Supervision source : g-ch.sup ^
-  Model-specific code: g-ch.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-ch.ded
-  *LEX-RULES-TABLE*  : set from g-ch.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-ch.ccg
+    Its token form        : g-ch.lisptokens
+  Compiled/loaded grammar : g-ch.ccg.lisp
+  Supervision source      : g-ch.sup (optional)
+       *CCG-GRAMMAR*      : 120 entries
+   *LEX-RULES-TABLE*      : 6 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -1209,49 +1193,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-jp] is assumed to consist of
+Project g-jp files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-jp.ccg $
-    Its token form   : g-jp.lisptokens $
-  Deduction grammar  : g-jp.ded $ (derived from g-jp.lisptokens)
-  Induction grammar  : g-jp.ind #
-  Supervision source : g-jp.sup ^
-  Model-specific code: g-jp.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-jp.ded
-  *LEX-RULES-TABLE*  : set from g-jp.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-jp.ccg
+    Its token form        : g-jp.lisptokens
+  Compiled/loaded grammar : g-jp.ccg.lisp
+  Supervision source      : g-jp.sup (optional)
+       *CCG-GRAMMAR*      : 121 entries
+   *LEX-RULES-TABLE*      : 7 entries
 =============================================================================
 
 Lowest types (NP PREDP) will be eliminated
@@ -1342,49 +1307,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-sh] is assumed to consist of
+Project g-sh files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-sh.ccg $
-    Its token form   : g-sh.lisptokens $
-  Deduction grammar  : g-sh.ded $ (derived from g-sh.lisptokens)
-  Induction grammar  : g-sh.ind #
-  Supervision source : g-sh.sup ^
-  Model-specific code: g-sh.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-sh.ded
-  *LEX-RULES-TABLE*  : set from g-sh.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-sh.ccg
+    Its token form        : g-sh.lisptokens
+  Compiled/loaded grammar : g-sh.ccg.lisp
+  Supervision source      : g-sh.sup (optional)
+       *CCG-GRAMMAR*      : 119 entries
+   *LEX-RULES-TABLE*      : 5 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -1443,49 +1389,30 @@ Derivations of (OCHITI-NIN-RA BAKE-BO NATEX-KAN-KE) onto S
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-nu] is assumed to consist of
+Project g-nu files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-nu.ccg $
-    Its token form   : g-nu.lisptokens $
-  Deduction grammar  : g-nu.ded $ (derived from g-nu.lisptokens)
-  Induction grammar  : g-nu.ind #
-  Supervision source : g-nu.sup ^
-  Model-specific code: g-nu.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-nu.ded
-  *LEX-RULES-TABLE*  : set from g-nu.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-nu.ccg
+    Its token form        : g-nu.lisptokens
+  Compiled/loaded grammar : g-nu.ccg.lisp
+  Supervision source      : g-nu.sup (optional)
+       *CCG-GRAMMAR*      : 118 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 
 Lowest types (NP PREDP) will be eliminated
@@ -1576,49 +1503,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-tr] is assumed to consist of
+Project g-tr files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-tr.ccg $
-    Its token form   : g-tr.lisptokens $
-  Deduction grammar  : g-tr.ded $ (derived from g-tr.lisptokens)
-  Induction grammar  : g-tr.ind #
-  Supervision source : g-tr.sup ^
-  Model-specific code: g-tr.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-tr.ded
-  *LEX-RULES-TABLE*  : set from g-tr.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-tr.ccg
+    Its token form        : g-tr.lisptokens
+  Compiled/loaded grammar : g-tr.ccg.lisp
+  Supervision source      : g-tr.sup (optional)
+       *CCG-GRAMMAR*      : 118 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -2253,49 +2161,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-pt] is assumed to consist of
+Project g-pt files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-pt.ccg $
-    Its token form   : g-pt.lisptokens $
-  Deduction grammar  : g-pt.ded $ (derived from g-pt.lisptokens)
-  Induction grammar  : g-pt.ind #
-  Supervision source : g-pt.sup ^
-  Model-specific code: g-pt.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-pt.ded
-  *LEX-RULES-TABLE*  : set from g-pt.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-pt.ccg
+    Its token form        : g-pt.lisptokens
+  Compiled/loaded grammar : g-pt.ccg.lisp
+  Supervision source      : g-pt.sup (optional)
+       *CCG-GRAMMAR*      : 116 entries
+   *LEX-RULES-TABLE*      : 2 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -2331,49 +2220,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-ko] is assumed to consist of
+Project g-ko files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-ko.ccg $
-    Its token form   : g-ko.lisptokens $
-  Deduction grammar  : g-ko.ded $ (derived from g-ko.lisptokens)
-  Induction grammar  : g-ko.ind #
-  Supervision source : g-ko.sup ^
-  Model-specific code: g-ko.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-ko.ded
-  *LEX-RULES-TABLE*  : set from g-ko.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-ko.ccg
+    Its token form        : g-ko.lisptokens
+  Compiled/loaded grammar : g-ko.ccg.lisp
+  Supervision source      : g-ko.sup (optional)
+       *CCG-GRAMMAR*      : 117 entries
+   *LEX-RULES-TABLE*      : 3 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
@@ -2520,49 +2390,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-dy] is assumed to consist of
+Project g-dy files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-dy.ccg $
-    Its token form   : g-dy.lisptokens $
-  Deduction grammar  : g-dy.ded $ (derived from g-dy.lisptokens)
-  Induction grammar  : g-dy.ind #
-  Supervision source : g-dy.sup ^
-  Model-specific code: g-dy.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-dy.ded
-  *LEX-RULES-TABLE*  : set from g-dy.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-dy.ccg
+    Its token form        : g-dy.lisptokens
+  Compiled/loaded grammar : g-dy.ccg.lisp
+  Supervision source      : g-dy.sup (optional)
+       *CCG-GRAMMAR*      : 119 entries
+   *LEX-RULES-TABLE*      : 5 entries
 =============================================================================
 
 Lowest types (NP VP) will be eliminated
@@ -2838,49 +2689,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-de] is assumed to consist of
+Project g-de files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-de.ccg $
-    Its token form   : g-de.lisptokens $
-  Deduction grammar  : g-de.ded $ (derived from g-de.lisptokens)
-  Induction grammar  : g-de.ind #
-  Supervision source : g-de.sup ^
-  Model-specific code: g-de.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-de.ded
-  *LEX-RULES-TABLE*  : set from g-de.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-de.ccg
+    Its token form        : g-de.lisptokens
+  Compiled/loaded grammar : g-de.ccg.lisp
+  Supervision source      : g-de.sup (optional)
+       *CCG-GRAMMAR*      : 118 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 
 Lowest types (NP S) will be eliminated
@@ -3018,49 +2850,30 @@ Final LF, normal-order evaluated:
 
 Try (cky-pprint) to see the details including the features and slash modalities.
     (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
-=============================================================================
-** CCGlab warning ** There are 2 string-constant categories in your grammar, make sure NONE are void
-
-=========================== p r e p a r i n g ===============================
-
-Project name: g
-  Input : g.lisptokens 
-  Output: g.ded 
-Check to see if output contains any spec errors.
-Fix and re-run if it does.
-You can also re/create g.lisptokens by running 'tokens g' sed script offline.
 ======================= l o a d i n g =======================================
 
-Project [g] is assumed to consist of
+Project g files
 -----------------------------------------------------------------------------
-  CCG grammar source : g.ccg $
-    Its token form   : g.lisptokens $
-  Deduction grammar  : g.ded $ (derived from g.lisptokens)
-  Induction grammar  : g.ind #
-  Supervision source : g.sup ^
-  Model-specific code: g.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g.ded
-  *LEX-RULES-TABLE*  : set from g.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g.ccg
+    Its token form        : g.lisptokens
+  Compiled/loaded grammar : g.ccg.lisp
+  Supervision source      : g.sup (optional)
+       *CCG-GRAMMAR*      : 114 entries
+   *LEX-RULES-TABLE*      : 0 entries
 =============================================================================
 
 Type-raising rules added at the end of *ccg-grammar*
 compiled, subsumed and saved.
 ======================= l o a d i n g =======================================
 
-Project [g-hu] is assumed to consist of
+Project g-hu files
 -----------------------------------------------------------------------------
-  CCG grammar source : g-hu.ccg $
-    Its token form   : g-hu.lisptokens $
-  Deduction grammar  : g-hu.ded $ (derived from g-hu.lisptokens)
-  Induction grammar  : g-hu.ind #
-  Supervision source : g-hu.sup ^
-  Model-specific code: g-hu.lisp ^
-   and other model-specific files you may create.
-       *CCG-GRAMMAR* : set from g-hu.ded
-  *LEX-RULES-TABLE*  : set from g-hu.ded
-Expected files       : $ for deduction, # for induction, ^ for model development
+  CCG grammar source      : g-hu.ccg
+    Its token form        : g-hu.lisptokens
+  Compiled/loaded grammar : g-hu.ccg.lisp
+  Supervision source      : g-hu.sup (optional)
+       *CCG-GRAMMAR*      : 118 entries
+   *LEX-RULES-TABLE*      : 4 entries
 =============================================================================
 
 Lowest types (NP) will be eliminated
