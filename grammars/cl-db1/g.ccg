@@ -4,6 +4,8 @@
 
 % English
 i n := np[agr=1s] : !i;
+arrives en := s\np[agr=3s] : \x.!arrive x;
+arrived en := s\np: \x.!arrive x;
 think en := (s\np[agr=1s])/^s : \p\x.!think p x;
 john n := np[agr=3s] : !john;
 likes en := (s\np[agr=3s])/np : \x\y.!like x y;

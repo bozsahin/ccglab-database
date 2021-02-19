@@ -1,0 +1,1882 @@
+
+> (mlg "g")
+
+=============================================================================
+*** CCGlab warning *** There are 2 string-constant categories in your grammar
+ make sure NONE are void
+
+======================= c o m p i l i n g ===================================
+
+Project name: g
+  Input : (g.ccg, g.lisptokens)
+  Output: g.ccg.lisp 
+** Check g.ccg.lisp for THE FIRST ERROR in g.ccg IF load fails.
+======================= l o a d i n g =======================================
+
+Project g files
+-----------------------------------------------------------------------------
+  CCG grammar source       : g.ccg
+          token form       : g.lisptokens
+  Compiled/loaded grammar  : g.ccg.lisp
+       *CCG-GRAMMAR*       : 116 entries
+   *LEX-RULES-TABLE*       : 0 entries
+=============================================================================
+T
+> (g2p2 "g" '(en))
+
+======================= l o a d i n g =======================================
+
+Project g files
+-----------------------------------------------------------------------------
+  CCG grammar source       : g.ccg
+          token form       : g.lisptokens
+  Compiled/loaded grammar  : g.ccg.lisp
+       *CCG-GRAMMAR*       : 116 entries
+   *LEX-RULES-TABLE*       : 0 entries
+=============================================================================
+
+Number of lexical entries                    : 116
+Number of lexical functions considered       : 12
+Number of second-order functions generated   : 12
+Number of paradigmatic functions out of them : 7
+Use (mergesave-tr <pn>) to merge and save rules
+ with current grammar to <pn>.ccg.lisp
+NIL
+> (mergesave-tr "en-new")
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+NIL
+> (lg "en-new")
+
+======================= l o a d i n g =======================================
+
+Project en-new files
+-----------------------------------------------------------------------------
+  Compiled/loaded grammar  : en-new.ccg.lisp
+       *CCG-GRAMMAR*       : 123 entries
+   *LEX-RULES-TABLE*       : 7 entries
+=============================================================================
+T
+> (p '(i think john likes and you believe mary hates cats))
+
+T
+> (ders 'S)
+
+
+Derivation 1
+--------------
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+>     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : ((LAM P (LAM X ((THINK P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 2
+--------------
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+>     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : ((LAM P (LAM X ((THINK P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 3
+--------------
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_G2_779 (JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := (S\NP)\^((S\NP)/^S)
+        : ((LAM LF (LAM P (P LF)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : (((LAM LF (LAM P (P LF)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           (LAM P (LAM X ((THINK P) X))))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : ((((LAM LF (LAM P (P LF)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              CATS))
+            (LAM P (LAM X ((THINK P) X))))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 4
+--------------
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_G2_779 (JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := (S\NP)\^((S\NP)/^S)
+        : ((LAM LF (LAM P (P LF)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : (((LAM LF (LAM P (P LF)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           (LAM P (LAM X ((THINK P) X))))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : ((((LAM LF (LAM P (P LF)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              CATS))
+            (LAM P (LAM X ((THINK P) X))))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 5
+--------------
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>B    (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             X)))
+_P2_795 (CATS) := (S\NP)\^((S\NP)/^NP)
+        : ((LAM LF (LAM P (P LF))) CATS)
+<     (THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S\NP
+        : (((LAM LF (LAM P (P LF))) CATS)
+           (LAM X
+            ((LAM P (LAM X ((THINK P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              X))))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : ((((LAM LF (LAM P (P LF))) CATS)
+            (LAM X
+             ((LAM P (LAM X ((THINK P) X)))
+              ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  (((LAM LF (LAM P (P LF))) YOU)
+                   ((LAM X
+                     ((LAM P (LAM X ((BELIEVE P) X)))
+                      ((LAM X
+                        (((LAM LF (LAM P (P LF))) MARY)
+                         ((LAM X (LAM Y ((HATE X) Y))) X)))
+                       X)))
+                    X))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))
+               X))))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 6
+--------------
+LEX   (I) := NP
+        : I
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>B    (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             X)))
+_P2_795 (CATS) := (S\NP)\^((S\NP)/^NP)
+        : ((LAM LF (LAM P (P LF))) CATS)
+<     (THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S\NP
+        : (((LAM LF (LAM P (P LF))) CATS)
+           (LAM X
+            ((LAM P (LAM X ((THINK P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              X))))
+<     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : ((((LAM LF (LAM P (P LF))) CATS)
+            (LAM X
+             ((LAM P (LAM X ((THINK P) X)))
+              ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  (((LAM LF (LAM P (P LF))) YOU)
+                   ((LAM X
+                     ((LAM P (LAM X ((BELIEVE P) X)))
+                      ((LAM X
+                        (((LAM LF (LAM P (P LF))) MARY)
+                         ((LAM X (LAM Y ((HATE X) Y))) X)))
+                       X)))
+                    X))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))
+               X))))
+           I)
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 79
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+>     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : ((LAM P (LAM X ((THINK P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS)))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 80
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+>     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : ((LAM P (LAM X ((THINK P) X)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS)))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 81
+--------------
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_G2_779 (JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := (S\NP)\^((S\NP)/^S)
+        : ((LAM LF (LAM P (P LF)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : (((LAM LF (LAM P (P LF)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           (LAM P (LAM X ((THINK P) X))))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           (((LAM LF (LAM P (P LF)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              CATS))
+            (LAM P (LAM X ((THINK P) X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 82
+--------------
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+LEX   (CATS) := NP
+        : CATS
+>     (JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) JOHN)
+              ((LAM X (LAM Y ((LIKE X) Y))) X))))
+           CATS)
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_G2_779 (JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := (S\NP)\^((S\NP)/^S)
+        : ((LAM LF (LAM P (P LF)))
+           ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) YOU)
+                ((LAM X
+                  ((LAM P (LAM X ((BELIEVE P) X)))
+                   ((LAM X
+                     (((LAM LF (LAM P (P LF))) MARY)
+                      ((LAM X (LAM Y ((HATE X) Y))) X)))
+                    X)))
+                 X))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X))))
+            CATS))
+<     (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S\NP
+        : (((LAM LF (LAM P (P LF)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             CATS))
+           (LAM P (LAM X ((THINK P) X))))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           (((LAM LF (LAM P (P LF)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              CATS))
+            (LAM P (LAM X ((THINK P) X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 119
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>B    (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             X)))
+_P2_795 (CATS) := (S\NP)\^((S\NP)/^NP)
+        : ((LAM LF (LAM P (P LF))) CATS)
+<     (THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S\NP
+        : (((LAM LF (LAM P (P LF))) CATS)
+           (LAM X
+            ((LAM P (LAM X ((THINK P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              X))))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           (((LAM LF (LAM P (P LF))) CATS)
+            (LAM X
+             ((LAM P (LAM X ((THINK P) X)))
+              ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  (((LAM LF (LAM P (P LF))) YOU)
+                   ((LAM X
+                     ((LAM P (LAM X ((BELIEVE P) X)))
+                      ((LAM X
+                        (((LAM LF (LAM P (P LF))) MARY)
+                         ((LAM X (LAM Y ((HATE X) Y))) X)))
+                       X)))
+                    X))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))
+               X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 120
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X))))
+>B    (THINK)(JOHN LIKES AND YOU BELIEVE MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) YOU)
+                 ((LAM X
+                   ((LAM P (LAM X ((BELIEVE P) X)))
+                    ((LAM X
+                      (((LAM LF (LAM P (P LF))) MARY)
+                       ((LAM X (LAM Y ((HATE X) Y))) X)))
+                     X)))
+                  X))))
+              (LAM X
+               (((LAM LF (LAM P (P LF))) JOHN)
+                ((LAM X (LAM Y ((LIKE X) Y))) X))))
+             X)))
+_P2_795 (CATS) := (S\NP)\^((S\NP)/^NP)
+        : ((LAM LF (LAM P (P LF))) CATS)
+<     (THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S\NP
+        : (((LAM LF (LAM P (P LF))) CATS)
+           (LAM X
+            ((LAM P (LAM X ((THINK P) X)))
+             ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) YOU)
+                  ((LAM X
+                    ((LAM P (LAM X ((BELIEVE P) X)))
+                     ((LAM X
+                       (((LAM LF (LAM P (P LF))) MARY)
+                        ((LAM X (LAM Y ((HATE X) Y))) X)))
+                      X)))
+                   X))))
+               (LAM X
+                (((LAM LF (LAM P (P LF))) JOHN)
+                 ((LAM X (LAM Y ((LIKE X) Y))) X))))
+              X))))
+>     (I)(THINK JOHN LIKES AND YOU BELIEVE MARY HATES CATS) := S
+        : (((LAM LF (LAM P (P LF))) I)
+           (((LAM LF (LAM P (P LF))) CATS)
+            (LAM X
+             ((LAM P (LAM X ((THINK P) X)))
+              ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+                 (LAM X
+                  (((LAM LF (LAM P (P LF))) YOU)
+                   ((LAM X
+                     ((LAM P (LAM X ((BELIEVE P) X)))
+                      ((LAM X
+                        (((LAM LF (LAM P (P LF))) MARY)
+                         ((LAM X (LAM Y ((HATE X) Y))) X)))
+                       X)))
+                    X))))
+                (LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X))))
+               X)))))
+
+Final LF, normal-order evaluated: 
+
+    ((THINK ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((LIKE CATS) JOHN))) I) =
+    (THINK (AND (BELIEVE (HATE CATS MARY) YOU) (LIKE CATS JOHN)) I)
+
+Derivation 157
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>B    (THINK)(JOHN LIKES) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X)))
+             X)))
+>B    (I)(THINK JOHN LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) I)
+            ((LAM X
+              ((LAM P (LAM X ((THINK P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                X)))
+             X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (I THINK JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I)
+             ((LAM X
+               ((LAM P (LAM X ((THINK P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) JOHN)
+                   ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                 X)))
+              X))))
+LEX   (CATS) := NP
+        : CATS
+>     (I THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) I)
+              ((LAM X
+                ((LAM P (LAM X ((THINK P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) JOHN)
+                    ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                  X)))
+               X))))
+           CATS)
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((THINK ((LIKE CATS) JOHN)) I)) =
+    (AND (BELIEVE (HATE CATS MARY) YOU) (THINK (LIKE CATS JOHN) I))
+
+Derivation 158
+--------------
+_P2_797 (I) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) I)
+LEX   (THINK) := (S\NP)/^S
+        : (LAM P (LAM X ((THINK P) X)))
+_P2_797 (JOHN) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) JOHN)
+LEX   (LIKES) := (S\NP)/NP
+        : (LAM X (LAM Y ((LIKE X) Y)))
+>B    (JOHN)(LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) JOHN) ((LAM X (LAM Y ((LIKE X) Y))) X)))
+>B    (THINK)(JOHN LIKES) := (S\NP)/NP
+        : (LAM X
+           ((LAM P (LAM X ((THINK P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) JOHN)
+               ((LAM X (LAM Y ((LIKE X) Y))) X)))
+             X)))
+>B    (I)(THINK JOHN LIKES) := S/NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) I)
+            ((LAM X
+              ((LAM P (LAM X ((THINK P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) JOHN)
+                  ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                X)))
+             X)))
+LEX   (AND) := (@X\@X)/@X
+        : (LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+_P2_797 (YOU) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) YOU)
+LEX   (BELIEVE) := (S\NP)/^S
+        : (LAM P (LAM X ((BELIEVE P) X)))
+_P2_797 (MARY) := S/(S\NP)
+        : ((LAM LF (LAM P (P LF))) MARY)
+LEX   (HATES) := (S\NP)/^NP
+        : (LAM X (LAM Y ((HATE X) Y)))
+>B    (MARY)(HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) MARY) ((LAM X (LAM Y ((HATE X) Y))) X)))
+>B    (BELIEVE)(MARY HATES) := (S\NP)/^NP
+        : (LAM X
+           ((LAM P (LAM X ((BELIEVE P) X)))
+            ((LAM X
+              (((LAM LF (LAM P (P LF))) MARY)
+               ((LAM X (LAM Y ((HATE X) Y))) X)))
+             X)))
+>B    (YOU)(BELIEVE MARY HATES) := S/^NP
+        : (LAM X
+           (((LAM LF (LAM P (P LF))) YOU)
+            ((LAM X
+              ((LAM P (LAM X ((BELIEVE P) X)))
+               ((LAM X
+                 (((LAM LF (LAM P (P LF))) MARY)
+                  ((LAM X (LAM Y ((HATE X) Y))) X)))
+                X)))
+             X)))
+>     (AND)(YOU BELIEVE MARY HATES) := (S/^NP)\(S/^NP)
+        : ((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) YOU)
+             ((LAM X
+               ((LAM P (LAM X ((BELIEVE P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) MARY)
+                   ((LAM X (LAM Y ((HATE X) Y))) X)))
+                 X)))
+              X))))
+<     (I THINK JOHN LIKES)(AND YOU BELIEVE MARY HATES) := S/^NP
+        : (((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) YOU)
+              ((LAM X
+                ((LAM P (LAM X ((BELIEVE P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) MARY)
+                    ((LAM X (LAM Y ((HATE X) Y))) X)))
+                  X)))
+               X))))
+           (LAM X
+            (((LAM LF (LAM P (P LF))) I)
+             ((LAM X
+               ((LAM P (LAM X ((THINK P) X)))
+                ((LAM X
+                  (((LAM LF (LAM P (P LF))) JOHN)
+                   ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                 X)))
+              X))))
+LEX   (CATS) := NP
+        : CATS
+>     (I THINK JOHN LIKES AND YOU BELIEVE MARY HATES)(CATS) := S
+        : ((((LAM P (LAM Q (LAM X ((AND (P X)) (Q X)))))
+             (LAM X
+              (((LAM LF (LAM P (P LF))) YOU)
+               ((LAM X
+                 ((LAM P (LAM X ((BELIEVE P) X)))
+                  ((LAM X
+                    (((LAM LF (LAM P (P LF))) MARY)
+                     ((LAM X (LAM Y ((HATE X) Y))) X)))
+                   X)))
+                X))))
+            (LAM X
+             (((LAM LF (LAM P (P LF))) I)
+              ((LAM X
+                ((LAM P (LAM X ((THINK P) X)))
+                 ((LAM X
+                   (((LAM LF (LAM P (P LF))) JOHN)
+                    ((LAM X (LAM Y ((LIKE X) Y))) X)))
+                  X)))
+               X))))
+           CATS)
+
+Final LF, normal-order evaluated: 
+
+    ((AND ((BELIEVE ((HATE CATS) MARY)) YOU)) ((THINK ((LIKE CATS) JOHN)) I)) =
+    (AND (BELIEVE (HATE CATS MARY) YOU) (THINK (LIKE CATS JOHN) I))
+
+Try (cky-pprint) to see the details including the features and slash modalities.
+    (cky-reveal-cell <cell>) to pretty-print the parse in <cell>.
+NIL
+> (dribble)
