@@ -1,0 +1,84 @@
+
+> (mlg "pftl")
+
+
+======================= c o m p i l i n g ===================================
+
+Project name: pftl
+  Input : (pftl.ccg, pftl.lisptokens)
+  Output: pftl.ccg.lisp 
+** Check pftl.ccg.lisp for THE FIRST ERROR in pftl.ccg IF load fails.
+======================= l o a d i n g =======================================
+
+Project pftl files
+-----------------------------------------------------------------------------
+  CCG grammar source       : pftl.ccg
+          token form       : pftl.lisptokens
+  Compiled/loaded grammar  : pftl.ccg.lisp
+       *CCG-GRAMMAR*       : 251 entries
+   *LEX-RULES-TABLE*       : 0 entries
+=============================================================================
+T
+> (tr "pftl" '(v))
+
+======================= l o a d i n g =======================================
+
+Project pftl files
+-----------------------------------------------------------------------------
+  CCG grammar source       : pftl.ccg
+          token form       : pftl.lisptokens
+  Compiled/loaded grammar  : pftl.ccg.lisp
+       *CCG-GRAMMAR*       : 251 entries
+   *LEX-RULES-TABLE*       : 0 entries
+=============================================================================
+
+Summary of compiling type-raising for pftl.ccg.lisp
+Number of lexical entries                       : 251
+Number of lexical functions considered          : 92
+Number of second-order case functions generated : 86
+Number of paradigmatic functions out of them    : 38
+Use (mergesave-tr <pn>) to merge and save the rules
+ with current grammar to <pn>.ccg.lisp
+NIL
+> (mergesave-tr "pftl-newtr")
+
+Type-raising rules added at the end of *ccg-grammar*
+compiled, subsumed and saved.
+NIL
+> (lg "pftl-newtr")
+
+======================= l o a d i n g =======================================
+
+Project pftl-newtr files
+-----------------------------------------------------------------------------
+  Compiled/loaded grammar  : pftl-newtr.ccg.lisp
+       *CCG-GRAMMAR*       : 289 entries
+   *LEX-RULES-TABLE*       : 38 entries
+=============================================================================
+T
+> (load "pftl-test.lisp")
+
+T
+> (test-ders)
+
+"CCGlab, version 7.1"
+
+  do (rules) or (onoff) for rules and switches
+  ---------------------------
+  Any non-standard rule     ? NO
+  Currently loaded grammar  : pftl-newtr.ccg.lisp
+ *CCG-GRAMMAR*              : 289 items
+ *LEX-RULES-TABLE*          : 38 items
+ *CKY-HASHTABLE*            : 0 items
+ *CKY-INPUT* for the table  : NIL 
+  Most likely LF w/weight   : NIL 
+  Its most likely derivation: NIL
+  Sum of weighted counts    : 0.0 
+  Most likely LF's cells    : NIL 
+  Number of differing LFs   : 0 
+  Most weighted derivation  : NIL 
+  ---------------------------
+
+debugger invoked on a SB-INT:SIMPLE-PROGRAM-ERROR: odd number of &KEY arguments
+
+> (dribble)
