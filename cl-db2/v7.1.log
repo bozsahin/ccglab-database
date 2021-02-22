@@ -1,0 +1,30 @@
+
+> (which-ccglab)
+
+"CCGlab, version 7.1"
+> (tr "eve" (read1 "eve.vmorphs" "eve-tr-err.log"))
+
+debugger invoked on a SB-INT:SIMPLE-PROGRAM-ERROR:
+  invalid number of arguments: 2
+
+> (tr "eve" (read1 "eve.vmorphs") "eve-tr-err.log")
+
+======================= l o a d i n g =======================================
+
+Project eve file system (some optional, some system-generated)
+-----------------------------------------------------------------------------
+  Compiled/loaded grammar  : eve.ccg.lisp
+       *CCG-GRAMMAR*       : 4054 entries
+   *LEX-RULES-TABLE*       : 2 entries
+=============================================================================
+
+Summary of compiling type-raising for grammar   : eve.ccg.lisp
+Log of warnings and errors                      : eve-tr-err.log (702 entries) 
+Number of lexical entries                       : 4054
+Number of lexical functions considered          : 3248
+Number of second-order case functions generated : 2574
+Number of paradigmatic functions out of them    : 367
+Use (mergesave-tr <pn>) to merge and save the rules
+ with current grammar to <pn>.ccg.lisp
+NIL
+> (dribble)
